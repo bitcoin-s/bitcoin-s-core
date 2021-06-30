@@ -9,7 +9,7 @@ import scala.util.{Failure, Success, Try}
   */
 trait CryptoRuntime {
 
-  val cryptoContext: CryptoContext
+  def cryptoContext: CryptoContext
 
   /** Generates a 32 byte private key */
   def freshPrivateKey: ECPrivateKey
