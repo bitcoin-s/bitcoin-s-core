@@ -102,6 +102,9 @@ sealed abstract class Transaction extends NetworkElement {
   lazy val toBaseTx: BaseTransaction = {
     BaseTransaction(version, inputs, outputs, lockTime)
   }
+
+  lazy val totalOutput: CurrencyUnit =
+    outputs.map(_.value).sum(org.bitcoins.core.currency.currencyUnitNumeric)
 }
 
 object Transaction extends Factory[Transaction] {

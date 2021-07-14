@@ -148,6 +148,8 @@ case object FilterDustFinalizer extends RawTxFinalizer {
 }
 
 case object BIP69Finalizer extends RawTxFinalizer {
+  import org.bitcoins.core.transactionInputOrder
+  import org.bitcoins.core.transactionOutputOrder
 
   override def buildTx(txBuilderResult: RawTxBuilderResult): Transaction = {
     val sortedInputs = txBuilderResult.inputs.sorted
