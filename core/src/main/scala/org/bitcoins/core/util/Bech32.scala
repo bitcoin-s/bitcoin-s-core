@@ -83,7 +83,7 @@ sealed abstract class Bech32 {
       val b = chk >> 25
       //chk = (chk & 0x1ffffff) << 5 ^ v
       chk = (chk & 0x1ffffff) << 5 ^ v.toLong
-      0.until(5).foreach { i: Int =>
+      0.until(5).foreach { (i: Int) =>
         //chk ^= GEN[i] if ((b >> i) & 1) else 0
         if (((b >> i) & 1) == 1) {
           chk = chk ^ generators(i)

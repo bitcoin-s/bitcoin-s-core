@@ -86,7 +86,7 @@ trait TLVUtil {
 
   protected def u16PrefixedList[T <: NetworkElement](
       vec: Vector[T]): ByteVector = {
-    u16PrefixedList[T](vec, { elem: NetworkElement => elem.bytes })
+    u16PrefixedList[T](vec, { (elem: NetworkElement) => elem.bytes })
   }
 
   protected def bigSizePrefix(bytes: ByteVector): ByteVector = {
@@ -103,7 +103,7 @@ trait TLVUtil {
 
   protected def bigSizePrefixedList[T <: NetworkElement](
       vec: Vector[T]): ByteVector = {
-    bigSizePrefixedList[T](vec, { elem: NetworkElement => elem.bytes })
+    bigSizePrefixedList[T](vec, { (elem: NetworkElement) => elem.bytes })
   }
 }
 
@@ -1761,7 +1761,7 @@ case class FundingSignaturesV0TLV(witnesses: Vector[ScriptWitnessV0])
   override val value: ByteVector = {
     u16PrefixedList(
       witnesses,
-      { witness: ScriptWitnessV0 =>
+      { (witness: ScriptWitnessV0) =>
         u16PrefixedList[ByteVector](witness.stack.toVector.reverse, u16Prefix)
       })
   }

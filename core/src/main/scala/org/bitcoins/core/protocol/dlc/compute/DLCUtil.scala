@@ -26,6 +26,7 @@ import org.bitcoins.crypto._
 import scodec.bits.ByteVector
 
 import scala.util.Try
+import org.bitcoins.core.currency.currencyUnitOrdering
 
 object DLCUtil {
 

@@ -1515,7 +1515,7 @@ object NetworkPayload {
     getDataCommandName -> RawGetDataMessageSerializer.read,
     headersCommandName -> RawHeadersMessageSerializer.read,
     invCommandName -> RawInventoryMessageSerializer.read,
-    memPoolCommandName -> { _: ByteVector =>
+    memPoolCommandName -> { (_: ByteVector) =>
       MemPoolMessage
     },
     merkleBlockCommandName -> RawMerkleBlockMessageSerializer.read,
@@ -1523,25 +1523,25 @@ object NetworkPayload {
     transactionCommandName -> RawTransactionMessageSerializer.read,
     addrCommandName -> RawAddrMessageSerializer.read,
     addrV2CommandName -> AddrV2Message.fromBytes,
-    sendAddrV2CommandName -> { _: ByteVector =>
+    sendAddrV2CommandName -> { (_: ByteVector) =>
       SendAddrV2Message
     },
     feeFilterCommandName -> RawFeeFilterMessageSerializer.read,
     filterAddCommandName -> RawFilterAddMessageSerializer.read,
-    filterClearCommandName -> { _: ByteVector =>
+    filterClearCommandName -> { (_: ByteVector) =>
       FilterClearMessage
     },
     filterLoadCommandName -> RawFilterLoadMessageSerializer.read,
-    getAddrCommandName -> { _: ByteVector =>
+    getAddrCommandName -> { (_: ByteVector) =>
       GetAddrMessage
     },
     pingCommandName -> RawPingMessageSerializer.read,
     pongCommandName -> RawPongMessageSerializer.read,
     rejectCommandName -> RawRejectMessageSerializer.read,
-    sendHeadersCommandName -> { _: ByteVector =>
+    sendHeadersCommandName -> { (_: ByteVector) =>
       SendHeadersMessage
     },
-    verAckCommandName -> { _: ByteVector =>
+    verAckCommandName -> { (_: ByteVector) =>
       VerAckMessage
     },
     versionCommandName -> RawVersionMessageSerializer.read,

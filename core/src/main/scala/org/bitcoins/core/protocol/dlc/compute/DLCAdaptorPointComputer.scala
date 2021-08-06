@@ -127,8 +127,8 @@ object DLCAdaptorPointComputer {
     // The possible messages a single nonce may be used to sign
     val possibleOutcomes: Vector[ByteVector] =
       contractInfo.contractDescriptor match {
-        case enum: EnumContractDescriptor =>
-          enum.keys.map(_.outcome).map(CryptoUtil.serializeForHash)
+        case enumEvent: EnumContractDescriptor =>
+          enumEvent.keys.map(_.outcome).map(CryptoUtil.serializeForHash)
         case _: NumericContractDescriptor => numericPossibleOutcomes
       }
 

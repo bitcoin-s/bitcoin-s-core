@@ -33,7 +33,7 @@ object TxUtil {
       if (locktime > UInt32.max.toLong || locktime < 0) {
         TxBuilderError.IncompatibleLockTimes
       } else Success(UInt32(locktime))
-    lockTimeT.flatMap { lockTime: UInt32 =>
+    lockTimeT.flatMap { (lockTime: UInt32) =>
       currentLockTimeOpt match {
         case Some(currentLockTime) =>
           val lockTimeThreshold = TransactionConstants.locktimeThreshold

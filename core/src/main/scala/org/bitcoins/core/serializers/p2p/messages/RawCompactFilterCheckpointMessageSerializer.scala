@@ -40,7 +40,7 @@ object RawCompactFilterCheckpointMessageSerializer
     val stopHash = message.stopHash.bytes
     val filterHeaders =
       RawSerializerHelper.writeCmpctSizeUInt(message.filterHeaders,
-                                             { fh: DoubleSha256Digest =>
+                                             { (fh: DoubleSha256Digest) =>
                                                fh.bytes
                                              })
     filterType ++ stopHash ++ filterHeaders

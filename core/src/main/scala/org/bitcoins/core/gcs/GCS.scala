@@ -3,7 +3,8 @@ package org.bitcoins.core.gcs
 import org.bitcoins.core.number.{UInt64, UInt8}
 import org.bitcoins.core.protocol.CompactSizeUInt
 import org.bitcoins.crypto.{CryptoUtil, SipHashKey}
-import scodec.bits.{BinStringSyntax, BitVector, ByteVector}
+import scodec.bits.{BitVector, ByteVector}
+import scodec.bits.bin
 
 import scala.annotation.tailrec
 

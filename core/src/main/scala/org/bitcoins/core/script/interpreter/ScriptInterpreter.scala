@@ -1453,7 +1453,7 @@ sealed abstract class ScriptInterpreter {
                                        old.flags))
       case wTxSigComponentP2SH: WitnessTxSigComponentP2SH =>
         wTxSigComponentP2SH.witnessScriptPubKey.map {
-          wit: WitnessScriptPubKey =>
+          (wit: WitnessScriptPubKey) =>
             val updatedOutput =
               TransactionOutput(old.output.value, rebuildScriptPubKey)
             WitnessTxSigComponentRebuilt(old.transaction,

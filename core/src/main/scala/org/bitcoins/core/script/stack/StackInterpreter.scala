@@ -134,7 +134,7 @@ sealed abstract class StackInterpreter {
             "Top of script stack must be OP_PICK")
     executeOpWithStackTopAsNumberArg(
       program,
-      { number: ScriptNumber =>
+      { (number: ScriptNumber) =>
         //check if n is within the bound of the script
         if (program.stack.size < 2)
           program.failExecution(ScriptErrorInvalidStackOperation)

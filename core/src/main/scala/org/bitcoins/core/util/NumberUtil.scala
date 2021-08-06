@@ -56,7 +56,7 @@ sealed abstract class NumberUtil extends CryptoNumberUtil {
         new IllegalArgumentException(
           "Can't have convert bits 'from' or 'to' parameter greater than 8"))
     } else {
-      data.map { h: UInt8 =>
+      data.map { (h: UInt8) =>
         if ((h >> fromU8.toInt) != UInt8.zero) {
           Failure(
             new IllegalArgumentException("Invalid input for bech32: " + h))
@@ -90,14 +90,14 @@ sealed abstract class NumberUtil extends CryptoNumberUtil {
       to: UInt32,
       pad: Boolean,
       f: Byte => T): Try[Vector[T]] = {
-    val wrapperF: UInt8 => T = { u8: UInt8 =>
+    val wrapperF: UInt8 => T = { (u8: UInt8) =>
       f(UInt8.toByte(u8))
     }
     convert[T](UInt8.toUInt8s(data), from, to, pad, wrapperF)
   }
 
   def convertUInt8sToUInt5s(u8s: Vector[UInt8]): Vector[UInt5] = {
-    val f = { u8: UInt8 =>
+    val f = { (u8: UInt8) =>
       UInt5.fromByte(UInt8.toByte(u8))
     }
     val u8sTry =
@@ -115,7 +115,7 @@ sealed abstract class NumberUtil extends CryptoNumberUtil {
                                 UInt32(5),
                                 UInt32(8),
                                 pad = pad,
-                                { u8: UInt8 =>
+                                { (u8: UInt8) =>
                                   u8
                                 })
     //should always be able to convert from uint5 => uint8
