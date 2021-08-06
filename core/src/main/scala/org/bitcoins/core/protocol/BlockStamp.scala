@@ -60,9 +60,10 @@ object BlockStamp extends StringFactory[BlockStamp] {
   }
 
   override def fromStringT(s: String): Try[BlockStamp] = {
-    lazy val blockHash = Try(DoubleSha256DigestBE.fromHex(s)).map(BlockHash)
+    lazy val blockHash =
+      Try(DoubleSha256DigestBE.fromHex(s)).map(BlockHash.apply(_))
 
-    lazy val blockHeight = Try(s.toInt).map(BlockHeight)
+    lazy val blockHeight = Try(s.toInt).map(BlockHeight.apply(_))
 
     lazy val blockTime =
       Try(DateTimeFormatter.ISO_INSTANT.parse(s)).map(BlockTime(_))
@@ -98,7 +99,7 @@ object BlockStamp extends StringFactory[BlockStamp] {
 object BlockTimeStamp extends StringFactory[BlockTimeStamp] {
 
   override def fromStringT(s: String): Try[BlockTimeStamp] = {
-    lazy val blockHeight = Try(s.toInt).map(BlockStamp.BlockHeight)
+    lazy val blockHeight = Try(s.toInt).map(BlockStamp.BlockHeight(_))
 
     lazy val blockTime =
       Try(DateTimeFormatter.ISO_INSTANT.parse(s)).map(BlockStamp.BlockTime(_))

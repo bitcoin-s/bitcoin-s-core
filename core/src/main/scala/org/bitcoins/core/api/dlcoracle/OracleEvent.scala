@@ -201,10 +201,10 @@ case class CompletedDigitDecompositionV0OracleEvent(
   override def outcomes: Vector[DigitDecompositionAttestationType] =
     dlcOutcome match {
       case UnsignedNumericOutcome(digits) =>
-        digits.map(DigitDecompositionAttestation)
+        digits.map(DigitDecompositionAttestation.apply(_))
       case SignedNumericOutcome(positive, digits) =>
         val sign = DigitDecompositionSignAttestation(positive)
-        sign +: digits.map(DigitDecompositionAttestation)
+        sign +: digits.map(DigitDecompositionAttestation.apply(_))
     }
 }
 
