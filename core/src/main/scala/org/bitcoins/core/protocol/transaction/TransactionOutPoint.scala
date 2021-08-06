@@ -39,7 +39,7 @@ case class TransactionOutPoint(txId: DoubleSha256Digest, vout: UInt32)
   * @see [[https://github.com/bitcoin/bitcoin/blob/d612837814020ae832499d18e6ee5eb919a87907/src/primitives/transaction.h transaction.h]]
   * @see http://stackoverflow.com/questions/2711522/what-happens-if-i-assign-a-negative-value-to-an-unsigned-variable
   */
-final object EmptyTransactionOutPoint
+object EmptyTransactionOutPoint
     extends TransactionOutPoint(txId = DoubleSha256Digest.empty,
                                 vout = UInt32.max) {
   override def toString(): String = "EmptyTransactionOutPoint"

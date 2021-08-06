@@ -14,32 +14,32 @@ object TxoState extends StringFactory[TxoState] {
   /** A coinbase output that has not reached maturity and cannot be spent yet.
     * https://bitcoin.stackexchange.com/questions/1991/what-is-the-block-maturation-time
     */
-  final case object ImmatureCoinbase extends ReceivedState
+  case object ImmatureCoinbase extends ReceivedState
 
   /** Means we have received funds to this utxo, and they have not been confirmed in a block */
-  final case object BroadcastReceived extends ReceivedState
+  case object BroadcastReceived extends ReceivedState
 
   /** Means we have received funds to this utxo, and they have some confirmations but
     * have not reached our confirmation threshold
     */
-  final case object PendingConfirmationsReceived extends ReceivedState
+  case object PendingConfirmationsReceived extends ReceivedState
 
   /** Means we have received funds and they are fully confirmed for this utxo */
-  final case object ConfirmedReceived extends ReceivedState
+  case object ConfirmedReceived extends ReceivedState
 
   /** Means we have not spent this utxo yet, but will be used in a future transaction */
-  final case object Reserved extends SpentState
+  case object Reserved extends SpentState
 
   /** Means we have spent this utxo, and they have not been confirmed in a block */
-  final case object BroadcastSpent extends SpentState
+  case object BroadcastSpent extends SpentState
 
   /** Means we have spent this utxo, and they have some confirmations but
     * have not reached our confirmation threshold
     */
-  final case object PendingConfirmationsSpent extends SpentState
+  case object PendingConfirmationsSpent extends SpentState
 
   /** Means we have spent this utxo, and it is fully confirmed */
-  final case object ConfirmedSpent extends SpentState
+  case object ConfirmedSpent extends SpentState
 
   val pendingReceivedStates: Set[TxoState] = {
     Set(PendingConfirmationsReceived, BroadcastReceived, ImmatureCoinbase)

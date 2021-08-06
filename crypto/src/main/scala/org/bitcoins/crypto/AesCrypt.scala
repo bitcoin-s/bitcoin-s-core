@@ -10,8 +10,7 @@ import scala.util.{Failure, Success, Try}
   * initialization vector (IV). Both the cipher text and the IV
   * is needed to decrypt the cipher text.
   */
-final case class AesEncryptedData(cipherText: ByteVector, iv: AesIV)
-    extends NetworkElement {
+case class AesEncryptedData(cipherText: ByteVector, iv: AesIV) extends NetworkElement {
 
   /** We serialize IV and ciphertext by prepending the IV
     * to the ciphertext, and converting it to base64.
@@ -75,7 +74,7 @@ object AesEncryptedData extends Factory[AesEncryptedData] {
 /** Represents a salt used to derive a AES key from
   * a human-readable passphrase.
   */
-final case class AesSalt(
+case class AesSalt(
     bytes: ByteVector
 ) extends AnyVal
 
@@ -94,7 +93,7 @@ object AesSalt extends Factory[AesSalt] {
 
 // we enforce the non-empty password length in the companion object
 // to be able to make this extend AnyVal, and not be boxed at runtime
-final case class AesPassword private (private val value: String)
+case class AesPassword private (private val value: String)
     extends MaskedToString {
 
   /** Converts this password into an AES key

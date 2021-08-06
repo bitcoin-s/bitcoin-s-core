@@ -6,13 +6,13 @@ sealed abstract class FeeProviderName
 
 object FeeProviderName extends StringFactory[FeeProviderName] {
 
-  final case object BitcoinerLive extends FeeProviderName
+  case object BitcoinerLive extends FeeProviderName
 
-  final case object BitGo extends FeeProviderName
+  case object BitGo extends FeeProviderName
 
-  final case object Constant extends FeeProviderName
+  case object Constant extends FeeProviderName
 
-  final case object MempoolSpace extends FeeProviderName
+  case object MempoolSpace extends FeeProviderName
 
   val all: Vector[FeeProviderName] =
     Vector(BitcoinerLive, BitGo, Constant, MempoolSpace)

@@ -28,7 +28,7 @@ object FilterType extends Factory[FilterType] with StringFactory[FilterType] {
     }
 
   /** Currently the only defined filter type */
-  final case object Basic extends FilterType {
+  case object Basic extends FilterType {
     val bytes: ByteVector = hex"0x00"
 
     val M: UInt64 = UInt64(784931)

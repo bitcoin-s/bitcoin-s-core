@@ -9,5 +9,5 @@ sealed abstract class HttpError extends Error
 object HttpError {
 
   /** The RPC method was not found */
-  final case class MethodNotFound(method: String) extends HttpError
+  case class MethodNotFound(method: String) extends HttpError
 }

@@ -22,7 +22,7 @@ object HDChainType {
     * are meant to be visible outside of the
     * wallet (e.g. for receiving payments).
     */
-  final case object External extends HDChainType {
+  case object External extends HDChainType {
     override val index: Int = 0
   }
 
@@ -31,7 +31,7 @@ object HDChainType {
     * wallet and is used for return transaction
     * change
     */
-  final case object Change extends HDChainType {
+  case object Change extends HDChainType {
     override val index: Int = 1
   }
 

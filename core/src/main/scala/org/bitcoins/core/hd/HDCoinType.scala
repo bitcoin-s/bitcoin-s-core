@@ -18,15 +18,15 @@ sealed trait HDCoinType {
   */
 object HDCoinType {
 
-  final case object Bitcoin extends HDCoinType {
+  case object Bitcoin extends HDCoinType {
     override val toInt: Int = 0
   }
 
-  final case object Testnet extends HDCoinType {
+  case object Testnet extends HDCoinType {
     override val toInt: Int = 1
   }
 
-  final case class UnknownCoinType(int: Int) extends HDCoinType {
+  case class UnknownCoinType(int: Int) extends HDCoinType {
     override val toInt: Int = int
   }
 
