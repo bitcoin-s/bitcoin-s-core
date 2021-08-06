@@ -44,7 +44,7 @@ sealed trait PartialMerkleTree {
   private def maxHeight = PartialMerkleTree.calcMaxHeight(numTransactions)
 
   /** The actual tree used to represent this partial merkle tree */
-  def tree: BinaryTree[DoubleSha256Digest]
+  def tree: BinaryTreeDoubleSha256Digest
 
   /** A sequence representing if this node is the parent of another node that matched a txid */
   def bits: BitVector
@@ -56,7 +56,7 @@ sealed trait PartialMerkleTree {
   def extractMatches: Seq[DoubleSha256Digest] = {
     //TODO: This is some really ugly that isn't tail recursive, try to clean this up eventually
     def loop(
-        subTree: BinaryTree[DoubleSha256Digest],
+        subTree: BinaryTreeDoubleSha256Digest,
         remainingBits: BitVector,
         height: Int,
         pos: Int,
@@ -70,7 +70,7 @@ sealed trait PartialMerkleTree {
         if (remainingBits.head) {
           //means we have a match underneath this node
           subTree match {
-            case n: Node[DoubleSha256Digest] =>
+            case n: NodeDoubleSha256Digest =>
               //since we are just trying to extract bloom filter matches, recurse into the two subtrees
               val (leftTreeMatches, leftRemainingBits) = loop(
                 n.l,
@@ -93,9 +93,9 @@ sealed trait PartialMerkleTree {
                        leftTreeMatches)
                 (rightTreeMatches, rightRemainingBits)
               } else (leftTreeMatches, leftRemainingBits)
-            case _: Leaf[DoubleSha256Digest] =>
+            case _: LeafDoubleSha256Digest =>
               (accumMatches, remainingBits.tail)
-            case Empty =>
+            case EmptyTreeDoubleSha256Digest =>
               throw new IllegalArgumentException(
                 "We cannot have an empty node when we supposedly have a match underneath this node since it has no children")
           }
@@ -115,16 +115,16 @@ sealed trait PartialMerkleTree {
   private def extractLeafMatch(
       accumMatches: Seq[DoubleSha256Digest],
       remainingBits: BitVector,
-      subTree: BinaryTree[DoubleSha256Digest]): (
+      subTree: BinaryTreeDoubleSha256Digest): (
       Seq[DoubleSha256Digest],
       BitVector) = {
     if (remainingBits.head) {
       //means we have a txid node that matched the filter
       subTree match {
-        case l: Leaf[DoubleSha256Digest] =>
+        case l: LeafDoubleSha256Digest =>
           val newAccumMatches = l.v +: accumMatches
           (newAccumMatches, remainingBits.tail)
-        case x @ (_: Node[DoubleSha256Digest] | Empty) =>
+        case x @ (_: NodeDoubleSha256Digest | EmptyTreeDoubleSha256Digest) =>
           throw new IllegalArgumentException("We cannot have a " +
             "Node or Empty node when we supposedly have a txid node -- txid nodes should always be leaves, got: " + x)
       }
@@ -138,7 +138,7 @@ sealed trait PartialMerkleTree {
 object PartialMerkleTree {
 
   private case class PartialMerkleTreeImpl(
-      tree: BinaryTree[DoubleSha256Digest],
+      tree: BinaryTreeDoubleSha256Digest,
       transactionCount: UInt32,
       bits: BitVector,
       hashes: Seq[DoubleSha256Digest])
@@ -272,7 +272,7 @@ object PartialMerkleTree {
     * @param hashes the hashes used to reconstruct the binary tree according to `bits`
     */
   def apply(
-      tree: BinaryTree[DoubleSha256Digest],
+      tree: BinaryTreeDoubleSha256Digest,
       transactionCount: UInt32,
       bits: BitVector,
       hashes: Seq[DoubleSha256Digest]): PartialMerkleTree = {
@@ -286,7 +286,7 @@ object PartialMerkleTree {
   private def reconstruct(
       numTransaction: Int,
       hashes: Seq[DoubleSha256Digest],
-      bits: BitVector): BinaryTree[DoubleSha256Digest] = {
+      bits: BitVector): BinaryTreeDoubleSha256Digest = {
     val maxHeight = calcMaxHeight(numTransaction)
     //TODO: Optimize to tailrec function
     def loop(
@@ -294,12 +294,12 @@ object PartialMerkleTree {
         remainingMatches: BitVector,
         height: Int,
         pos: Int): (
-        BinaryTree[DoubleSha256Digest],
+        BinaryTreeDoubleSha256Digest,
         Seq[DoubleSha256Digest],
         BitVector) = {
       if (height == maxHeight) {
         //means we have a txid node
-        (Leaf(remainingHashes.head),
+        (LeafDoubleSha256Digest(remainingHashes.head),
          remainingHashes.tail,
          remainingMatches.tail)
       } else {
@@ -335,10 +335,10 @@ object PartialMerkleTree {
           }
           val nodeHash = CryptoUtil.doubleSHA256(
             leftNode.value.get.bytes ++ rightNode.value.get.bytes)
-          val node = Node(nodeHash, leftNode, rightNode)
+          val node = NodeDoubleSha256Digest(nodeHash, leftNode, rightNode)
           (node, rightRemainingHashes, rightRemainingBits)
         } else {
-          (Leaf(remainingHashes.head),
+          (LeafDoubleSha256Digest(remainingHashes.head),
            remainingHashes.tail,
            remainingMatches.tail)
         }

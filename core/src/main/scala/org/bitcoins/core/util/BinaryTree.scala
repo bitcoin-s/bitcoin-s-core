@@ -4,7 +4,7 @@ import scala.annotation.tailrec
 
 /** Created by chris on 1/27/16.
   */
-trait BinaryTree[+T] {
+trait BinaryTree[T] {
 
   def value: Option[T] =
     this match {
@@ -100,7 +100,7 @@ trait BinaryTree[+T] {
         else
           throw new RuntimeException(
             "There was no empty branch to insert the new t: " + subTree + "inside of tree: " + parentTree)
-      case l: Leaf[T] => Node(l.v, subTree, Empty)
+      case l: Leaf[T] => Node(l.v, subTree, Empty.asInstanceOf[BinaryTree[T]])
       case Empty      => subTree
     }
 
@@ -109,10 +109,11 @@ trait BinaryTree[+T] {
       parentTree: BinaryTree[T] = this): BinaryTree[T] = {
     //TODO: Optimize into a tail recursive function
     parentTree match {
-      case Empty      => Empty
-      case l: Leaf[T] => if (l == subTree) Empty else l
+      case Empty => Empty.asInstanceOf[BinaryTree[T]]
+      case l: Leaf[T] =>
+        if (l == subTree) Empty.asInstanceOf[BinaryTree[T]] else l
       case n: Node[T] =>
-        if (n == subTree) Empty
+        if (n == subTree) Empty.asInstanceOf[BinaryTree[T]]
         else Node[T](n.v, remove(subTree)(n.l), remove(subTree)(n.r))
     }
   }
