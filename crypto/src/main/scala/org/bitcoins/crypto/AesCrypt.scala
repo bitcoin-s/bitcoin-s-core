@@ -10,7 +10,8 @@ import scala.util.{Failure, Success, Try}
   * initialization vector (IV). Both the cipher text and the IV
   * is needed to decrypt the cipher text.
   */
-case class AesEncryptedData(cipherText: ByteVector, iv: AesIV) extends NetworkElement {
+case class AesEncryptedData(cipherText: ByteVector, iv: AesIV)
+    extends NetworkElement {
 
   /** We serialize IV and ciphertext by prepending the IV
     * to the ciphertext, and converting it to base64.
