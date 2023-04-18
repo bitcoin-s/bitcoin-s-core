@@ -113,8 +113,8 @@ object CoinSelector extends CoinSelector {
 
   /** Cribbed from [[https://github.com/bitcoinjs/coinselect/blob/master/utils.js]] */
   def approximateUtxoSize(utxo: CoinSelectorUtxo): Long = {
-    val inputBase = 32 + 4 + 1 + 4
-    val scriptSize = utxo.redeemScriptOpt match {
+    val inputBase: Long = 32 + 4 + 1 + 4
+    val scriptSize: Long = utxo.redeemScriptOpt match {
       case Some(script) => script.bytes.length
       case None =>
         utxo.scriptWitnessOpt match {

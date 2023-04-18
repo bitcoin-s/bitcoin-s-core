@@ -9,7 +9,7 @@ object WalletStateDescriptorType
 
   case object SyncHeight extends WalletStateDescriptorType
 
-  final case object Rescan extends WalletStateDescriptorType
+  case object Rescan extends WalletStateDescriptorType
 
   val all: Vector[WalletStateDescriptorType] = Vector(SyncHeight, Rescan)
 

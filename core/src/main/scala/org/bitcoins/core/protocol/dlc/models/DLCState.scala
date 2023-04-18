@@ -25,7 +25,7 @@ object DLCState extends StringFactory[DLCState] {
   /** The state where an offer has been created but no
     * accept message has yet been created/received.
     */
-  final case object Offered extends InProgressState {
+  case object Offered extends InProgressState {
     override val order: Int = 0
   }
 

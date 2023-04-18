@@ -237,7 +237,7 @@ object DLCUtil {
       case disjoint: DisjointUnionContractInfo =>
         //at least one disjoint union contract
         //has to have matching signatures
-        disjoint.contracts.exists { single: SingleContractInfo =>
+        disjoint.contracts.exists { case single: SingleContractInfo =>
           checkSingleContractInfoOracleSigs(single, oracleSigs)
         }
     }

@@ -36,7 +36,7 @@ sealed trait DLCStatus {
   def localCollateral: CurrencyUnit
   def remoteCollateral: CurrencyUnit = totalCollateral - localCollateral
   def payoutAddress: Option[PayoutAddress]
-  def peer(): Option[String]
+  def peer: Option[String]
 
   lazy val announcements: Vector[OracleAnnouncementTLV] = {
     oracleInfos.flatMap(_.singleOracleInfos.map(_.announcement))

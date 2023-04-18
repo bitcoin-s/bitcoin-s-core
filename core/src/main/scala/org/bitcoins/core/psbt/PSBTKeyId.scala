@@ -166,32 +166,32 @@ object PSBTInputKeyId extends PSBTKeyIdFactory[PSBTInputKeyId] {
     type RecordType = InputPSBTRecord.HASH256PreImage
   }
 
-  final case object TRKeySpendSignatureKeyId extends PSBTInputKeyId {
+  case object TRKeySpendSignatureKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x13.byteValue
     type RecordType = InputPSBTRecord.TRKeySpendSignature
   }
 
-  final case object TRScriptSpendSignatureKeyId extends PSBTInputKeyId {
+  case object TRScriptSpendSignatureKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x14.byteValue
     type RecordType = InputPSBTRecord.TRScriptSpendSignature
   }
 
-  final case object TRLeafScriptKeyId extends PSBTInputKeyId {
+  case object TRLeafScriptKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x15.byteValue
     type RecordType = InputPSBTRecord.TRLeafScript
   }
 
-  final case object TRBIP32DerivationPathKeyId extends PSBTInputKeyId {
+  case object TRBIP32DerivationPathKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x16.byteValue
     type RecordType = InputPSBTRecord.TRBIP32DerivationPath
   }
 
-  final case object TRInternalKeyKeyId extends PSBTInputKeyId {
+  case object TRInternalKeyKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x17.byteValue
     type RecordType = InputPSBTRecord.TRInternalKey
   }
 
-  final case object TRMerkelRootKeyId extends PSBTInputKeyId {
+  case object TRMerkelRootKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x18.byteValue
     type RecordType = InputPSBTRecord.TRMerkelRoot
   }
@@ -236,17 +236,17 @@ object PSBTOutputKeyId extends PSBTKeyIdFactory[PSBTOutputKeyId] {
     type RecordType = OutputPSBTRecord.BIP32DerivationPath
   }
 
-  final case object TRInternalKeyKeyId extends PSBTOutputKeyId {
+  case object TRInternalKeyKeyId extends PSBTOutputKeyId {
     override val byte: Byte = 0x05.byteValue
     type RecordType = OutputPSBTRecord.TRInternalKey
   }
 
-  final case object TaprootTreeKeyId extends PSBTOutputKeyId {
+  case object TaprootTreeKeyId extends PSBTOutputKeyId {
     override val byte: Byte = 0x06.byteValue
     type RecordType = OutputPSBTRecord.TRInternalKey
   }
 
-  final case object TRBIP32DerivationPathKeyId extends PSBTOutputKeyId {
+  case object TRBIP32DerivationPathKeyId extends PSBTOutputKeyId {
     override val byte: Byte = 0x07.byteValue
     type RecordType = OutputPSBTRecord.TRBIP32DerivationPath
   }

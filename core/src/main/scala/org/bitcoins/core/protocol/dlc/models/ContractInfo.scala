@@ -407,7 +407,9 @@ case class DisjointUnionContractInfo(contracts: Vector[SingleContractInfo])
 
   /** @inheritdoc */
   override val maxOffererPayout: Satoshis =
-    contracts.map(_.maxOffererPayout).max
+    contracts
+      .map(_.maxOffererPayout)
+      .max(org.bitcoins.core.currency.currencyUnitOrdering)
 
   /** @inheritdoc */
   override lazy val allOutcomesAndPayouts: Vector[(OracleOutcome, Satoshis)] = {

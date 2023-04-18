@@ -6,7 +6,7 @@ sealed abstract class NodeStateDescriptorType
 
 object NodeStateDescriptorType extends StringFactory[NodeStateDescriptorType] {
 
-  final case object WalletName extends NodeStateDescriptorType
+  case object WalletName extends NodeStateDescriptorType
 
   val all: Vector[NodeStateDescriptorType] = Vector(WalletName)
 
