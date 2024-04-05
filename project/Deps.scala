@@ -230,7 +230,7 @@ object Deps {
         "org.scalatest" %%% "scalatest" % V.scalaTest withSources () withJavadoc ())
 
     val scalaTestPlus = Def.setting(
-      "org.scalatestplus" %%% "scalacheck-1-17" % V.scalaTestPlus withSources () withJavadoc ())
+      "org.scalatestplus" %%% "scalacheck-1-17" % V.scalaTestPlus withSources () /*withJavadoc ()*/)
 
     val pgEmbedded =
       "com.opentable.components" % "otj-pg-embedded" % V.pgEmbeddedV withSources () withJavadoc ()

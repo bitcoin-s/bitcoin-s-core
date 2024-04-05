@@ -2,7 +2,8 @@ package org.bitcoins.crypto
 
 import org.scalacheck.Gen
 import org.scalatest.compatible.Assertion
-import scodec.bits.{ByteVector, HexStringSyntax}
+import scodec.bits.{ByteVector}
+import scodec.bits.hex
 
 class AesCryptTest extends BitcoinSCryptoTest {
   behavior of "AesEncrypt"
@@ -392,7 +393,7 @@ class AesCryptTest extends BitcoinSCryptoTest {
         .filter(!AesKey.keylengths.contains(_))
         .map(NumberGenerator.bytevector(_))
 
-    val first +: second +: _ = bytevectorGens
+    val (first, second) = (bytevectorGens(0), bytevectorGens(1))
     val badKeyLenghts: Gen[ByteVector] =
       Gen.oneOf(first, second, bytevectorGens: _*)
 
