@@ -486,7 +486,7 @@ object Picklers {
     readwriter[String].bimap(_.toString, CoinSelectionAlgo.fromString)
 
   implicit val addressLabelTagPickler: ReadWriter[AddressLabelTag] =
-    readwriter[String].bimap(_.name, AddressLabelTag)
+    readwriter[String].bimap(_.name, AddressLabelTag.apply)
 
   implicit val lockUnspentOutputParameterPickler: ReadWriter[
     LockUnspentOutputParameter] =
@@ -572,7 +572,7 @@ object Picklers {
     }
 
   implicit val tlvPointReader: Reader[TLVPoint] = {
-    reader[Obj].map { obj: Obj =>
+    reader[Obj].map { case obj: Obj =>
       val map = obj.value
       val outcome = map(PicklerKeys.outcomeKey).num.toLong
       val payout = jsToSatoshis(map(PicklerKeys.payoutKey))
@@ -618,7 +618,7 @@ object Picklers {
       case v: Value => v
     }
 
-    writer[Obj].comap { payoutFunc =>
+    writer[Obj].comap { case payoutFunc =>
       val endPointsJs = payoutFunc.endpoints.map { point =>
         endpoint(writeJs(point), isEndpoint = true)
       }
@@ -639,7 +639,7 @@ object Picklers {
   }
 
   implicit val payoutFunctionV0TLVReader: Reader[PayoutFunctionV0TLV] = {
-    reader[Obj].map { obj: Obj =>
+    reader[Obj].map { case obj: Obj =>
       val pointsArr = obj(PicklerKeys.pointsKey).arr
       val points: Vector[TLVPoint] = pointsArr.map {
         case x @ (_: Arr | _: Num | Null | _: Bool | _: Str) =>
@@ -656,7 +656,7 @@ object Picklers {
   }
 
   implicit val roundingIntervalsV0TLVWriter: Writer[RoundingIntervalsV0TLV] =
-    writer[Obj].comap { roundingIntervals =>
+    writer[Obj].comap { case roundingIntervals =>
       import roundingIntervals._
 
       val intervalsJs = intervalStarts.map { i =>
@@ -789,7 +789,7 @@ object Picklers {
     writer[Obj].comap { offer =>
       import offer._
       Obj(
-        "contractFlags" -> Str(contractFlags.toHexString),
+        "contractFlags" -> Str(contractFlags.toInt.toHexString),
         "chainHash" -> Str(chainHash.hex),
         "contractInfo" -> writeJs(contractInfo)(contractInfoJsonWriter),
         "fundingPubKey" -> Str(fundingPubKey.hex),
@@ -1121,8 +1121,8 @@ object Picklers {
       Obj(
         "hash" -> offerDb.hash.hex,
         "receivedAt" -> Num(offerDb.receivedAt.getEpochSecond.toDouble),
-        "peer" -> offerDb.peer.map(Str).getOrElse(Null),
-        "message" -> offerDb.message.map(Str).getOrElse(Null),
+        "peer" -> offerDb.peer.map(Str.apply).getOrElse(Null),
+        "message" -> offerDb.message.map(Str.apply).getOrElse(Null),
         "offerTLV" -> offerDb.offerTLV.hex
       )
   }
@@ -1422,7 +1422,7 @@ object Picklers {
   }
 
   implicit val dlcWalletAccountingWriter: Writer[DLCWalletAccounting] = {
-    writer[Obj].comap { walletAccounting: DLCWalletAccounting =>
+    writer[Obj].comap { case walletAccounting: DLCWalletAccounting =>
       Obj(
         PicklerKeys.myCollateral -> Num(
           walletAccounting.myCollateral.satoshis.toLong.toDouble),

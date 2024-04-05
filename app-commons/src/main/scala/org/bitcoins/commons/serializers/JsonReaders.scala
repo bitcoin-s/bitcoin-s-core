@@ -563,7 +563,7 @@ object JsonReaders {
       if ((json \ "hex").isDefined) {
         JsError("PSBT was submitted as a serialized hex transaction!")
       } else {
-        (json \ "psbt").validate[PSBT].map(NonFinalizedPsbt)
+        (json \ "psbt").validate[PSBT].map(NonFinalizedPsbt.apply)
       }
   }
 
@@ -813,19 +813,19 @@ object JsonReaders {
   }
 
   implicit val feeProportionalMillionthsReads: Reads[
-    FeeProportionalMillionths] = Reads { js =>
+    FeeProportionalMillionths] = Reads { case js =>
     SerializerUtil.processJsNumberBigInt(FeeProportionalMillionths.fromBigInt)(
       js)
   }
 
   implicit val channelStateReads: Reads[ChannelState] = {
-    Reads { jsValue: JsValue =>
+    Reads { case jsValue: JsValue =>
       SerializerUtil.processJsStringOpt(ChannelState.fromStringOpt)(jsValue)
     }
   }
 
   implicit val normalChannelStateReads: Reads[ChannelState.NORMAL.type] =
-    Reads { jsValue =>
+    Reads { case jsValue =>
       jsValue
         .validate[ChannelState]
         .flatMap {
@@ -836,19 +836,19 @@ object JsonReaders {
     }
 
   implicit val peerStateReads: Reads[PeerState] = {
-    Reads { jsValue: JsValue =>
+    Reads { case jsValue: JsValue =>
       SerializerUtil.processJsStringOpt(PeerState.fromString)(jsValue)
     }
   }
 
   implicit val picoBitcoinsReads: Reads[PicoBitcoins] = {
-    Reads { jsValue: JsValue =>
+    Reads { case jsValue: JsValue =>
       SerializerUtil.processJsNumberBigInt(PicoBitcoins.apply)(jsValue)
     }
   }
 
   implicit val msatReads: Reads[MilliSatoshis] = {
-    Reads { jsValue: JsValue =>
+    Reads { case jsValue: JsValue =>
       SerializerUtil
         .processJsNumberBigInt(MilliSatoshis.apply)(jsValue)
         .orElse {
@@ -863,26 +863,26 @@ object JsonReaders {
   }
 
   implicit val nodeIdReads: Reads[NodeId] = {
-    Reads { jsValue: JsValue =>
+    Reads { case jsValue: JsValue =>
       SerializerUtil.processJsString(NodeId.fromHex)(jsValue)
     }
   }
 
   implicit val lnHrpReads: Reads[LnHumanReadablePart] = {
-    Reads { jsValue =>
+    Reads { case jsValue =>
       SerializerUtil.processJsStringOpt(LnHumanReadablePart.fromStringOpt(_))(
         jsValue)
     }
   }
 
   implicit val lnInvoiceSignatureReads: Reads[LnInvoiceSignature] = {
-    Reads { jsValue =>
+    Reads { case jsValue =>
       SerializerUtil.processJsString(LnInvoiceSignature.fromHex)(jsValue)
     }
   }
 
   implicit val inetSocketAddressReads: Reads[InetSocketAddress] = {
-    Reads { jsValue =>
+    Reads { case jsValue =>
       SerializerUtil.processJsString { addr =>
         addr.split(":") match {
           case Array(host, portStr) =>
@@ -896,7 +896,7 @@ object JsonReaders {
   }
 
   implicit val featureSupportReads: Reads[FeatureSupport] =
-    Reads { jsValue =>
+    Reads { case jsValue =>
       SerializerUtil.processJsString {
         case "mandatory" => FeatureSupport.Mandatory
         case "optional"  => FeatureSupport.Optional
@@ -911,17 +911,17 @@ object JsonReaders {
       .toMap
 
   implicit val featureReads: Reads[Feature] =
-    Reads { jsValue =>
+    Reads { case jsValue =>
       SerializerUtil.processJsString(featuresByName)(jsValue)
     }
 
   implicit val unknownFeatureReads: Reads[UnknownFeature] =
-    Reads { jsValue =>
+    Reads { case jsValue =>
       SerializerUtil.processJsString(s => UnknownFeature(s.toInt))(jsValue)
     }
 
   implicit val featuresReads: Reads[Features] = {
-    Reads { jsValue =>
+    Reads { case jsValue =>
       for {
         activatedObj <- (jsValue \ "activated")
           .validate[Map[String, FeatureSupport]]
@@ -946,7 +946,7 @@ object JsonReaders {
   }
 
   implicit val shortChannelIdReads: Reads[ShortChannelId] = {
-    Reads { jsValue =>
+    Reads { case jsValue =>
       SerializerUtil.processJsString(ShortChannelId.fromHumanReadableString)(
         jsValue)
     }
@@ -959,7 +959,7 @@ object JsonReaders {
     Json.reads[ShortIds]
 
   implicit val nodeInfoReads: Reads[NodeInfo] = {
-    Reads { jsValue =>
+    Reads { case jsValue =>
       for {
         signature <- (jsValue \ "signature").validate[ECDigitalSignature]
         features <- (jsValue \ "features").validate[Features]
@@ -980,19 +980,19 @@ object JsonReaders {
   }
 
   implicit val paymentPreimageReads: Reads[PaymentPreimage] = {
-    Reads { jsValue: JsValue =>
+    Reads { case jsValue: JsValue =>
       SerializerUtil.processJsString(PaymentPreimage.fromHex)(jsValue)
     }
   }
 
   implicit val paymentSecretReads: Reads[PaymentSecret] = {
-    Reads { jsValue: JsValue =>
+    Reads { case jsValue: JsValue =>
       SerializerUtil.processJsString(PaymentSecret.fromHex)(jsValue)
     }
   }
 
   implicit val fundedChannelIdReads: Reads[FundedChannelId] = {
-    Reads { jsValue: JsValue =>
+    Reads { case jsValue: JsValue =>
       SerializerUtil.processJsString(FundedChannelId.fromHex)(jsValue)
     }
   }
