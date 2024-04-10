@@ -10,7 +10,7 @@ import org.flywaydb.core.api.{FlywayException, MigrationInfoService}
 import scala.concurrent.{ExecutionContext, Future}
 
 trait DbManagement extends BitcoinSLogger {
-  _: JdbcProfileComponent[DbAppConfig] =>
+  this: JdbcProfileComponent[DbAppConfig] =>
   import profile.api._
 
   import scala.language.implicitConversions

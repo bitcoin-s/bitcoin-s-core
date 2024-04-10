@@ -5,7 +5,8 @@ import slick.jdbc.JdbcProfile
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext
 
-trait SlickUtilAction[T, PrimaryKeyType] { _: CRUDAction[T, PrimaryKeyType] =>
+trait SlickUtilAction[T, PrimaryKeyType] {
+  this: CRUDAction[T, PrimaryKeyType] =>
 
   def profile: JdbcProfile
 
@@ -20,7 +21,7 @@ trait SlickUtilAction[T, PrimaryKeyType] { _: CRUDAction[T, PrimaryKeyType] =>
 }
 
 trait SlickUtil[T, PrimaryKeyType] extends SlickUtilAction[T, PrimaryKeyType] {
-  _: CRUD[T, PrimaryKeyType] =>
+  this: CRUD[T, PrimaryKeyType] =>
   def profile: JdbcProfile
 
   import profile.api._

@@ -17,7 +17,7 @@ trait JdbcProfileComponent[+ConfigType <: DbAppConfig] extends BitcoinSLogger {
     appConfig.slickDbConfig
   }
 
-  lazy val profile: JdbcProfile = dbConfig.profile
+  final lazy val profile: JdbcProfile = dbConfig.profile
 
   lazy val numThreads: Int = dbConfig.config.getInt("db.numThreads")
 
