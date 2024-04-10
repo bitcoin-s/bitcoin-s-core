@@ -11,13 +11,11 @@ import java.util.NoSuchElementException
 import scala.util.{Failure, Success, Try}
 
 object WalletStorage extends KeyManagerLogger {
-
+  import scala.jdk.CollectionConverters.ListHasAsScala
   val SEED_FOLDER_NAME: String = "seeds"
 
   val ENCRYPTED_SEED_FILE_NAME: String =
     "encrypted-bitcoin-s-seed.json"
-
-  import org.bitcoins.core.compat.JavaConverters._
 
   /** Epoch time of the mainnet Genesis Block */
   val GENESIS_TIME = 1231006505L
@@ -155,7 +153,7 @@ object WalletStorage extends KeyManagerLogger {
         // If no CREATION_TIME is set, we set date to start of bitcoin-s wallet project
         // default is Block 555,990 block time on 2018-12-28
         FIRST_BITCOIN_S_WALLET_TIME
-      case Failure(exception) => throw exception
+      case Failure(exception: Throwable) => throw exception
     }
   }
 
