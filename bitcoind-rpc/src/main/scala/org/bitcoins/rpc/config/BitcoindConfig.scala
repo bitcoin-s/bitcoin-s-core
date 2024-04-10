@@ -306,7 +306,7 @@ object BitcoindConfig
   override def apply(
       config: File,
       datadir: File = DEFAULT_DATADIR): BitcoindConfig = {
-    import org.bitcoins.core.compat.JavaConverters._
+    import scala.jdk.CollectionConverters.IteratorHasAsScala
     val lines = Files
       .readAllLines(config.toPath)
       .iterator()
