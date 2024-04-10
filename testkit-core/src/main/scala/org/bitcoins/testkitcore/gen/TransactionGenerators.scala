@@ -80,7 +80,7 @@ object TransactionGenerators {
         accum
       } else {
         val amt = Gen
-          .choose(100, remainingAmount.toBigDecimal.toLongExact)
+          .choose(100L, remainingAmount.toBigDecimal.toLongExact)
           .map(n => Satoshis(n))
           .sampleSome
         loop(remaining - 1, remainingAmount - amt, amt +: accum)
@@ -887,7 +887,7 @@ object TransactionGenerators {
   private def sameLockTimeTypeSpendable(
       txLockTime: UInt32): Gen[ScriptNumber] = {
     if (txLockTime < TransactionConstants.locktimeThreshold) {
-      Gen.choose(0, txLockTime.toLong).map(ScriptNumber(_))
+      Gen.choose(0L, txLockTime.toLong).map(ScriptNumber(_))
     } else {
       Gen
         .choose(TransactionConstants.locktimeThreshold.toLong,

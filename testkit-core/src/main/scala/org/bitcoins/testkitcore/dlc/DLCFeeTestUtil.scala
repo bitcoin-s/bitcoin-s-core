@@ -1,9 +1,10 @@
 package org.bitcoins.testkitcore.dlc
 
-import org.bitcoins.core.currency.CurrencyUnit
+import org.bitcoins.core.currency.{CurrencyUnit, CurrencyUnits}
 import org.bitcoins.core.protocol.dlc.build.DLCTxBuilder
 import org.bitcoins.core.protocol.transaction.Transaction
 import org.scalatest.{Assertion, Assertions}
+import org.bitcoins.core.currency.currencyUnitNumeric
 
 object DLCFeeTestUtil extends Assertions {
 
@@ -24,11 +25,11 @@ object DLCFeeTestUtil extends Assertions {
       (builder.offerFundingInputs ++ builder.acceptFundingInputs)
         .map(_.output.value)
         .sum
-    val fundingOutput = fundingTx.outputs.map(_.value).sum
+    val fundingOutput = fundingTx.outputs.map(_.value).sum(CurrencyUnits)
     val actualFundingFee = fundingInput - fundingOutput
 
     val closingInput = fundingTx.outputs(builder.fundOutputIndex).value
-    val closingOutput = closingTx.outputs.map(_.value).sum
+    val closingOutput = closingTx.outputs.map(_.value).sum(CurrencyUnits)
     val actualClosingFee = closingInput - closingOutput
 
     /** Actual Fee Rate = Actual Fee / Ceil(Actual Weight / 4.0)

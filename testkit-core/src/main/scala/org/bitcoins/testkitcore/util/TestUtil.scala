@@ -219,16 +219,8 @@ object TestUtil {
     PreExecutionScriptProgram(t)
   }
 
-  def testProgramPreExecution =
-    testProgram match {
-      case p: PreExecutionScriptProgram => p
-      case _ =>
-        throw new RuntimeException(
-          "this must be a script program that is pre execution")
-    }
-
   def testProgramExecutionInProgress =
-    testProgramPreExecution.toExecutionInProgress
+    testProgram.toExecutionInProgress
 
   val rawP2PKScriptSig =
     "4847304402200a5c6163f07b8d3b013c4d1d6dba25e780b39658d79ba37af7057a3b7f15ffa102201fd9b4eaa9943f734928b99a83592c2e7bf342ea2680f6a2bb705167966b742001"

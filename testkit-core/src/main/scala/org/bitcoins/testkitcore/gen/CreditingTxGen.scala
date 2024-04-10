@@ -354,10 +354,10 @@ sealed abstract class CreditingTxGen {
 
   def random: Gen[ScriptSignatureParams[InputInfo]] =
     nonEmptyOutputs.flatMap { outputs =>
-      Gen.choose(0, outputs.size - 1).flatMap { outputIndex: Int =>
+      Gen.choose(0, outputs.size - 1).flatMap { case outputIndex: Int =>
         ScriptGenerators.scriptPubKey.flatMap { case (spk, keys) =>
-          WitnessGenerators.scriptWitness.flatMap { wit: ScriptWitness =>
-            CryptoGenerators.hashType.map { hashType: HashType =>
+          WitnessGenerators.scriptWitness.flatMap { case wit: ScriptWitness =>
+            CryptoGenerators.hashType.map { case hashType: HashType =>
               val tc = TransactionConstants
               val signers: Vector[Sign] = keys.toVector
               val creditingTx =
