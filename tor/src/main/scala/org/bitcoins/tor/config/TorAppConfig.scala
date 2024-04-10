@@ -194,7 +194,7 @@ case class TorAppConfig(
       val stream = Files.lines(torLogFile)
       try {
         stream
-          .filter { line: String =>
+          .filter { case line: String =>
             line.contains(isBootstrappedLogLine)
           }
           .count() > 0
