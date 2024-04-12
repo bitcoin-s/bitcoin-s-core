@@ -78,11 +78,11 @@ abstract class MempoolSpaceTarget
 
 object MempoolSpaceTarget {
 
-  final case object FastestFeeTarget extends MempoolSpaceTarget
+  case object FastestFeeTarget extends MempoolSpaceTarget
 
-  final case object HalfHourFeeTarget extends MempoolSpaceTarget
+  case object HalfHourFeeTarget extends MempoolSpaceTarget
 
-  final case object HourFeeTarget extends MempoolSpaceTarget
+  case object HourFeeTarget extends MempoolSpaceTarget
 
   def fromBlockTarget(blocks: Int): MempoolSpaceTarget = {
     if (blocks <= 0) {

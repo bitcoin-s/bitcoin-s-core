@@ -4,10 +4,11 @@ import org.bitcoins.core.hd.{BIP32Node, BIP32Path}
 import org.bitcoins.core.number.{UInt32, UInt8}
 import org.bitcoins.core.util._
 import org.bitcoins.crypto._
-import scodec.bits.{ByteVector, HexStringSyntax}
+import scodec.bits.ByteVector
 
 import scala.annotation.tailrec
 import scala.util.{Failure, Success, Try}
+import scodec.bits.hex
 
 /** Represents an extended key as defined by BIP32
   * [[https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki]]
@@ -557,12 +558,22 @@ object ExtPublicKey
           UInt32,
           ChainCode,
           ECPublicKey)) => ExtPublicKey = {
-    ExtPublicKeyImpl.tupled
+    (ExtPublicKeyImpl.apply).tupled(
+      _
+    ) //https://docs.scala-lang.org/scala3/guides/migration/incompat-other-changes.html
   }
 
   def unapply: ExtPublicKey => Option[
     (ExtKeyPubVersion, UInt8, ByteVector, UInt32, ChainCode, ECPublicKey)] = {
     extPubKey =>
-      ExtPublicKeyImpl.unapply(extPubKey.asInstanceOf[ExtPublicKeyImpl])
+      val ExtPublicKeyImpl(version,
+                           depth,
+                           fingerprint,
+                           childNum,
+                           chainCode,
+                           pubKey) = extPubKey match {
+        case impl: ExtPublicKeyImpl => impl
+      }
+      Some(version, depth, fingerprint, childNum, chainCode, pubKey)
   }
 }

@@ -138,7 +138,11 @@ object CommonSettings {
     List(
       //https://stackoverflow.com/a/43103038/967713
       "-release",
-      "8"
+      "8",
+      "-explain",
+      "-rewrite",
+      "-source",
+      "3.4-migration"
     )
   }
 

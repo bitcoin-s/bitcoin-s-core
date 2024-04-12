@@ -189,7 +189,7 @@ object LndConfig extends ConfigFactory[LndConfig] with BitcoinSLogger {
   override def apply(
       config: File,
       datadir: File = DEFAULT_DATADIR): LndConfig = {
-    import org.bitcoins.core.compat.JavaConverters._
+    import scala.jdk.CollectionConverters.IteratorHasAsScala
     val lines = Files
       .readAllLines(config.toPath)
       .iterator()

@@ -201,10 +201,10 @@ case class CompletedDigitDecompositionV0OracleEvent(
   override def outcomes: Vector[DigitDecompositionAttestationType] =
     dlcOutcome match {
       case UnsignedNumericOutcome(digits) =>
-        digits.map(DigitDecompositionAttestation)
+        digits.map(DigitDecompositionAttestation.apply(_))
       case SignedNumericOutcome(positive, digits) =>
         val sign = DigitDecompositionSignAttestation(positive)
-        sign +: digits.map(DigitDecompositionAttestation)
+        sign +: digits.map(DigitDecompositionAttestation.apply(_))
     }
 }
 
@@ -216,7 +216,7 @@ object OracleEvent {
             "EventDbs must all refer to the same event")
 
     (eventDb.eventDescriptorTLV, eventDb.attestationOpt) match {
-      case (enum: EnumEventDescriptorV0TLV, Some(sig)) =>
+      case (enumEvent: EnumEventDescriptorV0TLV, Some(sig)) =>
         require(eventDbs.size == 1, "Enum events may only have one eventDb")
         CompletedEnumV0OracleEvent(
           eventDb.pubkey,
@@ -225,12 +225,12 @@ object OracleEvent {
           eventDb.signingVersion,
           eventDb.maturationTime,
           eventDb.announcementSignature,
-          enum,
+          enumEvent,
           EnumAttestation(eventDb.outcomeOpt.get),
           sig,
           Some(eventDbs)
         )
-      case (enum: EnumEventDescriptorV0TLV, None) =>
+      case (enumEvent: EnumEventDescriptorV0TLV, None) =>
         require(eventDbs.size == 1, "Enum events may only have one eventDb")
         PendingEnumV0OracleEvent(eventDb.pubkey,
                                  eventDb.nonce,
@@ -238,7 +238,7 @@ object OracleEvent {
                                  eventDb.signingVersion,
                                  eventDb.maturationTime,
                                  eventDb.announcementSignature,
-                                 enum,
+                                 enumEvent,
                                  Some(eventDbs))
       case (decomp: DigitDecompositionEventDescriptorV0TLV, Some(_)) =>
         require(eventDbs.forall(_.attestationOpt.isDefined),
@@ -314,11 +314,11 @@ object OracleEvent {
       false
     } else {
       announcement.eventTLV.eventDescriptor match {
-        case enum: EnumEventDescriptorV0TLV =>
+        case enumEvent: EnumEventDescriptorV0TLV =>
           require(attestations.size == 1)
 
           val sig = attestations.head
-          enum.outcomes.exists { outcome =>
+          enumEvent.outcomes.exists { outcome =>
             val attestationType = EnumAttestation(outcome)
             val hash =
               signingVersion.calcOutcomeHash(attestationType.bytes)

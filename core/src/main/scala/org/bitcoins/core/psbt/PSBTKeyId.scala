@@ -41,22 +41,22 @@ object PSBTGlobalKeyId extends PSBTKeyIdFactory[PSBTGlobalKeyId] {
 
   override def unknownKey: PSBTGlobalKeyId = UnknownKeyId
 
-  final case object UnsignedTransactionKeyId extends PSBTGlobalKeyId {
+  case object UnsignedTransactionKeyId extends PSBTGlobalKeyId {
     override val byte: Byte = 0x00.byteValue
     type RecordType = GlobalPSBTRecord.UnsignedTransaction
   }
 
-  final case object XPubKeyKeyId extends PSBTGlobalKeyId {
+  case object XPubKeyKeyId extends PSBTGlobalKeyId {
     override val byte: Byte = 0x01.byteValue
     type RecordType = GlobalPSBTRecord.XPubKey
   }
 
-  final case object VersionKeyId extends PSBTGlobalKeyId {
+  case object VersionKeyId extends PSBTGlobalKeyId {
     override val byte: Byte = 0xfb.byteValue
     type RecordType = GlobalPSBTRecord.Version
   }
 
-  final case object UnknownKeyId extends PSBTGlobalKeyId {
+  case object UnknownKeyId extends PSBTGlobalKeyId {
     override val byte: Byte = Byte.MaxValue
     type RecordType = GlobalPSBTRecord.Unknown
   }
@@ -96,107 +96,107 @@ object PSBTInputKeyId extends PSBTKeyIdFactory[PSBTInputKeyId] {
 
     }
 
-  final case object NonWitnessUTXOKeyId extends PSBTInputKeyId {
+  case object NonWitnessUTXOKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x00.byteValue
     type RecordType = InputPSBTRecord.NonWitnessOrUnknownUTXO
   }
 
-  final case object WitnessUTXOKeyId extends PSBTInputKeyId {
+  case object WitnessUTXOKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x01.byteValue
     type RecordType = InputPSBTRecord.WitnessUTXO
   }
 
-  final case object PartialSignatureKeyId extends PSBTInputKeyId {
+  case object PartialSignatureKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x02.byteValue
     type RecordType = InputPSBTRecord.PartialSignature
   }
 
-  final case object SigHashTypeKeyId extends PSBTInputKeyId {
+  case object SigHashTypeKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x03.byteValue
     type RecordType = InputPSBTRecord.SigHashType
   }
 
-  final case object RedeemScriptKeyId extends PSBTInputKeyId {
+  case object RedeemScriptKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x04.byteValue
     type RecordType = InputPSBTRecord.RedeemScript
   }
 
-  final case object WitnessScriptKeyId extends PSBTInputKeyId {
+  case object WitnessScriptKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x05.byteValue
     type RecordType = InputPSBTRecord.WitnessScript
   }
 
-  final case object BIP32DerivationPathKeyId extends PSBTInputKeyId {
+  case object BIP32DerivationPathKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x06.byteValue
     type RecordType = InputPSBTRecord.BIP32DerivationPath
   }
 
-  final case object FinalizedScriptSigKeyId extends PSBTInputKeyId {
+  case object FinalizedScriptSigKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x07.byteValue
     type RecordType = InputPSBTRecord.FinalizedScriptSig
   }
 
-  final case object FinalizedScriptWitnessKeyId extends PSBTInputKeyId {
+  case object FinalizedScriptWitnessKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x08.byteValue
     type RecordType = InputPSBTRecord.FinalizedScriptWitness
   }
 
-  final case object ProofOfReservesCommitmentKeyId extends PSBTInputKeyId {
+  case object ProofOfReservesCommitmentKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x09.byteValue
     type RecordType = InputPSBTRecord.ProofOfReservesCommitment
   }
 
-  final case object RIPEMD160PreImageKeyId extends PSBTInputKeyId {
+  case object RIPEMD160PreImageKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x0a.byteValue
     type RecordType = InputPSBTRecord.RIPEMD160PreImage
   }
 
-  final case object SHA256PreImageKeyId extends PSBTInputKeyId {
+  case object SHA256PreImageKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x0b.byteValue
     type RecordType = InputPSBTRecord.SHA256PreImage
   }
 
-  final case object HASH160PreImageKeyId extends PSBTInputKeyId {
+  case object HASH160PreImageKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x0c.byteValue
     type RecordType = InputPSBTRecord.HASH160PreImage
   }
 
-  final case object HASH256PreImageKeyId extends PSBTInputKeyId {
+  case object HASH256PreImageKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x0d.byteValue
     type RecordType = InputPSBTRecord.HASH256PreImage
   }
 
-  final case object TRKeySpendSignatureKeyId extends PSBTInputKeyId {
+  case object TRKeySpendSignatureKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x13.byteValue
     type RecordType = InputPSBTRecord.TRKeySpendSignature
   }
 
-  final case object TRScriptSpendSignatureKeyId extends PSBTInputKeyId {
+  case object TRScriptSpendSignatureKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x14.byteValue
     type RecordType = InputPSBTRecord.TRScriptSpendSignature
   }
 
-  final case object TRLeafScriptKeyId extends PSBTInputKeyId {
+  case object TRLeafScriptKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x15.byteValue
     type RecordType = InputPSBTRecord.TRLeafScript
   }
 
-  final case object TRBIP32DerivationPathKeyId extends PSBTInputKeyId {
+  case object TRBIP32DerivationPathKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x16.byteValue
     type RecordType = InputPSBTRecord.TRBIP32DerivationPath
   }
 
-  final case object TRInternalKeyKeyId extends PSBTInputKeyId {
+  case object TRInternalKeyKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x17.byteValue
     type RecordType = InputPSBTRecord.TRInternalKey
   }
 
-  final case object TRMerkelRootKeyId extends PSBTInputKeyId {
+  case object TRMerkelRootKeyId extends PSBTInputKeyId {
     override val byte: Byte = 0x18.byteValue
     type RecordType = InputPSBTRecord.TRMerkelRoot
   }
 
-  final case object UnknownKeyId extends PSBTInputKeyId {
+  case object UnknownKeyId extends PSBTInputKeyId {
     override val byte: Byte = Byte.MaxValue
     type RecordType = InputPSBTRecord.Unknown
   }
@@ -221,37 +221,37 @@ object PSBTOutputKeyId extends PSBTKeyIdFactory[PSBTOutputKeyId] {
       case _: Byte                         => UnknownKeyId
     }
 
-  final case object RedeemScriptKeyId extends PSBTOutputKeyId {
+  case object RedeemScriptKeyId extends PSBTOutputKeyId {
     override val byte: Byte = 0x00.byteValue
     type RecordType = OutputPSBTRecord.RedeemScript
   }
 
-  final case object WitnessScriptKeyId extends PSBTOutputKeyId {
+  case object WitnessScriptKeyId extends PSBTOutputKeyId {
     override val byte: Byte = 0x01.byteValue
     type RecordType = OutputPSBTRecord.WitnessScript
   }
 
-  final case object BIP32DerivationPathKeyId extends PSBTOutputKeyId {
+  case object BIP32DerivationPathKeyId extends PSBTOutputKeyId {
     override val byte: Byte = 0x02.byteValue
     type RecordType = OutputPSBTRecord.BIP32DerivationPath
   }
 
-  final case object TRInternalKeyKeyId extends PSBTOutputKeyId {
+  case object TRInternalKeyKeyId extends PSBTOutputKeyId {
     override val byte: Byte = 0x05.byteValue
     type RecordType = OutputPSBTRecord.TRInternalKey
   }
 
-  final case object TaprootTreeKeyId extends PSBTOutputKeyId {
+  case object TaprootTreeKeyId extends PSBTOutputKeyId {
     override val byte: Byte = 0x06.byteValue
     type RecordType = OutputPSBTRecord.TRInternalKey
   }
 
-  final case object TRBIP32DerivationPathKeyId extends PSBTOutputKeyId {
+  case object TRBIP32DerivationPathKeyId extends PSBTOutputKeyId {
     override val byte: Byte = 0x07.byteValue
     type RecordType = OutputPSBTRecord.TRBIP32DerivationPath
   }
 
-  final case object UnknownKeyId extends PSBTOutputKeyId {
+  case object UnknownKeyId extends PSBTOutputKeyId {
     override val byte: Byte = Byte.MaxValue
     type RecordType = OutputPSBTRecord.Unknown
   }

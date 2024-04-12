@@ -20,6 +20,7 @@ sealed abstract class Number[T <: Number[T]]
   /** The underlying scala number used to to hold the number */
   protected def underlying: A
 
+  def toByte: Byte = toBigInt.bigInteger.byteValueExact()
   def toInt: Int = toBigInt.bigInteger.intExact
   def toLong: Long = toBigInt.bigInteger.longExact
   def toBigInt: BigInt = underlying
@@ -330,7 +331,7 @@ object UInt8
     checkCached(unsigned)
   }
 
-  def toByte(uInt8: UInt8): Byte = uInt8.underlying.toByte
+  def toByte(uInt8: UInt8): Byte = uInt8.toByte
 
   def toBytes(us: Seq[UInt8]): ByteVector = {
     ByteVector(us.map(toByte))

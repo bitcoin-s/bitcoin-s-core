@@ -11,7 +11,7 @@ case class TransactionOutput(value: CurrencyUnit, scriptPubKey: ScriptPubKey)
   override val bytes: ByteVector = RawTransactionOutputParser.write(this)
 }
 
-final object EmptyTransactionOutput
+object EmptyTransactionOutput
     extends TransactionOutput(CurrencyUnits.negativeSatoshi,
                               ScriptPubKey.empty) {
   override def toString(): String = "EmptyTransactionOutput"

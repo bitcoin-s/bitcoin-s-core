@@ -28,7 +28,7 @@ trait LnCurrencyUnitGen {
     } yield PicoBitcoins(amount)
 
   def positivePicoBitcoin: Gen[PicoBitcoins] = {
-    Gen.choose(0, PicoBitcoins.max.toLong).map(PicoBitcoins(_))
+    Gen.choose(0L, PicoBitcoins.max.toLong).map(PicoBitcoins(_))
   }
 
   def lnCurrencyUnit: Gen[LnCurrencyUnit] =
@@ -39,7 +39,7 @@ trait LnCurrencyUnitGen {
   }
 
   def realisticLnInvoice: Gen[LnCurrencyUnit] = {
-    val gen = Gen.choose(0, LnPolicy.maxAmountMSat.toLong)
+    val gen = Gen.choose(0L, LnPolicy.maxAmountMSat.toLong)
     val msat = gen.map(MilliSatoshis(_))
     msat.map(LnCurrencyUnits.fromMSat(_))
   }

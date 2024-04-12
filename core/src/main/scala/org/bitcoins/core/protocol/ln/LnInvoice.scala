@@ -206,13 +206,13 @@ object LnInvoice extends StringFactory[LnInvoice] {
         val dataValid = Bech32.checkDataValidity(data)
 
         val isChecksumValid: Try[Vector[UInt5]] = hrpValid.flatMap {
-          h: LnHumanReadablePart =>
-            dataValid.flatMap { d: Vector[UInt5] =>
+          (h: LnHumanReadablePart) =>
+            dataValid.flatMap { (d: Vector[UInt5]) =>
               stripChecksumIfValid(h, d)
             }
         }
 
-        val invoiceT = isChecksumValid.flatMap { d: Vector[UInt5] =>
+        val invoiceT = isChecksumValid.flatMap { (d: Vector[UInt5]) =>
           hrpValid.map(h => LnInvoice(h, d))
         }
 

@@ -12,7 +12,7 @@ abstract class CRUDAutoInc[T <: DbRowAutoInc[T]](implicit
   import profile.api._
 
   /** The table inside our database we are inserting into */
-  override val table: profile.api.TableQuery[_ <: TableAutoInc[T]]
+  override val table: profile.api.TableQuery[TableAutoInc[T]]
 
   override def createAllAction(ts: Vector[T]): profile.api.DBIOAction[
     Vector[T],

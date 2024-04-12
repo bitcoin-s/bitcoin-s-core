@@ -24,7 +24,7 @@ sealed abstract class RawBlockSerializer extends RawBitcoinSerializer[Block] {
   def write(block: Block): ByteVector = {
     val writtenHeader = block.blockHeader.bytes
     val txBytes = RawSerializerHelper.writeCmpctSizeUInt(block.transactions,
-                                                         { tx: Transaction =>
+                                                         { (tx: Transaction) =>
                                                            tx.bytes
                                                          })
     writtenHeader ++ txBytes

@@ -7,6 +7,7 @@ import org.bitcoins.commons.serializers.JsonSerializers._
 import org.bitcoins.core.api.tor.Socks5ProxyParams
 import org.bitcoins.core.wallet.fee.SatoshisPerKiloByte
 import play.api.libs.json.{JsError, JsSuccess, Json}
+import org.bitcoins.core.satoshisPerKiloByteOrdering
 
 import scala.util.{Failure, Success, Try}
 

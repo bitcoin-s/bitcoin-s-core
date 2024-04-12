@@ -71,31 +71,31 @@ object ScriptType extends StringFactory[ScriptType] {
       case None             => sys.error(s"Could not find scriptType=${string}")
     }
 
-  final case object NONSTANDARD extends ScriptType
+  case object NONSTANDARD extends ScriptType
 
   // ╔ "standard" transaction/script types
   // V
-  final case object PUBKEY extends ScriptType
-  final case object PUBKEYHASH extends ScriptType
-  final case object SCRIPTHASH extends ScriptType
-  final case object MULTISIG extends ScriptType
+  case object PUBKEY extends ScriptType
+  case object PUBKEYHASH extends ScriptType
+  case object SCRIPTHASH extends ScriptType
+  case object MULTISIG extends ScriptType
 
-  final case object CLTV extends ScriptType
-  final case object CSV extends ScriptType
-  final case object NONSTANDARD_IF_CONDITIONAL extends ScriptType
-  final case object NOT_IF_CONDITIONAL extends ScriptType
-  final case object MULTISIG_WITH_TIMEOUT extends ScriptType
+  case object CLTV extends ScriptType
+  case object CSV extends ScriptType
+  case object NONSTANDARD_IF_CONDITIONAL extends ScriptType
+  case object NOT_IF_CONDITIONAL extends ScriptType
+  case object MULTISIG_WITH_TIMEOUT extends ScriptType
 
-  final case object PUBKEY_WITH_TIMEOUT extends ScriptType
+  case object PUBKEY_WITH_TIMEOUT extends ScriptType
 
   /** unspendable OP_RETURN script that carries data */
-  final case object NULLDATA extends ScriptType
-  final case object WITNESS_V0_KEYHASH extends ScriptType
-  final case object WITNESS_V0_SCRIPTHASH extends ScriptType
-  final case object WITNESS_V1_TAPROOT extends ScriptType
+  case object NULLDATA extends ScriptType
+  case object WITNESS_V0_KEYHASH extends ScriptType
+  case object WITNESS_V0_SCRIPTHASH extends ScriptType
+  case object WITNESS_V1_TAPROOT extends ScriptType
 
   /** Only for Witness versions not already defined */
-  final case object WITNESS_UNKNOWN extends ScriptType
+  case object WITNESS_UNKNOWN extends ScriptType
 
-  final case object WITNESS_COMMITMENT extends ScriptType
+  case object WITNESS_COMMITMENT extends ScriptType
 }

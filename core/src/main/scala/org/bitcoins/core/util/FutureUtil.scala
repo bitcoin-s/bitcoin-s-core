@@ -86,12 +86,14 @@ object FutureUtil {
     val batches = elements.grouped(batchSize)
     for {
       batchExecution <- {
-        batches.foldLeft(initF) {
+        batches.foldLeft[Future[Vector[U]]](initF) {
           case (accumF: Future[Vector[U]], batch: Vector[T]) =>
             for {
               accum <- accumF
               executed <- f(batch)
-            } yield accum ++ executed
+            } yield {
+              accum ++ executed
+            }
         }
       }
     } yield batchExecution

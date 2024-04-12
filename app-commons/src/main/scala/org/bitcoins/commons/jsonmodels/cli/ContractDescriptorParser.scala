@@ -22,14 +22,14 @@ object ContractDescriptorParser {
     value match {
       case obj: Obj =>
         upickle.default
-          .read[ContractDescriptorV0TLV](obj)(Picklers.contractDescriptorV0)
+          .read[ContractDescriptorV0TLV](obj)(using Picklers.contractDescriptorV0)
       case arr: Arr =>
         //we read the number of digits from the announcement,
         //take in tlv points for the payout curve
         //and don't provide access to give a rounding mode as a parameter
         val payoutPoints: Vector[TLVPoint] = arr.value.toVector.map { pointJs =>
           upickle.default
-            .read[TLVPoint](pointJs)(Picklers.tlvPointReader)
+            .read[TLVPoint](pointJs)(using Picklers.tlvPointReader)
         }
 
         val payoutCurve = DLCPayoutCurve

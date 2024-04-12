@@ -120,16 +120,18 @@ trait BitcoinScriptUtil {
     val checkSigCount =
       script.count(token => token == OP_CHECKSIG || token == OP_CHECKSIGVERIFY)
     val multiSigOps = Seq(OP_CHECKMULTISIG, OP_CHECKMULTISIGVERIFY)
-    val multiSigCount: Long = script.zipWithIndex.map { case (token, index) =>
-      if (multiSigOps.contains(token) && index != 0) {
-        script(index - 1) match {
-          case scriptNum: ScriptNumber => scriptNum.toLong
-          case scriptConstant: ScriptConstant =>
-            ScriptNumberUtil.toLong(scriptConstant.hex)
-          case _: ScriptToken => Consensus.maxPublicKeysPerMultiSig
-        }
-      } else 0
-    }.sum
+    val multiSigCount: Long = script.zipWithIndex
+      .map[Long] { case (token, index) =>
+        if (multiSigOps.contains(token) && index != 0) {
+          script(index - 1) match {
+            case scriptNum: ScriptNumber => scriptNum.toLong
+            case scriptConstant: ScriptConstant =>
+              ScriptNumberUtil.toLong(scriptConstant.hex)
+            case _: ScriptToken => Consensus.maxPublicKeysPerMultiSig
+          }
+        } else 0
+      }
+      .sum
     checkSigCount + multiSigCount
   }
 

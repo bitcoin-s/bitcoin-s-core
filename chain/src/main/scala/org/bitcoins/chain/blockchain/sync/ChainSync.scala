@@ -102,7 +102,7 @@ abstract class ChainSync extends ChainVerificationLogger {
     //one sanity check to make sure we aren't _ahead_ of our data source
     val hasBlockHashF = chainApi.getHeader(bestBlockHash)
 
-    hasBlockHashF.flatMap { hasBlockHashF: Option[BlockHeaderDb] =>
+    hasBlockHashF.flatMap { case hasBlockHashF: Option[BlockHeaderDb] =>
       if (hasBlockHashF.isDefined) {
         //if we have the best block hash in our
         //chainstate already, we don't need to search

@@ -378,8 +378,8 @@ object ScriptNumberOperation
     extends ScriptOperationFactory[ScriptNumberOperation] {
 
   /** Finds the [[ScriptNumberOperation]] based on the given integer. */
-  def fromNumber(underlying: Long): Option[ScriptNumberOperation] =
-    operations.find(_.underlying == underlying)
+  def fromNumber(long: Long): Option[ScriptNumberOperation] =
+    operations.find(_.toLong == long)
 
   override val operations = Vector(OP_0,
                                    OP_1,

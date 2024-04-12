@@ -52,7 +52,7 @@ object UnknownAddressTag {
 
 object InternalAddressTagName extends StringFactory[InternalAddressTagName] {
 
-  val all: Seq[InternalAddressTagName] = StorageLocationTag.tagNames
+  val all: Vector[InternalAddressTagName] = StorageLocationTag.tagNames
 
   override def fromStringOpt(string: String): Option[InternalAddressTagName] =
     all.find(_.name.toLowerCase == string.toLowerCase)
@@ -111,7 +111,7 @@ object StorageLocationTag extends AddressTagFactory[StorageLocationTag] {
 
   override val tagType: InternalAddressTagType = StorageLocationTagType
 
-  override val tagNames =
+  override val tagNames: Vector[InternalAddressTagName] =
     Vector(HotStorageName, ColdStorageName, DeepColdStorageName)
 
   // Tag Names

@@ -176,7 +176,7 @@ class DbCommonsColumnMappers(val profile: JdbcProfile) {
 
   implicit val uint64Mapper: BaseColumnType[UInt64] = {
     MappedColumnType.base[UInt64, String](
-      { u64: UInt64 =>
+      { case u64: UInt64 =>
         uInt64ToHex(u64)
       },
       UInt64.fromHex

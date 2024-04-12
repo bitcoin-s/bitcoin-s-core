@@ -6,6 +6,8 @@ import org.bitcoins.core.protocol.script.EmptyScriptSignature
 import org.bitcoins.core.protocol.transaction._
 import org.bitcoins.crypto.{DoubleSha256Digest, DoubleSha256DigestBE}
 
+import org.bitcoins.core.currency.currencyUnitNumeric
+
 trait TxDB {
   def txIdBE: DoubleSha256DigestBE
 }

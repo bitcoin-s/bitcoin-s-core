@@ -86,7 +86,7 @@ sealed abstract class MainNet extends BitcoinNetwork {
 
 }
 
-final case object MainNet extends MainNet
+case object MainNet extends MainNet
 
 sealed abstract class TestNet3 extends BitcoinNetwork {
   override def chainParams: TestNetChainParams.type = TestNetChainParams
@@ -113,7 +113,7 @@ sealed abstract class TestNet3 extends BitcoinNetwork {
 
 }
 
-final case object TestNet3 extends TestNet3
+case object TestNet3 extends TestNet3
 
 sealed abstract class RegTest extends BitcoinNetwork {
   override def chainParams: RegTestNetChainParams.type = RegTestNetChainParams
@@ -135,7 +135,7 @@ sealed abstract class RegTest extends BitcoinNetwork {
   override def magicBytes: ByteVector = ByteVector(0xfa, 0xbf, 0xb5, 0xda)
 }
 
-final case object RegTest extends RegTest
+case object RegTest extends RegTest
 
 sealed abstract class SigNet extends BitcoinNetwork {
   override def chainParams: SigNetChainParams = SigNetChainParams()
@@ -166,7 +166,7 @@ sealed abstract class SigNet extends BitcoinNetwork {
 
 }
 
-final case object SigNet extends SigNet
+case object SigNet extends SigNet
 // $COVERAGE-ON$
 
 object Networks extends StringFactory[NetworkParameters] {

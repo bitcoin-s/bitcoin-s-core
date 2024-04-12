@@ -86,8 +86,8 @@ object DLCTemplate {
       case EnumEventDescriptorV0TLV(outcomes) =>
         oracles.forall {
           _.eventTLV.eventDescriptor match {
-            case enum: EnumEventDescriptorV0TLV =>
-              enum.outcomes.sortBy(_.normStr) == outcomes.sortBy(_.normStr)
+            case enumEvent: EnumEventDescriptorV0TLV =>
+              enumEvent.outcomes.sortBy(_.normStr) == outcomes.sortBy(_.normStr)
             case _: DigitDecompositionEventDescriptorV0TLV => false
           }
         }

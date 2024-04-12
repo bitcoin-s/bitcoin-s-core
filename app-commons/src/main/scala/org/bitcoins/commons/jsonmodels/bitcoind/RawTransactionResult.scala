@@ -196,11 +196,11 @@ case class SignRawTransactionError(
     error: String)
     extends RawTransactionResult
 
-final case class GetRpcInfoResult(
+case class GetRpcInfoResult(
     active_commands: Vector[RpcCommands]
 ) extends RawTransactionResult
 
-final case class RpcCommands(
+case class RpcCommands(
     method: String,
     duration: FiniteDuration //this time is in microseconds
 ) extends RawTransactionResult

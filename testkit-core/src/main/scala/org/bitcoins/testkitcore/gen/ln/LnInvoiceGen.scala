@@ -182,7 +182,7 @@ sealed abstract class LnInvoiceGen {
     } yield LnInvoiceSignature(version, sig)
 
   def invoiceTimestamp: Gen[UInt64] = {
-    Gen.choose(0, LnInvoice.MAX_TIMESTAMP_U64.toLong).map(UInt64(_))
+    Gen.choose(0L, LnInvoice.MAX_TIMESTAMP_U64.toLong).map(UInt64(_))
   }
 
   def lnInvoice(privateKey: ECPrivateKey): Gen[LnInvoice] = {

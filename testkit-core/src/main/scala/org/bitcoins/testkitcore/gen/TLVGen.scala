@@ -172,7 +172,7 @@ trait TLVGen {
       outcomes <- Gen.listOfN(numOutcomes, StringGenerators.genString)
       totalInput <-
         Gen
-          .choose(numOutcomes + 1, Long.MaxValue / 10000L)
+          .choose(numOutcomes + 1L, Long.MaxValue / 10000L)
           .map(Satoshis.apply)
       (contractDescriptor, _) =
         DLCTestUtil.genContractDescriptors(outcomes.toVector, totalInput)
@@ -191,7 +191,7 @@ trait TLVGen {
       numDigits <- Gen.choose(3, 7)
       totalInput <-
         Gen
-          .choose(numDigits + 1, Long.MaxValue / 10000L)
+          .choose(numDigits + 1L, Long.MaxValue / 10000L)
           .map(Satoshis.apply)
       (contractDescriptor, _) =
         DLCTestUtil.genMultiDigitContractInfo(numDigits, totalInput)

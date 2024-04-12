@@ -43,7 +43,7 @@ object RawCompactFilterHeadersMessageSerializer
     val previousFilterHeader = message.previousFilterHeader.bytes
     val filterHashes =
       RawSerializerHelper.writeCmpctSizeUInt(message.filterHashes,
-                                             { fh: DoubleSha256Digest =>
+                                             { (fh: DoubleSha256Digest) =>
                                                fh.bytes
                                              })
 

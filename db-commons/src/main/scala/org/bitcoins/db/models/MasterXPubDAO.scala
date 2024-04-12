@@ -152,7 +152,7 @@ case class MasterXPubDAO()(implicit
 
     def * = {
       (version, depth, fingerprint, childNum, chaincode, key, name).<>(
-        ExtPublicKeyDTO.tupled,
+        ExtPublicKeyDTO.apply,
         ExtPublicKeyDTO.unapply)
     }
   }

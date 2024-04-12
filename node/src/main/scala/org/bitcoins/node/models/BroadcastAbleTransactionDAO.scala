@@ -9,7 +9,7 @@ import slick.lifted.ProvenShape
 
 import scala.concurrent.{ExecutionContext, Future}
 
-final case class BroadcastAbleTransactionDAO()(implicit
+case class BroadcastAbleTransactionDAO()(implicit
     override val appConfig: NodeAppConfig,
     override val ec: ExecutionContext)
     extends CRUD[BroadcastAbleTransaction, DoubleSha256DigestBE]

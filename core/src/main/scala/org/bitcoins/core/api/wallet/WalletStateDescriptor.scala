@@ -7,9 +7,9 @@ sealed abstract class WalletStateDescriptorType
 object WalletStateDescriptorType
     extends StringFactory[WalletStateDescriptorType] {
 
-  final case object SyncHeight extends WalletStateDescriptorType
+  case object SyncHeight extends WalletStateDescriptorType
 
-  final case object Rescan extends WalletStateDescriptorType
+  case object Rescan extends WalletStateDescriptorType
 
   val all: Vector[WalletStateDescriptorType] = Vector(SyncHeight, Rescan)
 

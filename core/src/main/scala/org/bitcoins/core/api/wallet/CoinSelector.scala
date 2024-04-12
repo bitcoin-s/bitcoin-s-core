@@ -8,6 +8,7 @@ import org.bitcoins.core.wallet.fee.FeeUnit
 
 import scala.annotation.tailrec
 import scala.util.{Random, Try}
+import org.bitcoins.core.currency.currencyUnitOrdering
 
 /** Implements algorithms for selecting from a UTXO set to spend to an output set at a given fee rate. */
 trait CoinSelector {
@@ -112,8 +113,8 @@ object CoinSelector extends CoinSelector {
 
   /** Cribbed from [[https://github.com/bitcoinjs/coinselect/blob/master/utils.js]] */
   def approximateUtxoSize(utxo: CoinSelectorUtxo): Long = {
-    val inputBase = 32 + 4 + 1 + 4
-    val scriptSize = utxo.redeemScriptOpt match {
+    val inputBase: Long = 32 + 4 + 1 + 4
+    val scriptSize: Long = utxo.redeemScriptOpt match {
       case Some(script) => script.bytes.length
       case None =>
         utxo.scriptWitnessOpt match {

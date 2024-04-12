@@ -105,7 +105,7 @@ object BIP32Path extends Factory[BIP32Path] with StringFactory[BIP32Path] {
 
   def apply(path: Vector[BIP32Node]): BIP32Path = BIP32PathImpl(path)
 
-  def apply(path: BIP32Node*): BIP32Path = BIP32Path(Vector(path: _*))
+  def apply(path: BIP32Node*): BIP32Path = BIP32Path(Vector(path *))
 
   /** Parses a string representation of a BIP32 path. This is on the form
     * of

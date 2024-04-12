@@ -14,7 +14,7 @@ import org.scalatest.time.Span
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
 import scala.annotation.nowarn
-import scala.collection.JavaConverters.iterableAsScalaIterableConverter
+import scala.jdk.CollectionConverters._
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -182,7 +182,7 @@ trait BaseAsyncTest
     */
   def forAllParallel[A](gen: Gen[A])(
       func: A => Assertion): Future[Assertion] = {
-    forAllAsync(gen) { a: A =>
+    forAllAsync(gen) { case a: A =>
       FutureUtil.makeAsync { () =>
         func(a)
       }

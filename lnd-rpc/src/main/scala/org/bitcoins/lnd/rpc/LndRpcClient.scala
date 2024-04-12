@@ -1028,7 +1028,7 @@ class LndRpcClient(val instance: LndInstance, binaryOpt: Option[File] = None)(
 
         //register callback that publishes a payment to our actor system's
         //event stream,
-        receivedInfoF.foreach { info: Invoice =>
+        receivedInfoF.foreach { case info: Invoice =>
           if (info.state.isSettled) {
             //invoice has been paid, let's publish to event stream
             //so subscribers so the even stream can see that a payment

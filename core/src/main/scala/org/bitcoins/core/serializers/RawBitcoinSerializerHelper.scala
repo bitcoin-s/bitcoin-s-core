@@ -56,7 +56,7 @@ sealed abstract class RawSerializerHelper {
   /** Serializes a [[scala.Seq Seq]] of [[NetworkElement]] to a [[scodec.bits.ByteVector]] */
   final def writeNetworkElements[T <: NetworkElement](
       ts: Seq[T]): ByteVector = {
-    val f = { t: T =>
+    val f = { (t: T) =>
       t.bytes
     }
     write(ts, f)

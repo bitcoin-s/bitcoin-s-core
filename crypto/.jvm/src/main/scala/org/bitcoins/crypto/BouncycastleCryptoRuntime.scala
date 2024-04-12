@@ -18,7 +18,7 @@ import java.security.{MessageDigest, SecureRandom}
   * and [[java.security]].
   */
 trait BouncycastleCryptoRuntime extends CryptoRuntime {
-  private[this] lazy val secureRandom = new SecureRandom()
+  private lazy val secureRandom = new SecureRandom()
 
   override val cryptoContext: CryptoContext = CryptoContext.BouncyCastle
 

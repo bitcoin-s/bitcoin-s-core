@@ -19,13 +19,13 @@ trait CurrencyUnitGenerator {
   def currencyUnit: Gen[CurrencyUnit] = Gen.oneOf(satoshis, bitcoins)
 
   def positiveSatoshis: Gen[Satoshis] =
-    Gen.choose(0, Long.MaxValue).map(Satoshis.apply)
+    Gen.choose(0L, Long.MaxValue).map(Satoshis.apply)
 
   /** Generates a postiive satoshi value that is 'realistic'. This current 'realistic' range
     * is from 0 to 1,000,000 bitcoin
     */
   def positiveRealistic: Gen[Satoshis] =
-    Gen.choose(0, Bitcoins(1000000).satoshis.toLong).map { n =>
+    Gen.choose(0L, Bitcoins(1000000).satoshis.toLong).map { case n =>
       Satoshis(n)
     }
 }

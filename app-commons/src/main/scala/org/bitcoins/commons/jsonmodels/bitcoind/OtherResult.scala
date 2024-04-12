@@ -190,13 +190,13 @@ case class TestMempoolAcceptResultPostV22(
     rejectReason: Option[String]
 )
 
-final case class DeriveAddressesResult(addresses: Vector[BitcoinAddress])
+case class DeriveAddressesResult(addresses: Vector[BitcoinAddress])
     extends OtherResult
     with SeqWrapper[BitcoinAddress] {
   override protected val wrapped: Vector[BitcoinAddress] = addresses
 }
 
-final case class GetDescriptorInfoResult(
+case class GetDescriptorInfoResult(
     descriptor: String,
     checksum: Option[String],
     isrange: Boolean,
@@ -204,7 +204,7 @@ final case class GetDescriptorInfoResult(
     hasprivatekeys: Boolean
 ) extends OtherResult
 
-final case class SubmitHeaderResult(header: BlockHeader) extends OtherResult
+case class SubmitHeaderResult(header: BlockHeader) extends OtherResult
 
 case class IndexInfoResult(synced: Boolean, best_block_height: Int)
     extends OtherResult

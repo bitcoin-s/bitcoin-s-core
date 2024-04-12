@@ -23,6 +23,7 @@ import org.bitcoins.core.wallet.utxo.{
   P2WSHV0InputInfo
 }
 import org.bitcoins.crypto._
+import org.bitcoins.core.currency.currencyUnitNumeric
 import scodec.bits.ByteVector
 
 case class DLCTxBuilder(offer: DLCOffer, accept: DLCAcceptWithoutSigs) {
