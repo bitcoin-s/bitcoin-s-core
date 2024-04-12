@@ -9,7 +9,7 @@ abstract class CRUDAction[T, PrimaryKeyType](implicit
   import profile.api._
 
   /** The table inside our database we are inserting into */
-  val table: profile.api.TableQuery[_ <: profile.api.Table[T]]
+  val table: profile.api.TableQuery[? <: profile.api.Table[T]]
 
   def createAllAction(
       ts: Vector[T]): DBIOAction[Vector[T], NoStream, Effect.Write]
@@ -100,7 +100,7 @@ abstract class CRUDAction[T, PrimaryKeyType](implicit
   }
 
   def upsertAction(
-      t: T): DBIOAction[T, NoStream, Effect.Write with Effect.Read] = {
+      t: T): DBIOAction[T, NoStream, Effect.Write & Effect.Read] = {
     upsertAllAction(Vector(t)).map(_.head)
   }
 
@@ -111,7 +111,7 @@ abstract class CRUDAction[T, PrimaryKeyType](implicit
   def upsertAllAction(ts: Vector[T]): DBIOAction[
     Vector[T],
     NoStream,
-    Effect.Write with Effect.Read] = {
+    Effect.Write & Effect.Read] = {
     val upsertActions = {
       ts.map { t =>
         table.insertOrUpdate(t).flatMap(_ => find(t).result.map(_.headOption))
@@ -135,7 +135,7 @@ abstract class CRUDAction[T, PrimaryKeyType](implicit
   def deleteAllAction(): DBIOAction[
     Int,
     NoStream,
-    Effect.Write with Effect.Transactional] = {
+    Effect.Write & Effect.Transactional] = {
     table.delete
   }
 

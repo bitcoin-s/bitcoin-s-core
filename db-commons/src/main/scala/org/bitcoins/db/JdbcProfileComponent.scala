@@ -26,7 +26,7 @@ trait JdbcProfileComponent[+ConfigType <: DbAppConfig] extends BitcoinSLogger {
     dbConfig.db
   }
 
-  private[this] var hikariLoggerOpt: Option[HikariLogging] = None
+  private var hikariLoggerOpt: Option[HikariLogging] = None
 
   /** Starts the background logger for hikari
     * @param interval - how often hikari logs database connection pool information

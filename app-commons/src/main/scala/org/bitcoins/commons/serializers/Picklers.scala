@@ -532,7 +532,7 @@ object Picklers {
   // can't make implicit because it will overlap with ones needed for cli
   val oracleAnnouncementTLVJsonWriter: Writer[OracleAnnouncementTLV] =
     writer[Value].comap { case v0: OracleAnnouncementV0TLV =>
-      writeJs(v0)(announcementV0JsonWriter)
+      writeJs(v0)(using announcementV0JsonWriter)
     }
 
   // can't make implicit because it will overlap with ones needed for cli
@@ -549,7 +549,7 @@ object Picklers {
 
   implicit val fundingInputV0Writer: Writer[FundingInputTLV] =
     writer[Value].comap { case v0: FundingInputV0TLV =>
-      writeJs(v0)(fundingInputWriter)
+      writeJs(v0)(using fundingInputWriter)
     }
 
   implicit val fundingInputWriter: Writer[FundingInputV0TLV] =
@@ -695,16 +695,16 @@ object Picklers {
   implicit val contractDescriptorWriter: Writer[ContractDescriptorTLV] =
     writer[Value].comap {
       case v0: ContractDescriptorV0TLV =>
-        writeJs(v0)(contractDescriptorV0)
+        writeJs(v0)(using contractDescriptorV0)
       case v1: ContractDescriptorV1TLV =>
-        writeJs(v1)(contractDescriptorV1Writer)
+        writeJs(v1)(using contractDescriptorV1Writer)
     }
 
   implicit val oracleInfoV0TLVWriter: Writer[OracleInfoV0TLV] =
     writer[Obj].comap { oracleInfo =>
       Obj(
         "announcement" -> writeJs(oracleInfo.announcement)(
-          oracleAnnouncementTLVJsonWriter))
+          using oracleAnnouncementTLVJsonWriter))
     }
 
   implicit val oracleInfoV1TLVWriter: Writer[OracleInfoV1TLV] =
@@ -712,7 +712,7 @@ object Picklers {
       import oracleInfo._
       Obj("threshold" -> Num(threshold.toDouble),
           "announcements" -> oracles.map(o =>
-            writeJs(o)(oracleAnnouncementTLVJsonWriter)))
+            writeJs(o)(using oracleAnnouncementTLVJsonWriter)))
     }
 
   implicit val oracleParamsV0TLVWriter: Writer[OracleParamsV0TLV] =
@@ -733,7 +733,7 @@ object Picklers {
       import oracleInfo._
       Obj("threshold" -> Num(threshold.toDouble),
           "announcements" -> oracles.map(o =>
-            writeJs(o)(oracleAnnouncementTLVJsonWriter)),
+            writeJs(o)(using oracleAnnouncementTLVJsonWriter)),
           "params" -> writeJs(params))
     }
 
@@ -779,9 +779,9 @@ object Picklers {
   val contractInfoJsonWriter: Writer[ContractInfoTLV] = {
     writer[ujson.Value].comap {
       case contractInfoV0TLV: ContractInfoV0TLV =>
-        writeJs(contractInfoV0TLV)(contractInfoV0TLVJsonWriter)
+        writeJs(contractInfoV0TLV)(using contractInfoV0TLVJsonWriter)
       case contractInfoV1TLV: ContractInfoV1TLV =>
-        writeJs(contractInfoV1TLV)(contractInfoV1TLVJsonWriter)
+        writeJs(contractInfoV1TLV)(using contractInfoV1TLVJsonWriter)
     }
   }
 
@@ -791,7 +791,7 @@ object Picklers {
       Obj(
         "contractFlags" -> Str(contractFlags.toInt.toHexString),
         "chainHash" -> Str(chainHash.hex),
-        "contractInfo" -> writeJs(contractInfo)(contractInfoJsonWriter),
+        "contractInfo" -> writeJs(contractInfo)(using contractInfoJsonWriter),
         "fundingPubKey" -> Str(fundingPubKey.hex),
         "payoutSPK" -> Str(payoutSPK.hex),
         "payoutSerialId" -> Num(payoutSerialId.toBigInt.toDouble),
@@ -1133,25 +1133,25 @@ object Picklers {
 
   implicit val dlcStatusW: Writer[DLCStatus] = writer[Value].comap {
     case o: Offered =>
-      writeJs(o)(offeredW)
+      writeJs(o)(using offeredW)
     case a: AcceptedComputingAdaptorSigs =>
-      writeJs(a)(acceptedComputingAdaptorSigsW)
+      writeJs(a)(using acceptedComputingAdaptorSigsW)
     case a: Accepted =>
-      writeJs(a)(acceptedW)
+      writeJs(a)(using acceptedW)
     case s: SignedComputingAdaptorSigs =>
-      writeJs(s)(signedComputingAdaptorSigsW)
+      writeJs(s)(using signedComputingAdaptorSigsW)
     case s: Signed =>
-      writeJs(s)(signedW)
+      writeJs(s)(using signedW)
     case b: Broadcasted =>
-      writeJs(b)(broadcastedW)
+      writeJs(b)(using broadcastedW)
     case c: Confirmed =>
-      writeJs(c)(confirmedW)
+      writeJs(c)(using confirmedW)
     case c: Claimed =>
-      writeJs(c)(claimedW)
+      writeJs(c)(using claimedW)
     case r: RemoteClaimed =>
-      writeJs(r)(remoteClaimedW)
+      writeJs(r)(using remoteClaimedW)
     case r: Refunded =>
-      writeJs(r)(refundedW)
+      writeJs(r)(using refundedW)
   }
 
   implicit val dlcOfferAddR: Reader[IncomingDLCOfferDb] = reader[Obj].map {

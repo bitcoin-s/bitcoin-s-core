@@ -167,8 +167,8 @@ case class HikariLogging(
     logger.info(activityUpdate.toString)
   }
 
-  private[this] var started: Boolean = false
-  private[this] var cancelOpt: Option[ScheduledFuture[_]] = None
+  private var started: Boolean = false
+  private var cancelOpt: Option[ScheduledFuture[?]] = None
 
   override def start(): HikariLogging = {
     if (!started) {

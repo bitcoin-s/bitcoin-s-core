@@ -39,7 +39,7 @@ abstract class CRUD[T, PrimaryKeyType](implicit
     * ever used for things of the form TableQuery[XDAO().table] -> TableQuery[XDAO#XTable].
     */
   implicit protected def tableQuerySafeSubtypeCast[
-      SpecificT <: AbstractTable[_],
+      SpecificT <: AbstractTable[?],
       SomeT <: SpecificT](
       tableQuery: TableQuery[SomeT]): TableQuery[SpecificT] = {
     tableQuery.asInstanceOf[TableQuery[SpecificT]]
@@ -151,7 +151,7 @@ case class SafeDatabase(jdbcProfile: JdbcProfileComponent[DbAppConfig])
 
   /** Logs the given action and error, if we are not on mainnet */
   private def logAndThrowError(
-      action: DBIOAction[_, NoStream, _]): PartialFunction[
+      action: DBIOAction[?, NoStream, ?]): PartialFunction[
     Throwable,
     Nothing] = { case err: SQLException =>
     logger.error(
@@ -161,7 +161,7 @@ case class SafeDatabase(jdbcProfile: JdbcProfileComponent[DbAppConfig])
   }
 
   /** Runs the given DB action */
-  def run[R](action: DBIOAction[R, NoStream, _])(implicit
+  def run[R](action: DBIOAction[R, NoStream, ?])(implicit
       ec: ExecutionContext): Future[R] = {
     val result = scala.concurrent.blocking {
       if (sqlite) database.run[R](foreignKeysPragma >> action.transactionally)
@@ -175,7 +175,7 @@ case class SafeDatabase(jdbcProfile: JdbcProfileComponent[DbAppConfig])
   /** Runs the given DB sequence-returning DB action
     * and converts the result to a vector
     */
-  def runVec[R](action: DBIOAction[Seq[R], NoStream, _])(implicit
+  def runVec[R](action: DBIOAction[Seq[R], NoStream, ?])(implicit
       ec: ExecutionContext): Future[Vector[R]] = {
     val result = scala.concurrent.blocking {
       if (sqlite)

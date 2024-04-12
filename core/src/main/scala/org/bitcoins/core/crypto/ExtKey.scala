@@ -558,7 +558,7 @@ object ExtPublicKey
           UInt32,
           ChainCode,
           ECPublicKey)) => ExtPublicKey = {
-    (ExtPublicKeyImpl.apply _).tupled(
+    (ExtPublicKeyImpl.apply).tupled(
       _
     ) //https://docs.scala-lang.org/scala3/guides/migration/incompat-other-changes.html
   }

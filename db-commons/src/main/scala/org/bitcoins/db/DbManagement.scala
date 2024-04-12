@@ -68,11 +68,11 @@ trait DbManagement extends BitcoinSLogger {
     * stay that way so long as no one tries anything too fancy.
     */
   implicit protected def tableQueryToWithSchema(
-      tableQuery: TableQuery[_]): TableQuery[Table[_]] = {
-    tableQuery.asInstanceOf[TableQuery[Table[_]]]
+      tableQuery: TableQuery[?]): TableQuery[Table[?]] = {
+    tableQuery.asInstanceOf[TableQuery[Table[?]]]
   }
 
-  def allTables: List[TableQuery[Table[_]]]
+  def allTables: List[TableQuery[Table[?]]]
 
   def dropAll()(implicit ec: ExecutionContext): Future[Unit] = {
     val result =
@@ -88,7 +88,7 @@ trait DbManagement extends BitcoinSLogger {
 
   /** The query needed to create the given table */
   private def createTableQuery(
-      table: TableQuery[_ <: Table[_]],
+      table: TableQuery[? <: Table[?]],
       createIfNotExists: Boolean) = {
     if (createIfNotExists) {
       table.schema.createIfNotExists
@@ -99,7 +99,7 @@ trait DbManagement extends BitcoinSLogger {
 
   /** Creates the given table */
   def createTable(
-      table: TableQuery[_ <: Table[_]],
+      table: TableQuery[? <: Table[?]],
       createIfNotExists: Boolean = true)(implicit
       ec: ExecutionContext): Future[Unit] = {
     val tableName = table.baseTableRow.tableName
@@ -110,7 +110,7 @@ trait DbManagement extends BitcoinSLogger {
   }
 
   def dropTable(
-      table: TableQuery[Table[_]]
+      table: TableQuery[Table[?]]
   ): Future[Unit] = {
     val query = table.schema.dropIfExists
     val result = database.run(query)

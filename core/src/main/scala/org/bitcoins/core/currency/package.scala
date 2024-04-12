@@ -76,7 +76,7 @@ package object currency {
         x.satoshis.toBigInt.toDouble
 
       override def compare(x: CurrencyUnit, y: CurrencyUnit): Int =
-        x.satoshis compare y.satoshis
+        x.satoshis `compare` y.satoshis
 
       // Cannot use the override modifier because this method was added in scala version 2.13
       def parseString(str: String): Option[CurrencyUnit] = {

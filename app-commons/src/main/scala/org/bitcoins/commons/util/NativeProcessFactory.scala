@@ -10,7 +10,7 @@ import scala.sys.process.{Process, ProcessBuilder, ProcessLogger}
 trait NativeProcessFactory extends BitcoinSLogger {
   implicit protected def executionContext: ExecutionContext
 
-  private[this] var processOpt: Option[Process] = None
+  private var processOpt: Option[Process] = None
 
   private lazy val process: ProcessBuilder = scala.sys.process.Process(cmd)
 

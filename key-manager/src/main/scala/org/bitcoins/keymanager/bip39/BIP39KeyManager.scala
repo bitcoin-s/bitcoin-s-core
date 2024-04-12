@@ -31,7 +31,7 @@ import scala.util.{Failure, Success, Try}
   * @see https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki
   */
 class BIP39KeyManager(
-    private[this] val rootExtPrivKey: ExtPrivateKey,
+    private val rootExtPrivKey: ExtPrivateKey,
     val kmParams: KeyManagerParams,
     val creationTime: Instant,
     val imported: Boolean)
