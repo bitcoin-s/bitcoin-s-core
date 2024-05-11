@@ -29,8 +29,8 @@ case class ExtPublicKeyDTO(
   */
 case class MasterXPubDAO()(implicit
     ec: ExecutionContext,
-    appConfig: DbAppConfig
-) extends CRUD[ExtPublicKeyDTO, ECPublicKey]
+    appConfig: DbAppConfig)
+    extends CRUD[ExtPublicKeyDTO, ECPublicKey]
     with SlickUtil[ExtPublicKeyDTO, ECPublicKey] {
   import profile.api._
   private val mappers = new org.bitcoins.db.DbCommonsColumnMappers(profile)
@@ -40,19 +40,15 @@ case class MasterXPubDAO()(implicit
 
   def create(
       extPublicKey: ExtPublicKey,
-      name: Option[String] = None
-  ): Future[ExtPublicKeyDTO] = {
+      name: Option[String] = None): Future[ExtPublicKeyDTO] = {
     val dto = createDTO(extPublicKey, name)
     create(dto)
   }
 
-  override def createAllAction(
-      ts: Vector[ExtPublicKeyDTO]
-  ): profile.api.DBIOAction[Vector[
-                              ExtPublicKeyDTO
-                            ],
-                            profile.api.NoStream,
-                            Effect.Write] = {
+  override def createAllAction(ts: Vector[ExtPublicKeyDTO])
+      : profile.api.DBIOAction[Vector[ExtPublicKeyDTO],
+                               profile.api.NoStream,
+                               Effect.Write] = {
     val fixedSqlAction = table ++= ts
 
     fixedSqlAction.map(_ => ts)
@@ -66,43 +62,33 @@ case class MasterXPubDAO()(implicit
         table += t
       case count @ _ =>
         DBIO.failed(
-          new SQLException(s"Only 1 master xpub should be stored, got=$count")
-        )
+          new SQLException(s"Only 1 master xpub should be stored, got=$count"))
     }
 
     database.run(action).map(_ => t)
   }
 
   override def createAll(
-      extKeys: Vector[ExtPublicKeyDTO]
-  ): Future[Vector[ExtPublicKeyDTO]] = {
+      extKeys: Vector[ExtPublicKeyDTO]): Future[Vector[ExtPublicKeyDTO]] = {
     if (extKeys.size != 1)
       Future.failed(
         new SQLException(
-          s"Only 1 master xpub should be stored, got=${extKeys.size}"
-        )
-      )
+          s"Only 1 master xpub should be stored, got=${extKeys.size}"))
     else
       create(extKeys.head).map(Vector(_))
   }
 
-  override protected def findByPrimaryKeys(
-      pubkeys: Vector[ECPublicKey]
-  ): profile.api.Query[profile.api.Table[
-                         ExtPublicKeyDTO
-                       ],
-                       ExtPublicKeyDTO,
-                       Seq] = {
+  override protected def findByPrimaryKeys(pubkeys: Vector[ECPublicKey])
+      : profile.api.Query[profile.api.Table[ExtPublicKeyDTO],
+                          ExtPublicKeyDTO,
+                          Seq] = {
     table.filter(_.key.inSet(pubkeys))
   }
 
-  override protected def findAll(
-      ts: Vector[ExtPublicKeyDTO]
-  ): profile.api.Query[profile.api.Table[
-                         ExtPublicKeyDTO
-                       ],
-                       ExtPublicKeyDTO,
-                       Seq] = {
+  override protected def findAll(ts: Vector[ExtPublicKeyDTO])
+      : profile.api.Query[profile.api.Table[ExtPublicKeyDTO],
+                          ExtPublicKeyDTO,
+                          Seq] = {
     findByPrimaryKeys(ts.map(_.publicKey))
   }
 
@@ -112,14 +98,11 @@ case class MasterXPubDAO()(implicit
     */
   def validate(xpub: ExtPublicKey): Future[Unit] = {
     findAll().map { xpubs =>
-      require(
-        xpubs.length == 1,
-        s"Only 1 master xpub should be stored, got=${xpubs.length}"
-      )
+      require(xpubs.length == 1,
+              s"Only 1 master xpub should be stored, got=${xpubs.length}")
       if (xpub != xpubs.head.toExtPublicKey) {
         sys.error(
-          s"Keymanager xpub and stored xpub are different, stored=${xpubs.head.toExtPublicKey}, keymanager=${xpub}"
-        )
+          s"Keymanager xpub and stored xpub are different, stored=${xpubs.head.toExtPublicKey}, keymanager=${xpub}")
       }
     }
   }
@@ -130,10 +113,8 @@ case class MasterXPubDAO()(implicit
 
   def findXPub(): Future[ExtPublicKeyDTO] = {
     findAll().map { xpubs =>
-      require(
-        xpubs.length == 1,
-        s"Only 1 master xpub should be stored, got=${xpubs.length}"
-      )
+      require(xpubs.length == 1,
+              s"Only 1 master xpub should be stored, got=${xpubs.length}")
       xpubs.head
     }
   }
@@ -146,8 +127,7 @@ case class MasterXPubDAO()(implicit
         table.map(_.name).update(Option(name))
       case count @ _ =>
         DBIO.failed(
-          new SQLException(s"Only 1 master xpub should be stored, got=$count")
-        )
+          new SQLException(s"Only 1 master xpub should be stored, got=$count"))
     }
 
     database.run(action).map(_ => ())
@@ -172,16 +152,14 @@ case class MasterXPubDAO()(implicit
 
     def * = {
       (version, depth, fingerprint, childNum, chaincode, key, name).<>(
-        ExtPublicKeyDTO.tupled,
-        ExtPublicKeyDTO.unapply
-      )
+        ExtPublicKeyDTO.apply,
+        ExtPublicKeyDTO.unapply)
     }
   }
 
   private def createDTO(
       epk: ExtPublicKey,
-      name: Option[String]
-  ): ExtPublicKeyDTO =
+      name: Option[String]): ExtPublicKeyDTO =
     ExtPublicKeyDTO(
       version = epk.version,
       depth = epk.depth,

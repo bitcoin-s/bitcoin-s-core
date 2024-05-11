@@ -4,16 +4,15 @@ import scala.concurrent.ExecutionContext
 
 abstract class CRUDAction[T, PrimaryKeyType](implicit
     val ec: ExecutionContext,
-    override val appConfig: DbAppConfig
-) extends JdbcProfileComponent[DbAppConfig] {
+    override val appConfig: DbAppConfig)
+    extends JdbcProfileComponent[DbAppConfig] {
   import profile.api._
 
   /** The table inside our database we are inserting into */
-  val table: profile.api.TableQuery[_ <: profile.api.Table[T]]
+  val table: profile.api.TableQuery[? <: profile.api.Table[T]]
 
   def createAllAction(
-      ts: Vector[T]
-  ): DBIOAction[Vector[T], NoStream, Effect.Write]
+      ts: Vector[T]): DBIOAction[Vector[T], NoStream, Effect.Write]
 
   def createAction(t: T): DBIOAction[T, NoStream, Effect.Write] = {
     createAllAction(Vector(t))
@@ -41,12 +40,10 @@ abstract class CRUDAction[T, PrimaryKeyType](implicit
 
   /** Finds the rows that correlate to the given primary keys */
   protected def findByPrimaryKeys(
-      ids: Vector[PrimaryKeyType]
-  ): Query[Table[T], T, Seq]
+      ids: Vector[PrimaryKeyType]): Query[Table[T], T, Seq]
 
-  def findByPrimaryKeysAction(
-      ids: Vector[PrimaryKeyType]
-  ): DBIOAction[Vector[T], NoStream, Effect.Read] = {
+  def findByPrimaryKeysAction(ids: Vector[PrimaryKeyType])
+      : DBIOAction[Vector[T], NoStream, Effect.Read] = {
     if (ids.isEmpty) {
       DBIO.successful(Vector.empty)
     } else {
@@ -56,8 +53,7 @@ abstract class CRUDAction[T, PrimaryKeyType](implicit
   }
 
   def findByPrimaryKeyAction(
-      id: PrimaryKeyType
-  ): DBIOAction[Option[T], NoStream, Effect.Read] = {
+      id: PrimaryKeyType): DBIOAction[Option[T], NoStream, Effect.Read] = {
     findByPrimaryKey(id).result.map(_.headOption)
   }
 
@@ -75,8 +71,7 @@ abstract class CRUDAction[T, PrimaryKeyType](implicit
     * the database, thus could not be updated
     */
   def updateAllAction(
-      ts: Vector[T]
-  ): DBIOAction[Vector[T], NoStream, Effect.Write] = {
+      ts: Vector[T]): DBIOAction[Vector[T], NoStream, Effect.Write] = {
     val updateActions: Vector[DBIOAction[Option[T], NoStream, Effect.Write]] = {
       ts.map { t =>
         find(t).update(t).flatMap { rowsUpdated =>
@@ -85,11 +80,8 @@ abstract class CRUDAction[T, PrimaryKeyType](implicit
           } else if (rowsUpdated == 1) {
             DBIO.successful(Some(t))
           } else {
-            DBIO.failed(
-              new RuntimeException(
-                s"Updated more rows that we intended to update, updated=$rowsUpdated"
-              )
-            )
+            DBIO.failed(new RuntimeException(
+              s"Updated more rows that we intended to update, updated=$rowsUpdated"))
           }
         }
 
@@ -105,8 +97,7 @@ abstract class CRUDAction[T, PrimaryKeyType](implicit
   }
 
   def upsertAction(
-      t: T
-  ): DBIOAction[T, NoStream, Effect.Write with Effect.Read] = {
+      t: T): DBIOAction[T, NoStream, Effect.Write & Effect.Read] = {
     upsertAllAction(Vector(t)).map(_.head)
   }
 
@@ -114,9 +105,8 @@ abstract class CRUDAction[T, PrimaryKeyType](implicit
     * @see
     *   https://scala-slick.org/doc/3.3.3/queries.html#upserting
     */
-  def upsertAllAction(
-      ts: Vector[T]
-  ): DBIOAction[Vector[T], NoStream, Effect.Write with Effect.Read] = {
+  def upsertAllAction(ts: Vector[T])
+      : DBIOAction[Vector[T], NoStream, Effect.Write & Effect.Read] = {
     val upsertActions = {
       ts.map { t =>
         table.insertOrUpdate(t).flatMap(_ => find(t).result.map(_.headOption))
@@ -131,15 +121,14 @@ abstract class CRUDAction[T, PrimaryKeyType](implicit
   }
 
   def deleteAllAction(
-      ts: Vector[T]
-  ): DBIOAction[Int, NoStream, Effect.Write] = {
+      ts: Vector[T]): DBIOAction[Int, NoStream, Effect.Write] = {
     val query = findAll(ts)
     query.delete
   }
 
   /** WARNING: Deletes all rows in table, use with care */
   def deleteAllAction()
-      : DBIOAction[Int, NoStream, Effect.Write with Effect.Transactional] = {
+      : DBIOAction[Int, NoStream, Effect.Write & Effect.Transactional] = {
     table.delete
   }
 
