@@ -117,7 +117,7 @@ case class DLCFundingInputDAO()(implicit
         maxWitnessLength,
         redeemScriptOpt,
         witnessScriptOpt
-      ).<>(DLCFundingInputDb.tupled, DLCFundingInputDb.unapply)
+      ).<>(DLCFundingInputDb.apply, DLCFundingInputDb.unapply)
 
     def fk: ForeignKeyQuery[_, DLCDb] =
       foreignKey(

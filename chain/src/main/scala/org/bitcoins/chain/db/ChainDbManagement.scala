@@ -15,7 +15,7 @@ import scala.concurrent.ExecutionContext
   * project.
   */
 trait ChainDbManagement extends DbManagement {
-  _: JdbcProfileComponent[ChainAppConfig] =>
+  this: JdbcProfileComponent[ChainAppConfig] =>
   import profile.api._
 
   def ec: ExecutionContext

@@ -91,7 +91,7 @@ case class DLCOfferDAO()(implicit
         collateral,
         changeAddress,
         changeSerialId
-      ).<>(DLCOfferDb.tupled, DLCOfferDb.unapply)
+      ).<>(DLCOfferDb.apply, DLCOfferDb.unapply)
 
     def fk: ForeignKeyQuery[_, DLCDb] =
       foreignKey(

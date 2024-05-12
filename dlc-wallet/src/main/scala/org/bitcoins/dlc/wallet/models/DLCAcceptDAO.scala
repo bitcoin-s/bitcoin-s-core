@@ -97,7 +97,7 @@ case class DLCAcceptDAO()(implicit
         changeAddress,
         changeSerialId,
         negotiationFields
-      ).<>(DLCAcceptDb.tupled, DLCAcceptDb.unapply)
+      ).<>(DLCAcceptDb.apply, DLCAcceptDb.unapply)
 
     def fk: ForeignKeyQuery[_, DLCDb] =
       foreignKey(

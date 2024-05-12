@@ -78,7 +78,7 @@ case class EventOutcomeDAO()(implicit
 
     def * : ProvenShape[EventOutcomeDb] =
       (nonce, message, hashedMessage).<>(
-        EventOutcomeDb.tupled,
+        EventOutcomeDb.apply,
         EventOutcomeDb.unapply
       )
 

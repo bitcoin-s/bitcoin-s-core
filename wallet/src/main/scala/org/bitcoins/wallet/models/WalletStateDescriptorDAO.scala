@@ -152,7 +152,7 @@ case class WalletStateDescriptorDAO()(implicit
 
     override def * : ProvenShape[WalletStateDescriptorDb] =
       (tpe, descriptor).<>(
-        WalletStateDescriptorDb.tupled,
+        WalletStateDescriptorDb.apply,
         WalletStateDescriptorDb.unapply
       )
 

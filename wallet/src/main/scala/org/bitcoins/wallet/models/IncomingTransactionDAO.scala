@@ -14,7 +14,8 @@ case class IncomingTransactionDAO()(implicit
 ) extends TxDAO[IncomingTransactionDb] {
   import profile.api._
 
-  override val table: profile.api.TableQuery[IncomingTransactionTable] = {
+  override val table: slick.lifted.TableQuery[
+    IncomingTransactionDAO.this.IncomingTransactionTable] = {
     TableQuery[IncomingTransactionTable]
   }
 

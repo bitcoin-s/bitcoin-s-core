@@ -117,7 +117,7 @@ case class DLCAnnouncementDAO()(implicit
 
     override def * : ProvenShape[DLCAnnouncementDb] =
       (dlcId, announcementId, index, used)
-        .<>(DLCAnnouncementDb.tupled, DLCAnnouncementDb.unapply)
+        .<>(DLCAnnouncementDb.apply, DLCAnnouncementDb.unapply)
 
     def primaryKey: PrimaryKey =
       primaryKey(

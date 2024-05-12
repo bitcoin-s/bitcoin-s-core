@@ -30,10 +30,10 @@ trait WalletApi {
   def transactionProcessing: TransactionProcessingApi
   def sendFundsHandling: SendFundsHandlingApi
 
-  val nodeApi: NodeApi
-  val chainQueryApi: ChainQueryApi
+  def nodeApi: NodeApi
+  def chainQueryApi: ChainQueryApi
   def feeRateApi: FeeRateApi
-  val creationTime: Instant
+  def creationTime: Instant
 
   def broadcastTransaction(transaction: Transaction): Future[Unit]
 

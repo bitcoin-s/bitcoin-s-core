@@ -147,7 +147,7 @@ case class ChainStateDescriptorDAO()(implicit
 
     override def * : ProvenShape[ChainStateDescriptorDb] =
       (tpe, descriptor).<>(
-        ChainStateDescriptorDb.tupled,
+        ChainStateDescriptorDb.apply,
         ChainStateDescriptorDb.unapply
       )
 

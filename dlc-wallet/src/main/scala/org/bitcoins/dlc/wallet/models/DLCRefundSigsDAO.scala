@@ -79,7 +79,7 @@ case class DLCRefundSigsDAO()(implicit
 
     def * : ProvenShape[DLCRefundSigsDb] =
       (dlcId, accepterSig, initiatorSig).<>(
-        DLCRefundSigsDb.tupled,
+        DLCRefundSigsDb.apply,
         DLCRefundSigsDb.unapply
       )
 

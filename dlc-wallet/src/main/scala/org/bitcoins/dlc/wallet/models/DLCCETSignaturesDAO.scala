@@ -99,7 +99,7 @@ case class DLCCETSignaturesDAO()(implicit
 
     def * : ProvenShape[DLCCETSignaturesDb] =
       (dlcId, index, sigPoint, accepterSig, initiatorSig).<>(
-        DLCCETSignaturesDb.tupled,
+        DLCCETSignaturesDb.apply,
         DLCCETSignaturesDb.unapply
       )
 

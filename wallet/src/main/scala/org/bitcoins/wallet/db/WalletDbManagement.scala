@@ -8,7 +8,7 @@ import org.bitcoins.wallet.models._
 import scala.concurrent.ExecutionContext
 
 trait WalletDbManagement extends DbManagement {
-  _: JdbcProfileComponent[WalletAppConfig] =>
+  this: JdbcProfileComponent[WalletAppConfig] =>
 
   import profile.api._
 

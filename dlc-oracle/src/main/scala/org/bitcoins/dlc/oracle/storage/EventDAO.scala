@@ -127,7 +127,7 @@ case class EventDAO()(implicit
         outcomeOpt,
         announcementSignature,
         eventDescriptorTLV
-      ).<>(EventDb.tupled, EventDb.unapply)
+      ).<>(EventDb.apply, EventDb.unapply)
 
     def fk: ForeignKeyQuery[_, RValueDb] = {
       foreignKey(

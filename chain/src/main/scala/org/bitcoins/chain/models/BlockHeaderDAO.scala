@@ -593,7 +593,7 @@ case class BlockHeaderDAO()(implicit
         nonce,
         hex,
         chainWork
-      ).<>(BlockHeaderDb.tupled, BlockHeaderDb.unapply)
+      ).<>(BlockHeaderDb.apply, BlockHeaderDb.unapply)
     }
 
   }
