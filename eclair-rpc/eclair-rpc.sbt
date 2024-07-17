@@ -52,10 +52,14 @@ TaskKeys.downloadEclair := {
     val success = hash.equalsIgnoreCase(expectedHash)
     if (success) {
       logger.info(s"Download complete and verified, unzipping result")
-
-      val extractCommand = s"unzip $archiveLocation -d $versionDir"
-      logger.info(s"Extracting archive with command: $extractCommand")
-      extractCommand.!!
+      val cmds = Vector(
+        "unzip",
+        archiveLocation.toString,
+        "-d",
+        versionDir.toString
+      )
+      logger.info(s"Extracting archive with command: $cmds")
+      cmds.!!
     } else {
       Files.deleteIfExists(versionDir)
       logger.error(

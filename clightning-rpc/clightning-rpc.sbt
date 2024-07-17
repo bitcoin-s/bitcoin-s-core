@@ -72,10 +72,15 @@ TaskKeys.downloadCLightning := {
     val success = hash.equalsIgnoreCase(expectedHash)
     if (hash.equalsIgnoreCase(expectedHash)) {
       logger.info(s"Download complete and verified, unzipping result")
-
-      val extractCommand = s"tar -xf $archiveLocation --directory $versionDir"
-      logger.info(s"Extracting archive with command: $extractCommand")
-      extractCommand.!!
+      val cmds = Vector(
+        "tar",
+        "-xf",
+        archiveLocation.toString,
+        "--directory",
+        versionDir.toString
+      )
+      logger.info(s"Extracting archive with command: $cmds")
+      cmds.!!
     } else {
       logger.error(
         s"Downloaded invalid version of c-lightning, got $hash, expected $expectedHash")
