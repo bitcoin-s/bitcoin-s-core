@@ -23,8 +23,8 @@ import org.apache.pekko.http.scaladsl.model.{
 import org.apache.pekko.stream.scaladsl.{Flow, Sink, Source}
 import org.apache.pekko.util.ByteString
 import org.bitcoins.asyncutil.AsyncUtil
-import org.bitcoins.commons.jsonmodels.eclair._
-import org.bitcoins.commons.serializers.JsonReaders._
+import org.bitcoins.commons.jsonmodels.eclair.*
+import org.bitcoins.commons.serializers.JsonReaders.*
 import org.bitcoins.commons.util.NativeProcessFactory
 import org.bitcoins.core.currency.{CurrencyUnit, Satoshis}
 import org.bitcoins.core.protocol.ln.channel.{
@@ -38,14 +38,14 @@ import org.bitcoins.core.protocol.ln.routing.{ChannelRoute, NodeRoute, Route}
 import org.bitcoins.core.protocol.ln.{LnInvoice, LnParams, PaymentPreimage}
 import org.bitcoins.core.protocol.script.ScriptPubKey
 import org.bitcoins.core.protocol.{Address, BitcoinAddress}
-import org.bitcoins.core.util.{BytesUtil, StartStopAsync}
+import org.bitcoins.core.util.{BytesUtil, EnvUtil, StartStopAsync}
 import org.bitcoins.core.wallet.fee.SatoshisPerByte
 import org.bitcoins.crypto.{DoubleSha256DigestBE, Sha256Digest}
-import org.bitcoins.eclair.rpc.api._
+import org.bitcoins.eclair.rpc.api.*
 import org.bitcoins.eclair.rpc.config.EclairInstance
 import org.bitcoins.rpc.client.common.BitcoindVersion
 import org.bitcoins.tor.Socks5ClientTransport
-import play.api.libs.json._
+import play.api.libs.json.*
 
 import java.io.File
 import java.net.InetSocketAddress
@@ -823,7 +823,7 @@ class EclairRpcClient(
       // default to provided binary
       case (Some(binary), _) =>
         if (binary.exists) {
-          binary.toPath.toAbsolutePath.toString
+          binary.getAbsolutePath
         } else {
           throw new NoSuchFileException(
             s"Given binary ($binary) does not exist!"
@@ -833,7 +833,7 @@ class EclairRpcClient(
         val eclairBinDir =
           s"eclair-node-${EclairRpcClient.version}-${EclairRpcClient.commit}${File.separator}bin${File.separator}"
         val eclairV =
-          if (sys.props("os.name").toLowerCase.contains("windows"))
+          if (EnvUtil.isWindows)
             eclairBinDir + "eclair-node.bat"
           else
             eclairBinDir + "eclair-node.sh"
@@ -866,6 +866,8 @@ class EclairRpcClient(
       case Some(logback) => base.appended(logback)
       case None          => base
     }
+
+    // println(s"cmd=$cmd")
     cmd
   }
 
