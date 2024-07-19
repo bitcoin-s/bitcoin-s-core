@@ -867,7 +867,7 @@ class EclairRpcClient(
       case None          => base
     }
 
-    // println(s"cmd=$cmd")
+    println(s"cmd=$cmd")
     cmd
   }
 
