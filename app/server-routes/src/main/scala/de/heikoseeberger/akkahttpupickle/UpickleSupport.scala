@@ -49,14 +49,14 @@ trait UpickleSupport {
 
   private val jsonStringUnmarshaller =
     Unmarshaller.byteStringUnmarshaller
-      .forContentTypes(unmarshallerContentTypes: _*)
+      .forContentTypes(unmarshallerContentTypes*)
       .mapWithCharset {
         case (ByteString.empty, _) => throw Unmarshaller.NoContentException
         case (data, charset)       => data.decodeString(charset.nioCharset.name)
       }
 
   private val jsonStringMarshaller =
-    Marshaller.oneOf(mediaTypes: _*)(Marshaller.stringMarshaller)
+    Marshaller.oneOf(mediaTypes*)(Marshaller.stringMarshaller)
 
   /** HTTP entity => `A`
     *
