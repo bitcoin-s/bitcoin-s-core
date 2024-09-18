@@ -34,7 +34,7 @@ trait TxDAO[DbEntryType <: TxDB]
   private val mappers = new org.bitcoins.db.DbCommonsColumnMappers(profile)
   import mappers._
 
-  override val table: TableQuery[? <: TxTable]
+  override val table: TableQuery[TxTable]
 
   override def createAll(ts: Vector[DbEntryType]): Future[Vector[DbEntryType]] =
     createAllNoAutoInc(ts, safeDatabase)
@@ -164,7 +164,7 @@ case class TransactionDAO()(implicit
         numOutputs,
         locktime,
         blockHash
-      ).<>(TransactionDb.tupled, TransactionDb.unapply)
+      ).<>(TransactionDb.apply, TransactionDb.unapply)
 
     def primaryKey: PrimaryKey =
       primaryKey("pk_tx", sourceColumns = txIdBE)
