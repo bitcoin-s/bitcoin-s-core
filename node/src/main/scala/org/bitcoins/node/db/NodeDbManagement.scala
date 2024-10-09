@@ -7,7 +7,7 @@ import org.bitcoins.node.models.{BroadcastAbleTransactionDAO, PeerDAO}
 import scala.concurrent.ExecutionContext
 
 trait NodeDbManagement extends DbManagement {
-  _: JdbcProfileComponent[NodeAppConfig] =>
+  jdbcProfile: JdbcProfileComponent[NodeAppConfig] =>
 
   import profile.api._
 
