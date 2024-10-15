@@ -24,7 +24,7 @@ object DbTestUtil {
 }
 
 trait TestDbManagement extends DbManagement {
-  _: JdbcProfileComponent[TestAppConfig] =>
+  self: JdbcProfileComponent[TestAppConfig] =>
 
   import profile.api._
 

@@ -12,7 +12,7 @@ import scala.concurrent.Future
 
 /** A trait that is useful if you need bitcoind fixtures for your test suite */
 trait BitcoindFixtures extends BitcoinSFixture with EmbeddedPg {
-  _: BitcoinSAsyncFixtureTest =>
+  self: BitcoinSAsyncFixtureTest =>
 
   def withNewestFundedBitcoindCached(
       test: OneArgAsyncTest,
@@ -30,12 +30,12 @@ trait BitcoindFixtures extends BitcoinSFixture with EmbeddedPg {
 
 /** Bitcoind fixtures with a cached a bitcoind instance */
 trait BitcoindFixturesCached extends BitcoindFixtures {
-  _: BitcoinSAsyncFixtureTest with CachedBitcoind[_] =>
+  self: BitcoinSAsyncFixtureTest with CachedBitcoind[_] =>
 }
 
 /** Bitcoind fixtures with a cached a bitcoind instance that is funded */
 trait BitcoindFixturesFundedCached extends BitcoindFixtures {
-  _: BitcoinSAsyncFixtureTest with CachedBitcoindFunded[_] =>
+  self: BitcoinSAsyncFixtureTest with CachedBitcoindFunded[_] =>
 
   override def withFixture(test: OneArgAsyncTest): FutureOutcome = {
     val f: Future[Outcome] = for {
@@ -72,7 +72,7 @@ trait BitcoindFixturesFundedCachedNewest
 trait BitcoindFixturesCachedPair[T <: BitcoindRpcClient]
     extends BitcoindFixturesCached
     with CachedBitcoindPair[T] {
-  _: BitcoinSAsyncFixtureTest =>
+  self: BitcoinSAsyncFixtureTest =>
 
   def with2BitcoindsCached(
       test: OneArgAsyncTest,

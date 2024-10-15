@@ -29,7 +29,7 @@ import scala.util.{Failure, Success}
 trait BitcoinSWalletTestCachedBitcoind
     extends BitcoinSFixture
     with BaseWalletTest
-    with EmbeddedPg { _: CachedBitcoind[_] =>
+    with EmbeddedPg { self: CachedBitcoind[_] =>
 
   /** Creates a funded wallet fixture with bitcoind This is different than
     * [[withFundedWalletAndBitcoind()]] in the sense that it does NOT destroy

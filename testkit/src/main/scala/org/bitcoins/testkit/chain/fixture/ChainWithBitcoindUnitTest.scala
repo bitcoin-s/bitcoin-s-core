@@ -9,7 +9,7 @@ import scala.concurrent.Future
 
 /** Chain unit test that requires a cached bitcoind type to be injected */
 trait ChainWithBitcoindUnitTest extends ChainDbUnitTest {
-  _: CachedBitcoind[_] =>
+  self: CachedBitcoind[_] =>
 
 }
 
