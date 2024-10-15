@@ -44,7 +44,7 @@ trait DLCIdDaoUtil[T, PrimaryKeyType] { self: CRUD[T, PrimaryKeyType] =>
 /** Helper methods for querying by dlcId when the dlcId is not a primary key on
   * the table
   */
-trait DLCIdDaoUtilNoPK[T] { self: CRUD[T, _] =>
+trait DLCIdDaoUtilNoPK[T] { self: CRUD[T, ?] =>
 
   def findByDLCIdAction(
       dlcId: Sha256Digest): profile.api.DBIOAction[Vector[

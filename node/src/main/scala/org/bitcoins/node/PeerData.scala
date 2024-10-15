@@ -35,7 +35,7 @@ sealed trait PeerData {
     peerMessageSender.peerConnection
   }
 
-  private[this] var _serviceIdentifier: Option[ServiceIdentifier] = None
+  private var _serviceIdentifier: Option[ServiceIdentifier] = None
 
   def serviceIdentifier: ServiceIdentifier = {
     _serviceIdentifier.getOrElse(

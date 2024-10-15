@@ -282,7 +282,7 @@ case class WalletAppConfig(
   ): Future[Boolean] = {
     if (kmConf.seedExists()) {
       val hdCoin = walletConf.defaultAccount.coin
-      val walletDB = walletConf.dbPath resolve walletConf.dbName
+      val walletDB = walletConf.dbPath `resolve` walletConf.dbName
       walletConf.driver match {
         case PostgreSQL =>
           AccountDAO().read((hdCoin, 0)).map(_.isDefined)
@@ -307,8 +307,8 @@ case class WalletAppConfig(
     )(this, system)
   }
 
-  private[this] var rebroadcastTransactionsCancelOpt
-      : Option[ScheduledFuture[?]] = None
+  private var rebroadcastTransactionsCancelOpt: Option[ScheduledFuture[?]] =
+    None
   private var feeRateCancelOpt: Option[ScheduledFuture[?]] = None
 
   /** Starts the wallet's rebroadcast transaction scheduler */

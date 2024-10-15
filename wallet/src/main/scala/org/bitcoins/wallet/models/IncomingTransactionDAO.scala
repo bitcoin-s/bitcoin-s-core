@@ -55,7 +55,7 @@ case class IncomingTransactionDAO()(implicit
     def primaryKey: PrimaryKey =
       primaryKey("pk_in_tx", sourceColumns = txIdBE)
 
-    def fk_underlying_tx: slick.lifted.ForeignKeyQuery[_, TransactionDb] = {
+    def fk_underlying_tx: slick.lifted.ForeignKeyQuery[?, TransactionDb] = {
       foreignKey(
         "fk_underlying_tx",
         sourceColumns = txIdBE,

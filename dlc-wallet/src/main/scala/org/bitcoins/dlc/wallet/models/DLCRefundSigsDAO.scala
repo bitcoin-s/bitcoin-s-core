@@ -83,7 +83,7 @@ case class DLCRefundSigsDAO()(implicit
         DLCRefundSigsDb.unapply
       )
 
-    def fk: ForeignKeyQuery[_, DLCDb] =
+    def fk: ForeignKeyQuery[?, DLCDb] =
       foreignKey(
         "fk_dlc_id",
         sourceColumns = dlcId,

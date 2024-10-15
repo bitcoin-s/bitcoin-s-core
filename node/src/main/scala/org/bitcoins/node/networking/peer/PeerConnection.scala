@@ -54,10 +54,10 @@ case class PeerConnection(peer: Peer, queue: SourceQueue[NodeStreamMessage])(
 
   private val options: Vector[SocketOption] = Vector(KeepAlive(true))
 
-  private[this] var reconnectionTry = 0
-  private[this] var curReconnectionTry = 0
-  private[this] val reconnectionDelay = 500.millis
-  private[this] var reconnectionCancellableOpt: Option[Cancellable] = None
+  private var reconnectionTry = 0
+  private var curReconnectionTry = 0
+  private val reconnectionDelay = 500.millis
+  private var reconnectionCancellableOpt: Option[Cancellable] = None
 
   private lazy val connection: Flow[
     ByteString,
@@ -242,7 +242,7 @@ case class PeerConnection(peer: Peer, queue: SourceQueue[NodeStreamMessage])(
     }
   }
 
-  @volatile private[this] var connectionGraphOpt: Option[ConnectionGraph] = None
+  @volatile private var connectionGraphOpt: Option[ConnectionGraph] = None
 
   /** Initiates a connection with the given peer */
   def connect(): Future[Unit] = {

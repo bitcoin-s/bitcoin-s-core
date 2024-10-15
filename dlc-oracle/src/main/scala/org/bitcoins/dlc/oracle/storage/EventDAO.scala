@@ -129,7 +129,7 @@ case class EventDAO()(implicit
         eventDescriptorTLV
       ).<>(EventDb.apply, EventDb.unapply)
 
-    def fk: ForeignKeyQuery[_, RValueDb] = {
+    def fk: ForeignKeyQuery[?, RValueDb] = {
       foreignKey(
         "fk_nonce",
         sourceColumns = nonce,
@@ -137,7 +137,7 @@ case class EventDAO()(implicit
       )(_.nonce)
     }
 
-    def fkLabel: ForeignKeyQuery[_, RValueDb] = {
+    def fkLabel: ForeignKeyQuery[?, RValueDb] = {
       foreignKey(
         "fk_label",
         sourceColumns = eventName,

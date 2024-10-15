@@ -82,7 +82,7 @@ case class EventOutcomeDAO()(implicit
         EventOutcomeDb.unapply
       )
 
-    def fk: ForeignKeyQuery[_, EventDb] = {
+    def fk: ForeignKeyQuery[?, EventDb] = {
       foreignKey(
         "fk_nonce",
         sourceColumns = nonce,

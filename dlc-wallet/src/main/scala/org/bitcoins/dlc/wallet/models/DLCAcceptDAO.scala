@@ -99,7 +99,7 @@ case class DLCAcceptDAO()(implicit
         negotiationFields
       ).<>(DLCAcceptDb.apply, DLCAcceptDb.unapply)
 
-    def fk: ForeignKeyQuery[_, DLCDb] =
+    def fk: ForeignKeyQuery[?, DLCDb] =
       foreignKey(
         "fk_dlc_id",
         sourceColumns = dlcId,

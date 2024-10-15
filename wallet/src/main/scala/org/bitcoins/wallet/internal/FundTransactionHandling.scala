@@ -131,7 +131,7 @@ case class FundTransactionHandling(
                   ShufflingNonInteractiveFinalizer
                 ],
                 NoStream,
-                Effect.Read with Effect.Write with Effect.Transactional] = {
+                Effect.Read & Effect.Write & Effect.Transactional] = {
     val amts = destinations.map(_.value)
     // need to allow 0 for OP_RETURN outputs
     require(

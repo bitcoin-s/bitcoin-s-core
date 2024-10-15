@@ -254,7 +254,7 @@ case class TransactionProcessing(
   protected def insertTransactionAction(
       tx: Transaction,
       blockHashOpt: Option[DoubleSha256DigestBE]
-  ): DBIOAction[TransactionDb, NoStream, Effect.Write with Effect.Read] = {
+  ): DBIOAction[TransactionDb, NoStream, Effect.Write & Effect.Read] = {
     val txDb = TransactionDbHelper.fromTransaction(tx, blockHashOpt)
     transactionDAO.upsertAction(txDb)
   }
@@ -735,7 +735,7 @@ case class TransactionProcessing(
   ): DBIOAction[
     (TransactionDb, IncomingTransactionDb),
     NoStream,
-    Effect.Read with Effect.Write
+    Effect.Read & Effect.Write
   ] = {
     val incomingDb = IncomingTransactionDb(transaction.txIdBE, incomingAmount)
     for {

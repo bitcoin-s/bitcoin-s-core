@@ -13,15 +13,15 @@ trait NodeDbManagement extends DbManagement {
 
   def ec: ExecutionContext
 
-  private lazy val txTable: TableQuery[Table[_]] = {
+  private lazy val txTable: TableQuery[Table[?]] = {
     BroadcastAbleTransactionDAO()(appConfig, ec).table
   }
 
-  private lazy val peerTable: TableQuery[Table[_]] = {
+  private lazy val peerTable: TableQuery[Table[?]] = {
     PeerDAO()(appConfig, ec).table
   }
 
-  override lazy val allTables: List[TableQuery[Table[_]]] = {
+  override lazy val allTables: List[TableQuery[Table[?]]] = {
     List(txTable, peerTable)
   }
 

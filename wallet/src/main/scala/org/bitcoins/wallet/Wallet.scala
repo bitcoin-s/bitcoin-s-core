@@ -347,7 +347,7 @@ object Wallet extends WalletLogger {
     */
   private def createRootAccount(wallet: Wallet, keyManager: BIP39KeyManager)(
       implicit ec: ExecutionContext
-  ): DBIOAction[AccountDb, NoStream, Effect.Read with Effect.Write] = {
+  ): DBIOAction[AccountDb, NoStream, Effect.Read & Effect.Write] = {
     val coinType = HDUtil.getCoinType(keyManager.kmParams.network)
     val coin =
       HDCoin(purpose = keyManager.kmParams.purpose, coinType = coinType)
@@ -397,7 +397,7 @@ object Wallet extends WalletLogger {
     // so the user can change the default account kind later
     // and still have their wallet work
     val createAccountActions: Vector[
-      DBIOAction[AccountDb, NoStream, Effect.Read with Effect.Write]
+      DBIOAction[AccountDb, NoStream, Effect.Read & Effect.Write]
     ] = {
       val accounts = HDPurpose.singleSigPurposes.map { purpose =>
         // we need to create key manager params for each purpose
