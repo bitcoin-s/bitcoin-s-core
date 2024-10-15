@@ -8,7 +8,7 @@ import scala.concurrent.Future
 /** Helper methods for querying by dlcId whne the dlcId is the primary key on
   * the table
   */
-trait DLCIdDaoUtil[T, PrimaryKeyType] { _: CRUD[T, PrimaryKeyType] =>
+trait DLCIdDaoUtil[T, PrimaryKeyType] { self: CRUD[T, PrimaryKeyType] =>
 
   def findByDLCIdAction(
       dlcId: Sha256Digest): profile.api.DBIOAction[Option[
@@ -44,7 +44,7 @@ trait DLCIdDaoUtil[T, PrimaryKeyType] { _: CRUD[T, PrimaryKeyType] =>
 /** Helper methods for querying by dlcId when the dlcId is not a primary key on
   * the table
   */
-trait DLCIdDaoUtilNoPK[T] { _: CRUD[T, _] =>
+trait DLCIdDaoUtilNoPK[T] { self: CRUD[T, _] =>
 
   def findByDLCIdAction(
       dlcId: Sha256Digest): profile.api.DBIOAction[Vector[

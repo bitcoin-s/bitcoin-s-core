@@ -244,9 +244,9 @@ case class DLCTransactionProcessing(
         updatedNonces = {
           usedIds.flatMap { id =>
             outcome match {
-              case enum: EnumOracleOutcome =>
+              case e: EnumOracleOutcome =>
                 val nonces = noncesByAnnouncement(id).sortBy(_.index)
-                nonces.map(_.copy(outcomeOpt = Some(enum.outcome.outcome)))
+                nonces.map(_.copy(outcomeOpt = Some(e.outcome.outcome)))
               case numeric: NumericOracleOutcome =>
                 numeric.oraclesAndOutcomes.flatMap { case (oracle, outcome) =>
                   val id = announcementsWithId

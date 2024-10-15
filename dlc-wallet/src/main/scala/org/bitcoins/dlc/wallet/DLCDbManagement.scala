@@ -6,7 +6,7 @@ import org.bitcoins.dlc.wallet.models._
 import scala.concurrent.ExecutionContext
 
 trait DLCDbManagement extends DbManagement {
-  _: JdbcProfileComponent[DLCAppConfig] =>
+  self: JdbcProfileComponent[DLCAppConfig] =>
 
   import profile.api._
 
