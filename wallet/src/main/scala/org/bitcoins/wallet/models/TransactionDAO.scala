@@ -34,7 +34,7 @@ trait TxDAO[DbEntryType <: TxDB]
   private val mappers = new org.bitcoins.db.DbCommonsColumnMappers(profile)
   import mappers._
 
-  override val table: TableQuery[TxTable]
+  override val table: TableQuery[? <: TxTable]
 
   override def createAll(ts: Vector[DbEntryType]): Future[Vector[DbEntryType]] =
     createAllNoAutoInc(ts, safeDatabase)
@@ -42,12 +42,16 @@ trait TxDAO[DbEntryType <: TxDB]
   override def findByPrimaryKeys(
       txIdBEs: Vector[DoubleSha256DigestBE]
   ): Query[TxTable, DbEntryType, Seq] =
-    table.filter(_.txIdBE.inSet(txIdBEs))
+    table
+      .filter(_.txIdBE.inSet(txIdBEs))
+      .asInstanceOf[Query[TxTable, DbEntryType, Seq]]
 
   override def findByPrimaryKey(
       txIdBE: DoubleSha256DigestBE
   ): Query[TxTable, DbEntryType, Seq] = {
-    table.filter(_.txIdBE === txIdBE)
+    table
+      .filter(_.txIdBE === txIdBE)
+      .asInstanceOf[Query[TxTable, DbEntryType, Seq]]
   }
 
   override def findAll(
@@ -70,7 +74,7 @@ trait TxDAO[DbEntryType <: TxDB]
   def findByTxIds(
       txIdBEs: Vector[DoubleSha256DigestBE]
   ): Future[Vector[DbEntryType]] = {
-    val q = table.filter(_.txIdBE.inSet(txIdBEs))
+    val q = findByPrimaryKeys(txIdBEs)
 
     safeDatabase.runVec(q.result)
   }

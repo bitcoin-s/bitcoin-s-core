@@ -34,14 +34,18 @@ abstract class CRUDAutoInc[T <: DbRowAutoInc[T]](implicit
   override protected def findByPrimaryKey(
       id: Long
   ): Query[TableAutoInc, T, Seq] =
-    table.filter(_.id === id)
+    table
+      .filter(_.id === id)
+      .asInstanceOf[Query[TableAutoInc, T, Seq]]
 
   override def findByPrimaryKeys(
       ids: Vector[Long]
   ): Query[TableAutoInc, T, Seq] = {
-    table.filter { t =>
-      t.id.inSet(ids)
-    }
+    table
+      .filter { t =>
+        t.id.inSet(ids)
+      }
+      .asInstanceOf[Query[TableAutoInc, T, Seq]]
   }
 
   override def findAll(ts: Vector[T]): Query[Table[T], T, Seq] = {
