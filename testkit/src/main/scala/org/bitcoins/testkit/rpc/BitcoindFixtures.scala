@@ -30,12 +30,12 @@ trait BitcoindFixtures extends BitcoinSFixture with EmbeddedPg {
 
 /** Bitcoind fixtures with a cached a bitcoind instance */
 trait BitcoindFixturesCached extends BitcoindFixtures {
-  self: BitcoinSAsyncFixtureTest with CachedBitcoind[_] =>
+  self: BitcoinSAsyncFixtureTest & CachedBitcoind[?] =>
 }
 
 /** Bitcoind fixtures with a cached a bitcoind instance that is funded */
 trait BitcoindFixturesFundedCached extends BitcoindFixtures {
-  self: BitcoinSAsyncFixtureTest with CachedBitcoindFunded[_] =>
+  self: BitcoinSAsyncFixtureTest & CachedBitcoindFunded[?] =>
 
   override def withFixture(test: OneArgAsyncTest): FutureOutcome = {
     val f: Future[Outcome] = for {

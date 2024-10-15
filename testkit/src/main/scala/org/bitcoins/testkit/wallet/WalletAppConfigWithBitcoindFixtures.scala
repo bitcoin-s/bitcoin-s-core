@@ -15,7 +15,7 @@ import scala.concurrent.Future
 trait WalletAppConfigWithBitcoindFixtures
     extends BitcoinSAsyncFixtureTest
     with BitcoindFixturesCached
-    with EmbeddedPg { self: CachedBitcoind[_] =>
+    with EmbeddedPg { self: CachedBitcoind[?] =>
 
   override def afterAll(): Unit = {
     super[EmbeddedPg].afterAll()

@@ -29,7 +29,7 @@ import scala.util.{Failure, Success}
 trait BitcoinSWalletTestCachedBitcoind
     extends BitcoinSFixture
     with BaseWalletTest
-    with EmbeddedPg { self: CachedBitcoind[_] =>
+    with EmbeddedPg { self: CachedBitcoind[?] =>
 
   /** Creates a funded wallet fixture with bitcoind This is different than
     * [[withFundedWalletAndBitcoind()]] in the sense that it does NOT destroy
@@ -40,7 +40,7 @@ trait BitcoinSWalletTestCachedBitcoind
       test: OneArgAsyncTest,
       bitcoind: BitcoindRpcClient
   )(implicit walletAppConfig: WalletAppConfig): FutureOutcome = {
-    val builder: () => Future[WalletWithBitcoind[_]] = { () =>
+    val builder: () => Future[WalletWithBitcoind[?]] = { () =>
       for {
         walletWithBitcoind <- createWalletWithBitcoindCallbacks(
           bitcoind = bitcoind
@@ -56,7 +56,7 @@ trait BitcoinSWalletTestCachedBitcoind
       } yield fundedWallet
     }
 
-    makeDependentFixture[WalletWithBitcoind[_]](
+    makeDependentFixture[WalletWithBitcoind[?]](
       builder,
       { case walletWithBitcoind: WalletWithBitcoind[_] =>
         destroyOnlyWalletWithBitcoindCached(walletWithBitcoind)
@@ -68,7 +68,7 @@ trait BitcoinSWalletTestCachedBitcoind
       test: OneArgAsyncTest,
       bitcoind: BitcoindRpcClient
   )(implicit walletAppConfig: WalletAppConfig): FutureOutcome = {
-    val builder: () => Future[WalletWithBitcoind[_]] =
+    val builder: () => Future[WalletWithBitcoind[?]] =
       BitcoinSFixture.composeBuildersAndWrap(
         builder = { () =>
           Future.successful(bitcoind)
@@ -77,11 +77,11 @@ trait BitcoinSWalletTestCachedBitcoind
           createWalletWithBitcoind(bitcoind)
         },
         wrap =
-          (_: BitcoindRpcClient, walletWithBitcoind: WalletWithBitcoind[_]) =>
+          (_: BitcoindRpcClient, walletWithBitcoind: WalletWithBitcoind[?]) =>
             walletWithBitcoind
       )
 
-    makeDependentFixture[WalletWithBitcoind[_]](
+    makeDependentFixture[WalletWithBitcoind[?]](
       builder,
       { case walletWithBitcoind: WalletWithBitcoind[_] =>
         destroyOnlyWalletWithBitcoindCached(walletWithBitcoind)

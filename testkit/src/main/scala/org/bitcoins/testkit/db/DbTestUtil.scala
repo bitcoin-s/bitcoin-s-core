@@ -30,14 +30,14 @@ trait TestDbManagement extends DbManagement {
 
   def ec: ExecutionContext
 
-  private lazy val testTable: TableQuery[Table[_]] =
+  private lazy val testTable: TableQuery[Table[?]] =
     TestDAO()(ec, appConfig).table
 
-  private lazy val masterXpubTable: TableQuery[Table[_]] = {
+  private lazy val masterXpubTable: TableQuery[Table[?]] = {
     MasterXPubDAO()(ec = ec, appConfig = appConfig).table
   }
 
-  override lazy val allTables: List[TableQuery[Table[_]]] =
+  override lazy val allTables: List[TableQuery[Table[?]]] =
     List(testTable, masterXpubTable)
 
 }
