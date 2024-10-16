@@ -3,13 +3,13 @@ import sbt.Keys.excludeLintKeys
 import scala.util.Properties
 
 val scala2_13 = "2.13.16"
-val scala3 = "3.5.0"
+val scala3 = "3.5.1"
 
 ThisBuild / scalafmtOnCompile := !Properties.envOrNone("CI").contains("true")
 
 ThisBuild / scalaVersion := scala3
 
-ThisBuild / crossScalaVersions := List(scala2_13, scala3)
+ThisBuild / crossScalaVersions := List(/*scala2_13,*/ scala3)
 
 //https://github.com/sbt/sbt/pull/5153
 //https://github.com/bitcoin-s/bitcoin-s/pull/2194
