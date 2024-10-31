@@ -90,6 +90,7 @@ trait TxDAO[DbEntryType <: TxDB]
   ): DBIOAction[Vector[DbEntryType], NoStream, Effect.Read] = {
     table
       .filter(_.txIdBE.inSet(txIdBEs))
+      .asInstanceOf[Query[TxTable, DbEntryType, Seq]]
       .result
       .map(_.toVector)
   }
