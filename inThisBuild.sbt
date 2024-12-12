@@ -3,7 +3,7 @@ import sbt.Keys.excludeLintKeys
 import scala.util.Properties
 
 val scala2_13 = "2.13.16"
-val scala3 = "3.5.1"
+val scala3 = "3.6.2"
 
 ThisBuild / scalafmtOnCompile := !Properties.envOrNone("CI").contains("true")
 
