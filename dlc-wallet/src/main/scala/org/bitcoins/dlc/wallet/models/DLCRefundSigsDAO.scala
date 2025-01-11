@@ -79,11 +79,11 @@ case class DLCRefundSigsDAO()(implicit
 
     def * : ProvenShape[DLCRefundSigsDb] =
       (dlcId, accepterSig, initiatorSig).<>(
-        DLCRefundSigsDb.tupled,
+        DLCRefundSigsDb.apply,
         DLCRefundSigsDb.unapply
       )
 
-    def fk: ForeignKeyQuery[_, DLCDb] =
+    def fk: ForeignKeyQuery[?, DLCDb] =
       foreignKey(
         "fk_dlc_id",
         sourceColumns = dlcId,

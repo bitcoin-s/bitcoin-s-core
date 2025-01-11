@@ -67,11 +67,10 @@ case class NeutrinoNode(
     )
   }
 
-  private[this] var queueOpt
-      : Option[SourceQueueWithComplete[NodeStreamMessage]] =
+  private var queueOpt: Option[SourceQueueWithComplete[NodeStreamMessage]] =
     None
 
-  private[this] var streamDoneFOpt: Option[Future[NodeState]] = None
+  private var streamDoneFOpt: Option[Future[NodeState]] = None
 
   private val decider: Supervision.Decider = { case err: Throwable =>
     logger.error(s"Error occurred while processing p2p pipeline stream", err)
@@ -201,9 +200,9 @@ case class NeutrinoNode(
   ): Future[Vector[FilterResponse]] =
     chainApiFromDb().flatMap(_.getFiltersBetweenHeights(startHeight, endHeight))
 
-  private[this] val INACTIVITY_CHECK_TIMEOUT = 60.seconds
+  private val INACTIVITY_CHECK_TIMEOUT = 60.seconds
 
-  @volatile private[this] var inactivityCancellableOpt: Option[Cancellable] =
+  @volatile private var inactivityCancellableOpt: Option[Cancellable] =
     None
 
   private def healthChecksRunnable(): Runnable = { () =>

@@ -71,7 +71,7 @@ case class ScriptPubKeyDAO()(implicit
     safeDatabase.run(action)
   }
 
-  case class ScriptPubKeyTable(tag: Tag)
+  class ScriptPubKeyTable(tag: Tag)
       extends TableAutoInc(tag, schemaName, "pub_key_scripts") {
 
     def scriptPubKey: Rep[ScriptPubKey] = column("script_pub_key")

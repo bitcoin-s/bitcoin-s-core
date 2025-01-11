@@ -59,6 +59,6 @@ case class DLCRemoteTxDAO()(implicit
         numOutputs,
         locktime,
         blockHash
-      ).<>(TransactionDb.tupled, TransactionDb.unapply)
+      ).<>(TransactionDb.apply, TransactionDb.unapply)
   }
 }

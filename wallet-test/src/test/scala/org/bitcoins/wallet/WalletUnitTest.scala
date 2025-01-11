@@ -29,9 +29,8 @@ class WalletUnitTest extends BitcoinSWalletTest {
 
   behavior of "Wallet - unit test"
 
-  it must "write the mnemonic seed in the correct directory" in {
-    (wallet: Wallet) =>
-      assert(Files.exists(wallet.walletConfig.seedPath))
+  it must "write the mnemonic seed in the correct directory" in { wallet =>
+    assert(Files.exists(wallet.walletConfig.seedPath))
   }
 
   it should "create a new wallet" in { (wallet: Wallet) =>
@@ -95,8 +94,8 @@ class WalletUnitTest extends BitcoinSWalletTest {
         chain: HDChainType
     ): Future[Assertion] = {
       val getAddrFunc: () => Future[BitcoinAddress] = chain match {
-        case Change   => wallet.getNewChangeAddress _
-        case External => wallet.getNewAddress _
+        case Change   => (() => wallet.getNewChangeAddress())
+        case External => (() => wallet.getNewAddress())
       }
       for {
         _ <- {

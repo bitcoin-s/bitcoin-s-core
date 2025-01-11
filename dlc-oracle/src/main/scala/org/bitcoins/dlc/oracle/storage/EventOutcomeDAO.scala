@@ -78,11 +78,11 @@ case class EventOutcomeDAO()(implicit
 
     def * : ProvenShape[EventOutcomeDb] =
       (nonce, message, hashedMessage).<>(
-        EventOutcomeDb.tupled,
+        EventOutcomeDb.apply,
         EventOutcomeDb.unapply
       )
 
-    def fk: ForeignKeyQuery[_, EventDb] = {
+    def fk: ForeignKeyQuery[?, EventDb] = {
       foreignKey(
         "fk_nonce",
         sourceColumns = nonce,

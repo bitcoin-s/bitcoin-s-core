@@ -71,6 +71,6 @@ case class RValueDAO()(implicit
 
     def * : ProvenShape[RValueDb] =
       (nonce, eventName, purpose, coinType, accountIndex, chainType, keyIndex)
-        .<>(RValueDb.tupled, RValueDb.unapply)
+        .<>(RValueDb.apply, RValueDb.unapply)
   }
 }

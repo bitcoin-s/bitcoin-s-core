@@ -31,7 +31,7 @@ class ProcessTransactionTest extends BitcoinSWalletTest {
   /** Verifies that executing the given action doesn't change wallet state */
   private def checkUtxosAndBalance(
       wallet: WalletApi
-  )(action: => Future[_]): Future[Assertion] =
+  )(action: => Future[?]): Future[Assertion] =
     for {
       oldTransactions <- wallet.transactionProcessing.listTransactions()
       oldUtxos <- wallet.utxoHandling.getUtxos()

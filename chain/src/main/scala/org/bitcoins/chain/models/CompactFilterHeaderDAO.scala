@@ -43,7 +43,7 @@ case class CompactFilterHeaderDAO()(implicit
 
     override def * = {
       (hash, filterHash, previousFilterHeader, blockHash, height).<>(
-        CompactFilterHeaderDb.tupled,
+        CompactFilterHeaderDb.apply,
         CompactFilterHeaderDb.unapply
       )
     }
