@@ -87,10 +87,15 @@ TaskKeys.downloadLnd := {
     val success = hash.equalsIgnoreCase(expectedHash)
     if (success) {
       logger.info(s"Download complete and verified, unzipping result")
-
-      val extractCommand = s"tar -xzf $archiveLocation --directory $binaryDir"
-      logger.info(s"Extracting archive with command: $extractCommand")
-      extractCommand.!!
+      val cmds = Vector(
+        "tar",
+        "-xzf",
+        archiveLocation.toString,
+        "--directory",
+        binaryDir.toString
+      )
+      logger.info(s"Extracting archive with command: $cmds")
+      cmds.!!
     } else {
       Files.deleteIfExists(versionDir)
       logger.error(
