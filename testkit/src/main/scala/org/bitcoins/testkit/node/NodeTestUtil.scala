@@ -19,7 +19,7 @@ import scala.concurrent.{ExecutionContext, Future}
 abstract class NodeTestUtil extends P2PLogger {
 
   /** Helper method to get the [[java.net.InetSocketAddress]] we need to connect
-    * to to make a p2p connection with bitcoind
+    * to make a p2p connection with bitcoind
     * @param bitcoindRpcClient
     * @return
     */

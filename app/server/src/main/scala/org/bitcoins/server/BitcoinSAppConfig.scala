@@ -270,7 +270,7 @@ object BitcoinSAppConfig extends BitcoinSLogger {
     fromDatadirWithBundleConf(datadir, Vector(serverArgParser.toConfig))
   }
 
-  /** Creates a BitcoinSAppConfig the the given daemon args to a server */
+  /** Creates a BitcoinSAppConfig the given daemon args to a server */
   def fromDefaultDatadirWithServerArgs(
       serverArgParser: ServerArgParser
   )(implicit system: ActorSystem): BitcoinSAppConfig = {

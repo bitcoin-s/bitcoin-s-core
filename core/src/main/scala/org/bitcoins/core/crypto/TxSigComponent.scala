@@ -244,7 +244,7 @@ object TxSigComponent {
 }
 
 /** The [[org.bitcoins.core.crypto.TxSigComponent TxSigComponent]] used to
-  * evaluate the the original Satoshi transaction digest algorithm. Basically
+  * evaluate the original Satoshi transaction digest algorithm. Basically
   * this is every spk that is not a
   * [[org.bitcoins.core.protocol.script.WitnessScriptPubKey WitnessScriptPubKey]]
   * EXCEPT in the case of a P2SH(witness script)
