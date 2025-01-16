@@ -70,9 +70,8 @@ object AsyncSign {
 
   private case class AsyncSignImpl(
       asyncSignFunction: ByteVector => Future[ECDigitalSignature],
-      asyncSignWithEntropyFunction: (
-          ByteVector,
-          ByteVector) => Future[ECDigitalSignature],
+      asyncSignWithEntropyFunction: (ByteVector, ByteVector) => Future[
+        ECDigitalSignature],
       override val publicKey: ECPublicKey)
       extends AsyncSign {
 
@@ -89,9 +88,8 @@ object AsyncSign {
 
   def apply(
       asyncSign: ByteVector => Future[ECDigitalSignature],
-      asyncSignWithEntropy: (
-          ByteVector,
-          ByteVector) => Future[ECDigitalSignature],
+      asyncSignWithEntropy: (ByteVector, ByteVector) => Future[
+        ECDigitalSignature],
       pubKey: ECPublicKey): AsyncSign = {
     AsyncSignImpl(asyncSign, asyncSignWithEntropy, pubKey)
   }

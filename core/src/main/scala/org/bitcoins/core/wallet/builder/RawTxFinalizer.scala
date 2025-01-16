@@ -362,11 +362,12 @@ case class ShufflingNonInteractiveFinalizer(
       .map(input => inputInfos.find(_.outPoint == input.previousOutput).get)
 
     val sanityCheck =
-      SanityCheckFinalizer(inputInfos = shuffledInputInfos,
-                           expectedOutputSPKs =
-                             tempTxBuilderResult.outputs.map(_.scriptPubKey),
-                           expectedFeeRate = feeRate,
-                           changeSPKs = Vector(changeSPK))
+      SanityCheckFinalizer(
+        inputInfos = shuffledInputInfos,
+        expectedOutputSPKs = tempTxBuilderResult.outputs.map(_.scriptPubKey),
+        expectedFeeRate = feeRate,
+        changeSPKs = Vector(changeSPK)
+      )
 
     sanityCheck
       .andThen(AddWitnessDataFinalizer(shuffledInputInfos))

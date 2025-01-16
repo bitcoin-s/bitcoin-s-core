@@ -74,9 +74,8 @@ case class TestDLCClient(
     * from them
     */
   def setupDLCAccept(
-      sendSigs: (
-          CETSignatures,
-          PartialSignature[ECDigitalSignature]) => Future[Unit],
+      sendSigs: (CETSignatures, PartialSignature[ECDigitalSignature]) => Future[
+        Unit],
       getSigs: Future[(CETSignatures,
                        PartialSignature[ECDigitalSignature],
                        FundingSignatures)]

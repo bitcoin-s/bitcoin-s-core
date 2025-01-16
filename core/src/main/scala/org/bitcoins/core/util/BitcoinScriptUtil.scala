@@ -607,8 +607,8 @@ trait BitcoinScriptUtil {
     }
   }
 
-  /** Since witnesses are not run through the interpreter, replace `OP_0`/`OP_1`
-    * with `ScriptNumber.zero`/`ScriptNumber.one`
+  /** Since witnesses are not run through the interpreter, replace `OP_0`
+    * /`OP_1` with `ScriptNumber.zero` /`ScriptNumber.one`
     */
   def minimalIfOp(asm: Seq[ScriptToken]): Seq[ScriptToken] = {
     asm.map {

@@ -28,34 +28,38 @@ import scodec.bits.ByteVector
 
 case class DLCTxBuilder(offer: DLCOffer, accept: DLCAcceptWithoutSigs) {
 
-  val DLCOffer(_,
-               _,
-               DLCPublicKeys(offerFundingKey: ECPublicKey,
-                             offerFinalAddress: BitcoinAddress),
-               offerTotalCollateral: Satoshis,
-               offerFundingInputs: Vector[DLCFundingInput],
-               offerChangeAddress: BitcoinAddress,
-               offerPayoutSerialId: UInt64,
-               offerChangeSerialId: UInt64,
-               fundOutputSerialId: UInt64,
-               feeRate: SatoshisPerVirtualByte,
-               DLCTimeouts(contractMaturity: BlockTimeStamp,
-                           contractTimeout: BlockTimeStamp),
-               _) = offer
+  val DLCOffer(
+    _,
+    _,
+    DLCPublicKeys(offerFundingKey: ECPublicKey,
+                  offerFinalAddress: BitcoinAddress),
+    offerTotalCollateral: Satoshis,
+    offerFundingInputs: Vector[DLCFundingInput],
+    offerChangeAddress: BitcoinAddress,
+    offerPayoutSerialId: UInt64,
+    offerChangeSerialId: UInt64,
+    fundOutputSerialId: UInt64,
+    feeRate: SatoshisPerVirtualByte,
+    DLCTimeouts(contractMaturity: BlockTimeStamp,
+                contractTimeout: BlockTimeStamp),
+    _
+  ) = offer
 
   val network: BitcoinNetwork = offerFinalAddress.networkParameters match {
     case network: BitcoinNetwork => network
   }
 
-  val DLCAcceptWithoutSigs(acceptTotalCollateral: Satoshis,
-                           DLCPublicKeys(acceptFundingKey: ECPublicKey,
-                                         acceptFinalAddress: BitcoinAddress),
-                           acceptFundingInputs: Vector[DLCFundingInput],
-                           acceptChangeAddress: BitcoinAddress,
-                           acceptPayoutSerialId: UInt64,
-                           acceptChangeSerialId: UInt64,
-                           acceptNegotiationFields: DLCAccept.NegotiationFields,
-                           tempContractId: Sha256Digest) = accept
+  val DLCAcceptWithoutSigs(
+    acceptTotalCollateral: Satoshis,
+    DLCPublicKeys(acceptFundingKey: ECPublicKey,
+                  acceptFinalAddress: BitcoinAddress),
+    acceptFundingInputs: Vector[DLCFundingInput],
+    acceptChangeAddress: BitcoinAddress,
+    acceptPayoutSerialId: UInt64,
+    acceptChangeSerialId: UInt64,
+    acceptNegotiationFields: DLCAccept.NegotiationFields,
+    tempContractId: Sha256Digest
+  ) = accept
 
   val totalInput: CurrencyUnit = offerTotalCollateral + acceptTotalCollateral
 

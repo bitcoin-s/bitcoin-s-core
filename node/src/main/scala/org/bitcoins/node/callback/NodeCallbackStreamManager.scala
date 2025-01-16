@@ -96,11 +96,11 @@ case class NodeCallbackStreamManager(
   private val (blockQueue, blockSinkCompleteF) =
     matSourceAndQueue(blockQueueSource, blockSink)
 
-  private val merkleBlockQueueSource
-      : Source[(MerkleBlock, Vector[Transaction]),
-               SourceQueueWithComplete[
-                 (MerkleBlock, Vector[Transaction])
-               ]] = {
+  private val merkleBlockQueueSource: Source[(MerkleBlock, Vector[Transaction]),
+                                             SourceQueueWithComplete[
+                                               (MerkleBlock,
+                                                Vector[Transaction])
+                                             ]] = {
     Source.queue(maxBufferSize, overflowStrategy)
   }
 

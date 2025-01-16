@@ -133,12 +133,12 @@ case class DLCActionBuilder(dlcWalletDAOs: DLCWalletDAOs) {
     val offerDbsQ = dlcOfferDAO.findByPrimaryKey(dlcId)
     // optimization to use sql queries rather than action
     // as this method gets called a lot.
-    val dlcDbOfferDbContractDataDbOptA
-        : DBIOAction[Option[
-                       ((DLCDb, DLCOfferDb), DLCContractDataDb)
-                     ],
-                     NoStream,
-                     Effect.Read with Effect.Transactional] = {
+    val dlcDbOfferDbContractDataDbOptA: DBIOAction[
+      Option[
+        ((DLCDb, DLCOfferDb), DLCContractDataDb)
+      ],
+      NoStream,
+      Effect.Read with Effect.Transactional] = {
       dlcDbQ
         .join(offerDbsQ)
         .on(_.dlcId === _.dlcId)
@@ -172,12 +172,12 @@ case class DLCActionBuilder(dlcWalletDAOs: DLCWalletDAOs) {
     */
   def updateDLCOracleSigsAction(
       outcomeAndSigByNonce: Map[SchnorrNonce, (String, SchnorrDigitalSignature)]
-  )(implicit ec: ExecutionContext)
-      : DBIOAction[Vector[
-                     OracleNonceDb
-                   ],
-                   NoStream,
-                   Effect.Write with Effect.Read with Effect.Transactional] = {
+  )(implicit ec: ExecutionContext): DBIOAction[
+    Vector[
+      OracleNonceDb
+    ],
+    NoStream,
+    Effect.Write with Effect.Read with Effect.Transactional] = {
     val updateAction = for {
       nonceDbs <- oracleNonceDAO.findByNoncesAction(
         outcomeAndSigByNonce.keys.toVector

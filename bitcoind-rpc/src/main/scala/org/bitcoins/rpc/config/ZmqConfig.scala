@@ -35,7 +35,8 @@ object ZmqConfig extends BitcoinSLogger {
       rawTx = rawTx
     )
 
-  /** Creates a `ZmqConfig` with all `URI`s set to `localhost` and the same port
+  /** Creates a `ZmqConfig` with all `URI` s set to `localhost` and the same
+    * port
     */
   def fromPort(port: Int): ZmqConfig = {
     val uri = new InetSocketAddress("tcp://127.0.0.1", port)

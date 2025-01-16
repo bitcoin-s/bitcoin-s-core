@@ -28,7 +28,8 @@ case class PSBT(
     s"There must be an input map for every input in the global transaction, inputs: ${transaction.inputs}")
   require(
     outputMaps.size == transaction.outputs.size,
-    s"There must be an output map for every output in the global transaction, outputs: ${transaction.outputs}")
+    s"There must be an output map for every output in the global transaction, outputs: ${transaction.outputs}"
+  )
 
   require(
     inputMaps.zip(transaction.inputs).forall { case (inputMap, txIn) =>
@@ -73,7 +74,8 @@ case class PSBT(
     require(
       isFinalized || inputMaps.size == 1 || inputMaps.forall(
         !_.isBIP143Vulnerable),
-      "One or more of the input maps are susceptible to the BIP 143 vulnerability")
+      "One or more of the input maps are susceptible to the BIP 143 vulnerability"
+    )
 
     this
   }

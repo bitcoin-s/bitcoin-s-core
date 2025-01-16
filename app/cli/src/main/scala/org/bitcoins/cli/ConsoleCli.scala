@@ -2031,7 +2031,7 @@ object ConsoleCli extends BitcoinSLogger {
   }
 
   /** Converts a `ujson.Value` to String, making an effort to avoid preceding
-    * and trailing `"`s
+    * and trailing `"` s
     */
   private def jsValueToString(value: ujson.Value): String = {
     value match {
