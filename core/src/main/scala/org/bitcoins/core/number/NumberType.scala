@@ -17,7 +17,7 @@ sealed abstract class Number[T <: Number[T]]
     with BasicArithmetic[T] {
   type A = BigInt
 
-  /** The underlying scala number used to to hold the number */
+  /** The underlying scala number used to hold the number */
   protected def underlying: A
 
   def toByte: Byte = toBigInt.bigInteger.byteValueExact()

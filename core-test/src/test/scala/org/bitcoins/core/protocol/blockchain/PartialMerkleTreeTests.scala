@@ -188,7 +188,7 @@ class PartialMerkleTreeTests extends BitcoinSUnitTest {
 
     PartialMerkleTree.matchesTx(maxHeight, 3, 5, matchedTxs) must be(false)
 
-    // it must match the the correct leaf nodes (great-great-grand-children), which are indexes 7 and 8
+    // it must match the correct leaf nodes (great-great-grand-children), which are indexes 7 and 8
     PartialMerkleTree.matchesTx(maxHeight, 4, 0, matchedTxs) must be(false)
     PartialMerkleTree.matchesTx(maxHeight, 4, 1, matchedTxs) must be(false)
     PartialMerkleTree.matchesTx(maxHeight, 4, 2, matchedTxs) must be(false)

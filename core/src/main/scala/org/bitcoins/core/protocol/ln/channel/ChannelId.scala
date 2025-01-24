@@ -12,7 +12,7 @@ import scodec.bits.ByteVector
   */
 sealed abstract class ChannelId extends NetworkElement
 
-/** Represents the the temporary channelId created in the `open_channel` msg of
+/** Represents the temporary channelId created in the `open_channel` msg of
   * the
   * [[https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#the-open_channel-message LN p2p protocol]]
   */

@@ -86,7 +86,7 @@ object FutureUtil {
   }
 
   /** Batches the elements by batchSize, executes f, and then aggregates all of
-    * the results into a vector and returns it. This is is the synchronous
+    * the results into a vector and returns it. This is the synchronous
     * version of batchAndParallelExecute
     */
   def batchAndSyncExecute[T, U](

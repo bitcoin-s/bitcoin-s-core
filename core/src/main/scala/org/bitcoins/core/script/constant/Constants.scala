@@ -213,7 +213,7 @@ case object OP_PUSHDATA4 extends ScriptOperation {
   def max = 4294967295L
 }
 
-/** Represents a [[ScriptNumberOperation]] where the the number in the operation
+/** Represents a [[ScriptNumberOperation]] where the number in the operation
   * is pushed onto the stack i.e. OP_0 would be push 0 onto the stack, OP_1
   * would be push 1 onto the stack.
   */
