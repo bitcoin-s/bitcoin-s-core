@@ -25,11 +25,11 @@ trait NodeCallbacks
     with NodeApiCallbacks
     with BitcoinSLogger {
 
-  def onCompactFiltersReceived
-      : CallbackHandler[Vector[
-                          (DoubleSha256DigestBE, GolombFilter)
-                        ],
-                        OnCompactFiltersReceived]
+  def onCompactFiltersReceived: CallbackHandler[Vector[
+                                                  (DoubleSha256DigestBE,
+                                                   GolombFilter)
+                                                ],
+                                                OnCompactFiltersReceived]
 
   def onTxReceived: CallbackHandler[Transaction, OnTxReceived]
 

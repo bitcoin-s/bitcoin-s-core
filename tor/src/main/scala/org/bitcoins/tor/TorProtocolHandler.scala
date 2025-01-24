@@ -246,7 +246,9 @@ object TorProtocolHandler {
         ) // remove non-numeric symbols at the end of the last number (rc, beta, alpha, etc.)
         .map(d => Try(d.toInt).getOrElse(0))
         .zipAll(List(0, 3, 3, 6), 0, 0) // min version for v3 is 0.3.3.6
-        .foldLeft(Option.empty[Boolean]) { // compare subversion by subversion starting from the left
+        .foldLeft(
+          Option.empty[Boolean]
+        ) { // compare subversion by subversion starting from the left
           case (Some(res), _) =>
             Some(
               res

@@ -96,20 +96,22 @@ object ReservedOperation extends ScriptOperationFactory[ReservedOperation] {
     org.bitcoins.core.script.reserved.ReservedOperation
       with Product
       with java.io.Serializable] =
-    Vector(OP_RESERVED,
-           OP_VER,
-           OP_VERIF,
-           OP_VERNOTIF,
-           OP_RESERVED,
-           OP_RESERVED1,
-           OP_RESERVED2,
-           OP_NOP,
-           OP_NOP1,
-           OP_NOP4,
-           OP_NOP5,
-           OP_NOP6,
-           OP_NOP7,
-           OP_NOP8,
-           OP_NOP9,
-           OP_NOP10) ++ undefinedOpCodes
+    Vector(
+      OP_RESERVED,
+      OP_VER,
+      OP_VERIF,
+      OP_VERNOTIF,
+      OP_RESERVED,
+      OP_RESERVED1,
+      OP_RESERVED2,
+      OP_NOP,
+      OP_NOP1,
+      OP_NOP4,
+      OP_NOP5,
+      OP_NOP6,
+      OP_NOP7,
+      OP_NOP8,
+      OP_NOP9,
+      OP_NOP10
+    ) ++ undefinedOpCodes
 }

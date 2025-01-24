@@ -451,10 +451,10 @@ case class InputPSBTMap(elements: Vector[InputPSBTRecord])
         Failure(new IllegalArgumentException(
           s"Could not collect $required signatures when only the following were present: $sigs"))
       } else {
-        val scriptSig = constructScriptSig(sigs.map {
-          case sig: PartialSignature[Sig] =>
+        val scriptSig = constructScriptSig(
+          sigs.map { case sig: PartialSignature[Sig] =>
             PartialSignature(sig.pubKey, sig.signature)
-        })
+          })
 
         val newInputMap = wipeAndAdd(scriptSig)
 

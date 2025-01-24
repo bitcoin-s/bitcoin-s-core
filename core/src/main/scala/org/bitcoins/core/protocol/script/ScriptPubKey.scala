@@ -212,9 +212,11 @@ object MultiSignatureScriptPubKey
       "We cannot have more required signatures than: " +
         Consensus.maxPublicKeysPerMultiSig + " got: " + requiredSigs
     )
-    require(pubKeys.length <= Consensus.maxPublicKeysPerMultiSig,
-            "We cannot have more public keys than " +
-              Consensus.maxPublicKeysPerMultiSig + " got: " + pubKeys.length)
+    require(
+      pubKeys.length <= Consensus.maxPublicKeysPerMultiSig,
+      "We cannot have more public keys than " +
+        Consensus.maxPublicKeysPerMultiSig + " got: " + pubKeys.length
+    )
 
     val required = ScriptNumberOperation.fromNumber(requiredSigs) match {
       case Some(scriptNumOp) => Seq(scriptNumOp)
