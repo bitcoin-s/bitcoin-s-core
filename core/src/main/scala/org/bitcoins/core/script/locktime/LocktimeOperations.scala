@@ -14,7 +14,7 @@ sealed trait LocktimeOperation extends ScriptOperation
   *      stack item is greater than or equal to 500000000 while the
   *      transaction's nLockTime field is less than 500000000, or vice versa; or
   *      4. the input's nSequence field is equal to 0xffffffff. The precise
-  *      semantics are described in BIP 0065
+  *         semantics are described in BIP 0065
   */
 case object OP_CHECKLOCKTIMEVERIFY extends LocktimeOperation {
   override val opCode: Int = 177

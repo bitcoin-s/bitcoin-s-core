@@ -2125,12 +2125,12 @@ case class DLCWallet(override val walletApi: Wallet)(implicit
 
     // optimization to use sql queries rather than action
     // as this method gets called a lot.
-    val offerAndContractA
-        : DBIOAction[Vector[
-                       ((DLCOfferDb, DLCContractDataDb), Option[DLCAcceptDb])
-                     ],
-                     NoStream,
-                     Effect.Read] = {
+    val offerAndContractA: DBIOAction[Vector[
+                                        ((DLCOfferDb, DLCContractDataDb),
+                                         Option[DLCAcceptDb])
+                                      ],
+                                      NoStream,
+                                      Effect.Read] = {
       offerDbsQ
         .join(contractDbsQ)
         .on(_.dlcId === _.dlcId)

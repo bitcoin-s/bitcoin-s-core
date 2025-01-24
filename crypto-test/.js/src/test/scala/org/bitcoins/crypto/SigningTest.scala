@@ -65,8 +65,7 @@ class SigningTest extends BitcoinSCryptoTest {
         }
 
         testVerify(index, pk, msgBytes, schnorrSig, result, comment)
-      case (Failure(_), _) |
-          (_, Failure(_)) => // Must be verify only test resulting in false
+      case (Failure(_), _) | (_, Failure(_)) => // Must be verify only test resulting in false
         assert(secKeyOpt.isEmpty)
         assert(auxRandOpt.isEmpty)
         assert(!result, s"Test $index failed to parse signature: $comment")

@@ -1,6 +1,7 @@
 name := s"bitcoin-s-cli"
 
-Universal / packageName := CommonSettings.buildPackageName((Universal /packageName).value)
+Universal / packageName := CommonSettings.buildPackageName(
+  (Universal / packageName).value)
 
 libraryDependencies ++= Deps.cli.value
 
