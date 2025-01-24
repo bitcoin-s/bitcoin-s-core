@@ -43,52 +43,50 @@ This link is intended for setting up development of bitcoin-s. If you want to ju
 
 ### Adding bitcoin-s to your library
 
-The latest release of bitcoin-s is `1.9.9`, here is how you can use the dependencies in your projects:
+The latest release of bitcoin-s is `1.9.10`, here is how you can use the dependencies in your projects:
 
 ```
-libraryDependencies += "org.bitcoin-s" % "bitcoin-s-secp256k1jni" % "1.9.9"
+libraryDependencies += "org.bitcoin-s" % "bitcoin-s-secp256k1jni" % "1.9.10"
 
-libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-core" % "1.9.9"
+libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-core" % "1.9.10"
 
-libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-crypto" % "1.9.9"
+libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-crypto" % "1.9.10"
 
-libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-chain" % "1.9.9"
+libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-chain" % "1.9.10"
 
-libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-dlc-oracle" % "1.9.9"
+libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-dlc-oracle" % "1.9.10"
 
-libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-oracle-explorer-client" % "1.9.9"
+libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-app-commons" % "1.9.10"
 
-libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-app-commons" % "1.9.9"
+libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-db-commons" % "1.9.10"
 
-libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-db-commons" % "1.9.9"
+libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-fee-provider" % "1.9.10"
 
-libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-fee-provider" % "1.9.9"
+libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-bitcoind-rpc" % "1.9.10"
 
-libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-bitcoind-rpc" % "1.9.9"
+libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-eclair-rpc" % "1.9.10"
 
-libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-eclair-rpc" % "1.9.9"
+libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-lnd-rpc" % "1.9.10"
 
-libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-lnd-rpc" % "1.9.9"
+libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-key-manager" % "1.9.10"
 
-libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-key-manager" % "1.9.9"
+libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-node" % "1.9.10"
 
-libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-node" % "1.9.9"
+libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-dlc-node" % "1.9.10"
 
-libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-dlc-node" % "1.9.9"
+libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-wallet" % "1.9.10"
 
-libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-wallet" % "1.9.9"
+libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-dlc-wallet" % "1.9.10"
 
-libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-dlc-wallet" % "1.9.9"
+libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-testkit-core" % "1.9.10"
 
-libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-testkit-core" % "1.9.9"
+libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-testkit" % "1.9.10"
 
-libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-testkit" % "1.9.9"
+libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-zmq" % "1.9.10"
 
-libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-zmq" % "1.9.9"
+libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-tor" % "1.9.10"
 
-libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-tor" % "1.9.9"
-
-libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-cli" % "1.9.9"
+libraryDependencies += "org.bitcoin-s" %% "bitcoin-s-cli" % "1.9.10"
 
 ```
 
