@@ -1,7 +1,7 @@
 import scala.util.Properties
 
 object EnvUtil {
-  private val osName = System.getProperty("os.name")
+  val osName = System.getProperty("os.name")
 
   lazy val isLinux: Boolean = osName.startsWith("Linux")
 
