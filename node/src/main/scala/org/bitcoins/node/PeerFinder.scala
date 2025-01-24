@@ -147,7 +147,7 @@ case class PeerFinder(
 
   private val isConnectionSchedulerRunning = new AtomicBoolean(false)
 
-  private[this] var peerConnectionCancellableOpt: Option[Cancellable] = None
+  private var peerConnectionCancellableOpt: Option[Cancellable] = None
 
   private def peerConnectionScheduler(): Cancellable = {
     system.scheduler.scheduleWithFixedDelay(

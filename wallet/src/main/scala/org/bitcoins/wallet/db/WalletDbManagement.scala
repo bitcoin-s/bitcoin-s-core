@@ -8,55 +8,55 @@ import org.bitcoins.wallet.models._
 import scala.concurrent.ExecutionContext
 
 trait WalletDbManagement extends DbManagement {
-  _: JdbcProfileComponent[WalletAppConfig] =>
+  this: JdbcProfileComponent[WalletAppConfig] =>
 
   import profile.api._
 
   def ec: ExecutionContext
 
-  private lazy val accountTable: TableQuery[Table[_]] = {
+  private lazy val accountTable: TableQuery[Table[?]] = {
     AccountDAO()(ec, appConfig).table
   }
 
-  private lazy val addressTable: TableQuery[Table[_]] = {
+  private lazy val addressTable: TableQuery[Table[?]] = {
     AddressDAO()(ec, appConfig).table
   }
 
-  private lazy val addressTagTable: TableQuery[Table[_]] = {
+  private lazy val addressTagTable: TableQuery[Table[?]] = {
     AddressTagDAO()(ec, appConfig).table
   }
 
-  private lazy val utxoTable: TableQuery[Table[_]] = {
+  private lazy val utxoTable: TableQuery[Table[?]] = {
     SpendingInfoDAO()(ec, appConfig).table
   }
 
-  private lazy val txTable: TableQuery[Table[_]] = {
+  private lazy val txTable: TableQuery[Table[?]] = {
     TransactionDAO()(ec, appConfig).table
   }
 
-  private lazy val incomingTxTable: TableQuery[Table[_]] = {
+  private lazy val incomingTxTable: TableQuery[Table[?]] = {
     IncomingTransactionDAO()(ec, appConfig).table
   }
 
-  private lazy val outgoingTxTable: TableQuery[Table[_]] = {
+  private lazy val outgoingTxTable: TableQuery[Table[?]] = {
     OutgoingTransactionDAO()(ec, appConfig).table
   }
 
-  private lazy val spkTable: TableQuery[Table[_]] = {
+  private lazy val spkTable: TableQuery[Table[?]] = {
     ScriptPubKeyDAO()(ec, appConfig).table
   }
 
-  private lazy val stateDescriptorTable: TableQuery[Table[_]] = {
+  private lazy val stateDescriptorTable: TableQuery[Table[?]] = {
     WalletStateDescriptorDAO()(ec, appConfig).table
   }
 
-  private lazy val masterXPubTable: TableQuery[Table[_]] = {
+  private lazy val masterXPubTable: TableQuery[Table[?]] = {
     MasterXPubDAO()(ec, appConfig).table
   }
 
   // Ordering matters here, tables with a foreign key should be listed after
   // the table that key references
-  override lazy val allTables: List[TableQuery[Table[_]]] = {
+  override lazy val allTables: List[TableQuery[Table[?]]] = {
     List(
       spkTable,
       accountTable,

@@ -32,7 +32,7 @@ import scala.concurrent.{ExecutionContext, Future}
 trait FundWalletUtil extends BitcoinSLogger {
 
   /** Funds the given wallet with money from the given bitcoind */
-  def fundWalletWithBitcoind[T <: WalletWithBitcoind[_ <: BitcoindRpcClient]](
+  def fundWalletWithBitcoind[T <: WalletWithBitcoind[? <: BitcoindRpcClient]](
       pair: T
   )(implicit ec: ExecutionContext): Future[T] = {
     val (wallet, bitcoind) = (pair.wallet, pair.bitcoind)

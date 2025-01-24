@@ -20,7 +20,7 @@ object BitcoinSNodeUtil {
     * @param className
     * @return
     */
-  def createActorName(className: Class[_]): String =
+  def createActorName(className: Class[?]): String =
     createActorName(className.getSimpleName)
 
   def stringsToPeers(

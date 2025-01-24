@@ -300,8 +300,8 @@ case class DLCWallet(override val walletApi: Wallet)(implicit
       sigs: Vector[OracleSignatures]
   ): Future[Vector[OracleNonceDb]] = {
     val outcomeAndSigByNonce = sigs.flatMap {
-      case enum: EnumOracleSignature =>
-        Vector((enum.sig.rx, (enum.getOutcome.outcome, enum.sig)))
+      case e: EnumOracleSignature =>
+        Vector((e.sig.rx, (e.getOutcome.outcome, e.sig)))
       case numeric: NumericOracleSignatures =>
         val nonces = numeric.sigs.map(_.rx)
         val outcomes = numeric.getOutcome.digits.map(_.toString)

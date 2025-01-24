@@ -16,8 +16,8 @@ import scala.concurrent.{ExecutionContext, Future}
 abstract class CRUD[T, PrimaryKeyType](implicit
     override
     val ec: ExecutionContext,
-    override val appConfig: DbAppConfig
-) extends CRUDAction[T, PrimaryKeyType]
+    override val appConfig: DbAppConfig)
+    extends CRUDAction[T, PrimaryKeyType]
     with JdbcProfileComponent[DbAppConfig] {
 
   val schemaName: Option[String] = appConfig.schemaName
@@ -42,12 +42,9 @@ abstract class CRUD[T, PrimaryKeyType](implicit
     * TableQuery[XDAO#XTable].
     */
   implicit protected def tableQuerySafeSubtypeCast[
-      SpecificT <: AbstractTable[
-        _
-      ],
+      SpecificT <: AbstractTable[?],
       SomeT <: SpecificT](
-      tableQuery: TableQuery[SomeT]
-  ): TableQuery[SpecificT] = {
+      tableQuery: TableQuery[SomeT]): TableQuery[SpecificT] = {
     tableQuery.asInstanceOf[TableQuery[SpecificT]]
   }
 
@@ -166,20 +163,17 @@ case class SafeDatabase(jdbcProfile: JdbcProfileComponent[DbAppConfig])
   private val sqlite = jdbcProfile.appConfig.driver == DatabaseDriver.SQLite
 
   /** Logs the given action and error, if we are not on mainnet */
-  private def logAndThrowError(
-      action: DBIOAction[_, NoStream, _]
-  ): PartialFunction[Throwable, Nothing] = { case err: SQLException =>
+  private def logAndThrowError(action: DBIOAction[?, NoStream, ?])
+      : PartialFunction[Throwable, Nothing] = { case err: SQLException =>
     logger.error(
-      s"Error when executing query ${action.getDumpInfo.getNamePlusMainInfo}"
-    )
+      s"Error when executing query ${action.getDumpInfo.getNamePlusMainInfo}")
     logger.error(s"$err")
     throw err
   }
 
   /** Runs the given DB action */
-  def run[R](
-      action: DBIOAction[R, NoStream, _]
-  )(implicit ec: ExecutionContext): Future[R] = {
+  def run[R](action: DBIOAction[R, NoStream, ?])(implicit
+      ec: ExecutionContext): Future[R] = {
     val result = scala.concurrent.blocking {
       if (sqlite) database.run[R](foreignKeysPragma >> action.transactionally)
       else database.run[R](action.transactionally)
@@ -192,9 +186,8 @@ case class SafeDatabase(jdbcProfile: JdbcProfileComponent[DbAppConfig])
   /** Runs the given DB sequence-returning DB action and converts the result to
     * a vector
     */
-  def runVec[R](
-      action: DBIOAction[Seq[R], NoStream, _]
-  )(implicit ec: ExecutionContext): Future[Vector[R]] = {
+  def runVec[R](action: DBIOAction[Seq[R], NoStream, ?])(implicit
+      ec: ExecutionContext): Future[Vector[R]] = {
     val result = scala.concurrent.blocking {
       if (sqlite)
         database.run[Seq[R]](foreignKeysPragma >> action.transactionally)

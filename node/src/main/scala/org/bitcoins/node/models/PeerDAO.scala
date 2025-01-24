@@ -142,7 +142,7 @@ case class PeerDAO()(implicit appConfig: NodeAppConfig, ec: ExecutionContext)
 
     def * : ProvenShape[PeerDb] =
       (address, port, lastSeen, firstSeen, networkId, serviceBytes).<>(
-        PeerDb.tupled,
+        PeerDb.apply,
         PeerDb.unapply
       )
   }

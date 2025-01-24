@@ -89,12 +89,10 @@ case class HikariLogging(
   private lazy val mBeanServer = ManagementFactory.getPlatformMBeanServer
 
   lazy val aeBeanName = new ObjectName(
-    s"slick:type=AsyncExecutor,name=$poolName"
-  )
+    s"slick:type=AsyncExecutor,name=$poolName")
 
   lazy val poolBeanName = new ObjectName(
-    s"com.zaxxer.hikari:type=Pool ($poolName)"
-  )
+    s"com.zaxxer.hikari:type=Pool ($poolName)")
 
   lazy val poolConfigBeanName = new ObjectName(
     s"com.zaxxer.hikari:type=PoolConfig ($poolName)"
@@ -172,8 +170,8 @@ case class HikariLogging(
     logger.info(activityUpdate.toString)
   }
 
-  private[this] var started: Boolean = false
-  private[this] var cancelOpt: Option[ScheduledFuture[_]] = None
+  private var started: Boolean = false
+  private var cancelOpt: Option[ScheduledFuture[?]] = None
 
   override def start(): HikariLogging = {
     if (!started) {
@@ -188,8 +186,7 @@ case class HikariLogging(
         logHikariStats,
         interval.toMillis,
         interval.toMillis,
-        TimeUnit.MILLISECONDS
-      )
+        TimeUnit.MILLISECONDS)
       cancelOpt = Some(future)
       started = true
       this
@@ -225,8 +222,7 @@ object HikariLogging extends BitcoinSLogger {
     */
   def fromJdbcProfileComponent[T <: DbAppConfig](
       jdbcProfileComponent: JdbcProfileComponent[T],
-      interval: Duration
-  ): Option[HikariLogging] = {
+      interval: Duration): Option[HikariLogging] = {
     val dataSource = jdbcProfileComponent.database.source
     val moduleName = jdbcProfileComponent.appConfig.moduleName
     dataSource match {

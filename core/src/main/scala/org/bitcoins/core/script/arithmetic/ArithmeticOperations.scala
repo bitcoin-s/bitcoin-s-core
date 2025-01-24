@@ -148,8 +148,8 @@ object ArithmeticOperation extends ScriptOperationFactory[ArithmeticOperation] {
 
   override val operations: scala.collection.immutable.Vector[
     org.bitcoins.core.script.arithmetic.ArithmeticOperation
-      with Product
-      with java.io.Serializable] = Vector(
+      & Product
+      & java.io.Serializable] = Vector(
     OP_0NOTEQUAL,
     OP_1ADD,
     OP_1SUB,

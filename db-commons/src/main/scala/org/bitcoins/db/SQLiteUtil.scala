@@ -16,30 +16,26 @@ object SQLiteUtil extends BitcoinSLogger {
       source: Path,
       target: Path,
       fileNameFilter: Vector[Regex] = Vector.empty,
-      dbExtension: String = ".sqlite"
-  ): Unit = {
+      dbExtension: String = ".sqlite"): Unit = {
     Files.list(source).toArray.map(_.asInstanceOf[Path]).foreach { file =>
       if (
-        fileNameFilter
-          .exists(reg => file.toAbsolutePath.toString.matches(reg.regex))
+        fileNameFilter.exists(reg =>
+          file.toAbsolutePath.toString.matches(reg.regex))
       ) {
         logger.info(s"Skipping ${file.toAbsolutePath} for backup")
       } else {
         if (Files.isDirectory(file)) {
-          backupDirectory(
-            file,
-            target.resolve(file.getFileName),
-            fileNameFilter,
-            dbExtension
-          )
+          backupDirectory(file,
+                          target.resolve(file.getFileName),
+                          fileNameFilter,
+                          dbExtension)
         } else if (
           Files.isRegularFile(file, LinkOption.NOFOLLOW_LINKS) && file.toString
             .endsWith(dbExtension)
         ) {
           val backupFile = target.resolve(file.getFileName)
           logger.info(
-            s"Backing up file=${file.toAbsolutePath} to ${backupFile.toAbsolutePath}"
-          )
+            s"Backing up file=${file.toAbsolutePath} to ${backupFile.toAbsolutePath}")
           Files.createDirectories(target)
           backup(pathToJdbcUrl(file), backupFile)
           logger.info(s"Done backing up file=${file.toAbsolutePath}")
@@ -54,15 +50,13 @@ object SQLiteUtil extends BitcoinSLogger {
       val existsAndWritable =
         Files.exists(backupFilePath) && Files.isWritable(backupFilePath)
       val doesntExistAndPArentIsWritable = !Files.exists(
-        backupFilePath
-      ) && Files.isWritable(backupFilePath.getParent)
+        backupFilePath) && Files.isWritable(backupFilePath.getParent)
       if (existsAndWritable || doesntExistAndPArentIsWritable) {
         val _ =
           conn.createStatement().executeUpdate(s"BACKUP TO $backupFilePath")
       } else {
         throw new IOException(
-          s"Backup destination is not writable: $backupFilePath"
-        )
+          s"Backup destination is not writable: $backupFilePath")
       }
     } finally conn.close()
   }

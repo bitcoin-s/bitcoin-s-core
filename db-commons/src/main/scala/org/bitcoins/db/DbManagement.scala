@@ -10,7 +10,7 @@ import org.flywaydb.core.api.{FlywayException, MigrationInfoService}
 import scala.concurrent.{ExecutionContext, Future}
 
 trait DbManagement extends BitcoinSLogger {
-  _: JdbcProfileComponent[DbAppConfig] =>
+  this: JdbcProfileComponent[DbAppConfig] =>
   import profile.api._
 
   import scala.language.implicitConversions
@@ -73,12 +73,11 @@ trait DbManagement extends BitcoinSLogger {
     * too fancy.
     */
   implicit protected def tableQueryToWithSchema(
-      tableQuery: TableQuery[_]
-  ): TableQuery[Table[_]] = {
-    tableQuery.asInstanceOf[TableQuery[Table[_]]]
+      tableQuery: TableQuery[?]): TableQuery[Table[?]] = {
+    tableQuery.asInstanceOf[TableQuery[Table[?]]]
   }
 
-  def allTables: List[TableQuery[Table[_]]]
+  def allTables: List[TableQuery[Table[?]]]
 
   def dropAll()(implicit ec: ExecutionContext): Future[Unit] = {
     val result =
@@ -94,9 +93,8 @@ trait DbManagement extends BitcoinSLogger {
 
   /** The query needed to create the given table */
   private def createTableQuery(
-      table: TableQuery[_ <: Table[_]],
-      createIfNotExists: Boolean
-  ) = {
+      table: TableQuery[? <: Table[?]],
+      createIfNotExists: Boolean) = {
     if (createIfNotExists) {
       table.schema.createIfNotExists
     } else {
@@ -106,9 +104,9 @@ trait DbManagement extends BitcoinSLogger {
 
   /** Creates the given table */
   def createTable(
-      table: TableQuery[_ <: Table[_]],
-      createIfNotExists: Boolean = true
-  )(implicit ec: ExecutionContext): Future[Unit] = {
+      table: TableQuery[? <: Table[?]],
+      createIfNotExists: Boolean = true)(implicit
+      ec: ExecutionContext): Future[Unit] = {
     val tableName = table.baseTableRow.tableName
     logger.debug(s"Creating table $tableName with DB config: $appConfig")
 
@@ -117,16 +115,15 @@ trait DbManagement extends BitcoinSLogger {
   }
 
   def dropTable(
-      table: TableQuery[Table[_]]
+      table: TableQuery[Table[?]]
   ): Future[Unit] = {
     val query = table.schema.dropIfExists
     val result = database.run(query)
     result
   }
 
-  def dropTable(
-      tableName: String
-  )(implicit ec: ExecutionContext): Future[Int] = {
+  def dropTable(tableName: String)(implicit
+      ec: ExecutionContext): Future[Int] = {
     val fullTableName =
       appConfig.schemaName.map(_ + ".").getOrElse("") + tableName
     val sql = sqlu"""DROP TABLE IF EXISTS #$fullTableName"""
@@ -137,9 +134,8 @@ trait DbManagement extends BitcoinSLogger {
     result
   }
 
-  def createSchema(
-      createIfNotExists: Boolean = true
-  )(implicit ec: ExecutionContext): Future[Unit] =
+  def createSchema(createIfNotExists: Boolean = true)(implicit
+      ec: ExecutionContext): Future[Unit] =
     appConfig.schemaName match {
       case None =>
         Future.unit
@@ -183,8 +179,7 @@ trait DbManagement extends BitcoinSLogger {
       case err: FlywayException =>
         logger.warn(
           s"Failed to apply first round of migrations, attempting baseline and re-apply",
-          err
-        )
+          err)
         // maybe we have an existing database, so attempt to baseline the existing
         // database and then apply migrations again
         flyway.baseline()

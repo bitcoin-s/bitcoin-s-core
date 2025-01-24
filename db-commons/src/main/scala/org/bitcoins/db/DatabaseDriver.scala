@@ -8,11 +8,11 @@ sealed abstract class DatabaseDriver {
 
 object DatabaseDriver extends StringFactory[DatabaseDriver] {
 
-  final case object SQLite extends DatabaseDriver {
+  case object SQLite extends DatabaseDriver {
     override def shortName: String = "sqlite"
   }
 
-  final case object PostgreSQL extends DatabaseDriver {
+  case object PostgreSQL extends DatabaseDriver {
     override def shortName: String = "postgres"
   }
 

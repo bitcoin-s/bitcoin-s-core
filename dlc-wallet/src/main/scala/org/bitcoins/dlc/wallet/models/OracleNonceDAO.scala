@@ -120,7 +120,7 @@ case class OracleNonceDAO()(implicit
 
     override def * : ProvenShape[OracleNonceDb] =
       (announcementId, index, announcementSignature, nonce, signature, outcome)
-        .<>(OracleNonceDb.tupled, OracleNonceDb.unapply)
+        .<>(OracleNonceDb.apply, OracleNonceDb.unapply)
 
     def pk: PrimaryKey =
       primaryKey(

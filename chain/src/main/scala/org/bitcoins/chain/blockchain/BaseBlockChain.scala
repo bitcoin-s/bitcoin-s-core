@@ -44,7 +44,7 @@ private[blockchain] trait BaseBlockChain extends SeqWrapper[BlockHeaderDb] {
 
   override protected lazy val wrapped: Vector[BlockHeaderDb] = headers
 
-  def find(predicate: BlockHeaderDb => Boolean): Option[BlockHeaderDb]
+//  def find(predicate: BlockHeaderDb => Boolean): Option[BlockHeaderDb]
 
   /** Finds a block header at a given height */
   def findAtHeight(height: Int): Option[BlockHeaderDb] =
