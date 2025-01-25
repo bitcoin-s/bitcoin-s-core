@@ -3,7 +3,7 @@ package org.bitcoins.core.util
 import scala.util.Properties
 
 object EnvUtil {
-  private val osName = System.getProperty("os.name")
+  lazy val osName: String = System.getProperty("os.name")
 
   lazy val isLinux: Boolean = osName.startsWith("Linux")
 

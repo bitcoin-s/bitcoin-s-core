@@ -2,11 +2,11 @@ package org.bitcoins.commons.config
 
 import com.typesafe.config.{Config, ConfigFactory, ConfigParseOptions}
 import org.bitcoins.commons.util.BitcoinSLogger
-import org.bitcoins.core.config._
+import org.bitcoins.core.config.*
 import org.bitcoins.core.protocol.blockchain.BitcoinChainParams
-import org.bitcoins.core.util.StartStopAsync
+import org.bitcoins.core.util.{EnvUtil, StartStopAsync}
 
-import java.nio.file._
+import java.nio.file.*
 import scala.concurrent.Future
 import scala.jdk.CollectionConverters.CollectionHasAsScala
 import scala.util.Properties
@@ -236,8 +236,37 @@ object AppConfig extends BitcoinSLogger {
     * TODO: use different directories on Windows and Mac, should probably mimic
     * what Bitcoin Core does
     */
-  private[bitcoins] lazy val DEFAULT_BITCOIN_S_DATADIR: Path =
-    Paths.get(Properties.userHome, ".bitcoin-s")
+  private[bitcoins] lazy val DEFAULT_BITCOIN_S_DATADIR: Path = {
+    val base = Paths.get(Properties.userHome, ".bitcoin-s")
+    if (EnvUtil.isLinux) {
+      base
+    } else if (EnvUtil.isMac) {
+      // migration code to use proper location on mac
+      val full = Paths
+        .get(Properties.userHome)
+        .resolve("Library")
+        .resolve("Application Support")
+        .resolve("bitcoin-s")
+      if (Files.exists(full)) {
+        full
+      } else {
+        if (Files.exists(base)) {
+          // just use old directory for now
+          // we will eventually migrate this in the future
+          base
+        } else {
+          // fresh install, so use the proper spot
+          full
+        }
+      }
+    } else if (EnvUtil.isWindows) {
+      // windows
+      base
+    } else {
+      sys.error(s"Unsupported os=${EnvUtil.osName}")
+    }
+
+  }
 
   private[bitcoins] lazy val DEFAULT_BITCOIN_S_CONF_FILE: String =
     "bitcoin-s.conf"
