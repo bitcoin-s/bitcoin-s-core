@@ -19,10 +19,10 @@ trait EventDbUtil {
       signingVersion: SigningVersion
   ): Vector[EventOutcomeDb] = {
     descriptor match {
-      case enum: EnumEventDescriptorV0TLV =>
+      case e: EnumEventDescriptorV0TLV =>
         require(nonces.size == 1, "Enum events should only have one R value")
         val nonce = nonces.head
-        enum.outcomes.map { outcome =>
+        e.outcomes.map { outcome =>
           val attestationType = EnumAttestation(outcome)
           val hash =
             signingVersion.calcOutcomeHash(attestationType.bytes)

@@ -38,7 +38,7 @@ case class DLCActionBuilder(dlcWalletDAOs: DLCWalletDAOs) {
   )(implicit ec: ExecutionContext): DBIOAction[
     Unit,
     NoStream,
-    Effect.Read with Effect.Write with Effect.Transactional
+    Effect.Read & Effect.Write & Effect.Transactional
   ] = {
     val globalAction = dlcDAO.upsertAction(dlcDb)
     val contractAction = contractDataDAO.upsertAction(contractDataDb)
@@ -70,7 +70,7 @@ case class DLCActionBuilder(dlcWalletDAOs: DLCWalletDAOs) {
   )(implicit ec: ExecutionContext): DBIOAction[
     Unit,
     NoStream,
-    Effect.Write with Effect.Read with Effect.Transactional
+    Effect.Write & Effect.Read & Effect.Transactional
   ] = {
     val dlcDbAction = dlcDAO.updateAction(dlcDb)
     val inputAction = dlcInputsDAO.upsertAllAction(offerInputs)
@@ -89,7 +89,7 @@ case class DLCActionBuilder(dlcWalletDAOs: DLCWalletDAOs) {
     */
   def deleteDLCAction(dlcId: Sha256Digest)(implicit
       ec: ExecutionContext
-  ): DBIOAction[Unit, NoStream, Effect.Write with Effect.Transactional] = {
+  ): DBIOAction[Unit, NoStream, Effect.Write & Effect.Transactional] = {
     val deleteSigA = dlcSigsDAO.deleteByDLCIdAction(dlcId)
     val deleteRefundSigA = dlcRefundSigDAO.deleteByDLCIdAction(dlcId)
     val deleteInputSigA = dlcInputsDAO.deleteByDLCIdAction(dlcId)
@@ -126,7 +126,7 @@ case class DLCActionBuilder(dlcWalletDAOs: DLCWalletDAOs) {
         Vector[DLCFundingInputDb]
     ),
     NoStream,
-    Effect.Read with Effect.Transactional
+    Effect.Read & Effect.Transactional
   ] = {
     val dlcDbQ = dlcDAO.findByPrimaryKey(dlcId)
     val contractDbsQ = contractDataDAO.findByPrimaryKey(dlcId)
@@ -138,7 +138,7 @@ case class DLCActionBuilder(dlcWalletDAOs: DLCWalletDAOs) {
                        ((DLCDb, DLCOfferDb), DLCContractDataDb)
                      ],
                      NoStream,
-                     Effect.Read with Effect.Transactional] = {
+                     Effect.Read & Effect.Transactional] = {
       dlcDbQ
         .join(offerDbsQ)
         .on(_.dlcId === _.dlcId)
@@ -177,7 +177,7 @@ case class DLCActionBuilder(dlcWalletDAOs: DLCWalletDAOs) {
                      OracleNonceDb
                    ],
                    NoStream,
-                   Effect.Write with Effect.Read with Effect.Transactional] = {
+                   Effect.Write & Effect.Read & Effect.Transactional] = {
     val updateAction = for {
       nonceDbs <- oracleNonceDAO.findByNoncesAction(
         outcomeAndSigByNonce.keys.toVector

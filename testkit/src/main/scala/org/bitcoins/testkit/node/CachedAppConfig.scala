@@ -10,7 +10,7 @@ import org.bitcoins.wallet.config.WalletAppConfig
 
 import scala.concurrent.Await
 
-sealed trait CachedAppConfig { _: BitcoinSPekkoAsyncTest =>
+sealed trait CachedAppConfig { self: BitcoinSPekkoAsyncTest =>
 
   /** Unfortunately this can't be a 'val' because of NPE */
   implicit protected def appConfig: AppConfig
@@ -20,7 +20,7 @@ sealed trait CachedAppConfig { _: BitcoinSPekkoAsyncTest =>
   }
 }
 
-trait CachedBitcoinSAppConfig { _: BitcoinSPekkoAsyncTest =>
+trait CachedBitcoinSAppConfig { self: BitcoinSPekkoAsyncTest =>
 
   implicit protected lazy val cachedConfig: BitcoinSAppConfig =
     BitcoinSTestAppConfig.getNeutrinoTestConfig()
@@ -44,9 +44,9 @@ trait CachedBitcoinSAppConfig { _: BitcoinSPekkoAsyncTest =>
 }
 
 trait CachedChainAppConfig {
-  _: BitcoinSPekkoAsyncTest =>
+  self: BitcoinSPekkoAsyncTest =>
 
-  private[this] lazy val cachedConfig: BitcoinSAppConfig =
+  private lazy val cachedConfig: BitcoinSAppConfig =
     BitcoinSTestAppConfig.getNeutrinoTestConfig()
 
   implicit protected lazy val cachedChainConf: ChainAppConfig = {

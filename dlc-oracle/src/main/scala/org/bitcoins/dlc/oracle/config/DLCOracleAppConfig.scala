@@ -169,23 +169,23 @@ case class DLCOracleAppConfig(
 
   private val masterXPubDAO: MasterXPubDAO = MasterXPubDAO()(ec, this)
 
-  private lazy val masterXPubTable: TableQuery[Table[_]] = {
+  private lazy val masterXPubTable: TableQuery[Table[?]] = {
     masterXPubDAO.table
   }
 
-  private lazy val rValueTable: TableQuery[Table[_]] = {
+  private lazy val rValueTable: TableQuery[Table[?]] = {
     RValueDAO()(ec, appConfig).table
   }
 
-  private lazy val eventTable: TableQuery[Table[_]] = {
+  private lazy val eventTable: TableQuery[Table[?]] = {
     EventDAO()(ec, appConfig).table
   }
 
-  private lazy val eventOutcomeTable: TableQuery[Table[_]] = {
+  private lazy val eventOutcomeTable: TableQuery[Table[?]] = {
     EventOutcomeDAO()(ec, appConfig).table
   }
 
-  override def allTables: List[TableQuery[Table[_]]] =
+  override def allTables: List[TableQuery[Table[?]]] =
     List(masterXPubTable, rValueTable, eventTable, eventOutcomeTable)
 
   /** @param migrations - The number of migrations we have run */

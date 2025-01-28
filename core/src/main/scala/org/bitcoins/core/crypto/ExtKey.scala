@@ -581,9 +581,7 @@ object ExtPublicKey
        UInt32,
        ChainCode,
        ECPublicKey)) => ExtPublicKey = {
-    (ExtPublicKeyImpl.apply).tupled(
-      _
-    ) // https://docs.scala-lang.org/scala3/guides/migration/incompat-other-changes.html
+    ExtPublicKeyImpl.apply
   }
 
   def unapply: ExtPublicKey => Option[

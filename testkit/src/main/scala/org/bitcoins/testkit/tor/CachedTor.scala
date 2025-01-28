@@ -12,7 +12,7 @@ import scala.concurrent.{Await, Future}
   * using with fixtures to avoid starting tor everytime a new test is run.
   */
 trait CachedTor {
-  _: BitcoinSPekkoAsyncTest =>
+  self: BitcoinSPekkoAsyncTest =>
 
   implicit protected lazy val torConfig: TorAppConfig =
     BitcoinSTestAppConfig.getNeutrinoTestConfig().torConf

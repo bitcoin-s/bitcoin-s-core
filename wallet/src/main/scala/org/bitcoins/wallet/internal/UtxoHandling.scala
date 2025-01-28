@@ -49,7 +49,7 @@ case class UtxoHandling(
 
   override def clearAllUtxos(): Future[Unit] = {
     val aggregatedActions
-        : DBIOAction[Unit, NoStream, Effect.Write with Effect.Transactional] =
+        : DBIOAction[Unit, NoStream, Effect.Write & Effect.Transactional] =
       spendingInfoDAO.deleteAllAction().map(_ => ())
 
     val resultedF = safeDatabase.run(aggregatedActions)
@@ -369,7 +369,7 @@ case class UtxoHandling(
   ): DBIOAction[
     (Vector[SpendingInfoDb], Future[Unit]),
     NoStream,
-    Effect.Read with Effect.Write
+    Effect.Read & Effect.Write
   ] = {
     val outPoints = utxos.map(_.outPoint)
     logger.info(s"Reserving utxos=$outPoints")

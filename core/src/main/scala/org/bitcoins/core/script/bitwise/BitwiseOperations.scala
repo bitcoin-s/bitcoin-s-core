@@ -43,7 +43,7 @@ object BitwiseOperation extends ScriptOperationFactory[BitwiseOperation] {
 
   override val operations: scala.collection.immutable.Vector[
     org.bitcoins.core.script.bitwise.BitwiseOperation
-      with Product
-      with java.io.Serializable] =
+      & Product
+      & java.io.Serializable] =
     Vector(OP_EQUAL, OP_EQUALVERIFY, OP_INVERT, OP_AND, OP_OR, OP_XOR)
 }

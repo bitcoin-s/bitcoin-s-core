@@ -27,7 +27,7 @@ import scala.concurrent.Future
   * extends this trait.
   */
 trait NodeTestWithCachedBitcoind extends BaseNodeTest with CachedTor {
-  _: CachedBitcoind[_] =>
+  self: CachedBitcoind[?] =>
 
   def withNeutrinoNodeConnectedToBitcoindCached(
       test: OneArgAsyncTest,

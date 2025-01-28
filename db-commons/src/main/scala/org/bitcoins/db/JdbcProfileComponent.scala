@@ -17,7 +17,7 @@ trait JdbcProfileComponent[+ConfigType <: DbAppConfig] extends BitcoinSLogger {
     appConfig.slickDbConfig
   }
 
-  lazy val profile: JdbcProfile = dbConfig.profile
+  final lazy val profile: JdbcProfile = dbConfig.profile
 
   lazy val numThreads: Int = dbConfig.config.getInt("db.numThreads")
 
@@ -26,7 +26,7 @@ trait JdbcProfileComponent[+ConfigType <: DbAppConfig] extends BitcoinSLogger {
     dbConfig.db
   }
 
-  private[this] var hikariLoggerOpt: Option[HikariLogging] = None
+  private var hikariLoggerOpt: Option[HikariLogging] = None
 
   /** Starts the background logger for hikari
     * @param interval

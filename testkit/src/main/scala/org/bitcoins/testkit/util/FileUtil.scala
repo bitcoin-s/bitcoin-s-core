@@ -20,7 +20,7 @@ object FileUtil extends BitcoinSLogger {
     *   if the given directory isn't in the user temp dir location
     */
   def deleteTmpDir(dir: File): Boolean = {
-    val isTemp = dir.getPath startsWith Properties.tmpDir
+    val isTemp = dir.getPath `startsWith` Properties.tmpDir
     if (!isTemp) {
       logger.warn(
         s"Directory $dir is not in the system temp dir location! You most likely didn't mean to delete this directory."
