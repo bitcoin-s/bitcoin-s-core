@@ -28,7 +28,7 @@ TaskKeys.downloadCLightning := {
       val inputStream = new java.io.InputStreamReader(processBuilder.start().getInputStream())
       val version = new java.io.BufferedReader(inputStream).readLine()
       if (version == "22.04")  {
-        ("Ubuntu-22.04", "tar.xz")
+        ("Ubuntu-22.04-amd64", "tar.xz")
       } else if (version == "24.04") {
         ("Ubuntu-24.04-amd64", "tar.xz")
       } else {
