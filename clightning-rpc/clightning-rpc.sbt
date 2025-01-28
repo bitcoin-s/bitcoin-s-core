@@ -30,7 +30,7 @@ TaskKeys.downloadCLightning := {
       if (version == "22.04")  {
         ("Ubuntu-22.04", "tar.xz")
       } else if (version == "24.04") {
-        ("Ubuntu-24.04", "tar.xz")
+        ("Ubuntu-24.04-amd64", "tar.xz")
       } else {
         ("Ubuntu-20.04", "tar.xz")
       }
