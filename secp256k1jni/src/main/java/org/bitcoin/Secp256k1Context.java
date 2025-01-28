@@ -43,6 +43,14 @@ public class Secp256k1Context {
       }
       enabled = isEnabled;
       context = contextRef;
+
+      if (isEnabled) {
+          Runtime.getRuntime().addShutdownHook(new Thread() {
+              public void run() {
+                  NativeSecp256k1.cleanup();
+              }
+          });
+      }
   }
 
   /**

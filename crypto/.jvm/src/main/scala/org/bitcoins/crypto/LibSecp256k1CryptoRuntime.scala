@@ -1,6 +1,6 @@
 package org.bitcoins.crypto
 
-import org.bitcoin.NativeSecp256k1
+import org.bitcoin.{NativeSecp256k1, Secp256k1Context}
 import scodec.bits.ByteVector
 
 /** This is an implementation of [[CryptoRuntime]] that defaults to libsecp256k1
@@ -295,4 +295,9 @@ trait LibSecp256k1CryptoRuntime extends CryptoRuntime {
   }
 }
 
-object LibSecp256k1CryptoRuntime extends LibSecp256k1CryptoRuntime
+object LibSecp256k1CryptoRuntime extends LibSecp256k1CryptoRuntime {
+  if (Secp256k1Context.isEnabled) {
+    NativeSecp256k1.randomize(
+      BouncycastleCryptoRuntime.freshPrivateKey.bytes.toArray)
+  }
+}
