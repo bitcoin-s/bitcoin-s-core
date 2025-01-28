@@ -19,7 +19,7 @@ TaskKeys.downloadCLightning := {
     Files.createDirectories(binaryDir)
   }
 
-  val version = "24.02.2"
+  val version = "24.11.1"
 
   val (platform, suffix) =
     if (Properties.isLinux) {
@@ -29,6 +29,8 @@ TaskKeys.downloadCLightning := {
       val version = new java.io.BufferedReader(inputStream).readLine()
       if (version == "22.04")  {
         ("Ubuntu-22.04", "tar.xz")
+      } else if (version == "24.04") {
+        ("Ubuntu-24.04", "tar.xz")
       } else {
         ("Ubuntu-20.04", "tar.xz")
       }
@@ -66,6 +68,8 @@ TaskKeys.downloadCLightning := {
         "0068852306bca9df3d213c6a29bb90451eb538be83e413d6838e9e2d2729ff7f"
       } else if (platform == "Ubuntu-22.04") {
         "7d78e49615ace6ff8ee9ebfdf30e108ecf41ce98834493260ee31486389b781f"
+      } else if (platform == "Ubuntu-22.04") {
+        ""
       }
       else sys.error(s"Unsupported OS: ${Properties.osName}")
 
