@@ -1087,15 +1087,15 @@ object EclairRpcClient {
   ) = new EclairRpcClient(instance, binary)
 
   /** The current commit we support of Eclair */
-  private[bitcoins] val commit = "a63d2c2"
+  private[bitcoins] val commit = "7e7ad45"
 
   /** The current version we support of Eclair */
-  private[bitcoins] val version = "0.10.0"
+  private[bitcoins] val version = "0.11.0"
 
   /** The bitcoind version that eclair is officially tested & supported with by
     * ACINQ
     * @see
-    *   https://github.com/ACINQ/eclair/releases/tag/v0.8.0
+    *   https://github.com/ACINQ/eclair/releases/tag/v0.11.0
     */
-  val bitcoindV: BitcoindVersion = BitcoindVersion.V26
+  val bitcoindV: BitcoindVersion = BitcoindVersion.V27
 }

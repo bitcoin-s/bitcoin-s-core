@@ -343,6 +343,11 @@ object Features {
     val mandatory = 152
   }
 
+  case object Quiesce extends Feature {
+    override val rfcName = "option_quiesce"
+    override val mandatory = 34
+  }
+
   val knownFeatures: Set[Feature] = Set(
     DataLossProtect,
     InitialRoutingSync,
@@ -366,7 +371,8 @@ object Features {
     ZeroConf,
     KeySend,
     TrampolinePaymentPrototype,
-    AsyncPaymentPrototype
+    AsyncPaymentPrototype,
+    Quiesce
   )
 
   // Features may depend on other features, as specified in Bolt 9.
