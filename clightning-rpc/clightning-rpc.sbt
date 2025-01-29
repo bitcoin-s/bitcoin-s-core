@@ -19,7 +19,7 @@ TaskKeys.downloadCLightning := {
     Files.createDirectories(binaryDir)
   }
 
-  val version = "24.02.2"
+  val version = "24.11.1"
 
   val (platform, suffix) =
     if (Properties.isLinux) {
@@ -28,13 +28,15 @@ TaskKeys.downloadCLightning := {
       val inputStream = new java.io.InputStreamReader(processBuilder.start().getInputStream())
       val version = new java.io.BufferedReader(inputStream).readLine()
       if (version == "22.04")  {
-        ("Ubuntu-22.04", "tar.xz")
+        ("Ubuntu-22.04-amd64", "tar.xz")
+      } else if (version == "24.04") {
+        ("Ubuntu-24.04-amd64", "tar.xz")
       } else {
         ("Ubuntu-20.04", "tar.xz")
       }
+    } else {
+      sys.error(s"Unsupported OS: ${Properties.osName}")
     }
-//    else if (Properties.isMac) ("darwin-amd64", "tar.gz") // todo c-lightning adding in a future release
-    else sys.error(s"Unsupported OS: ${Properties.osName}")
 
   logger.debug(s"(Maybe) downloading clightning binaries for version: $version")
 
@@ -62,10 +64,12 @@ TaskKeys.downloadCLightning := {
       .mkString
 
     val expectedHash =
-      if (platform == "Ubuntu-20.04") {
+      if (platform == "Ubuntu-20.04-amd64") {
         "0068852306bca9df3d213c6a29bb90451eb538be83e413d6838e9e2d2729ff7f"
-      } else if (platform == "Ubuntu-22.04") {
-        "7d78e49615ace6ff8ee9ebfdf30e108ecf41ce98834493260ee31486389b781f"
+      } else if (platform == "Ubuntu-22.04-amd64") {
+        "10a42e4d8f1bfef2c82a4f16725669843a2243729e0904aeb0412981f8f2496c"
+      } else if (platform == "Ubuntu-24.04-amd64") {
+        "f78eeb3bf71ad49f0dc7d42e9665b4f377b621b1606b46ab58ea4343f72f7dee"
       }
       else sys.error(s"Unsupported OS: ${Properties.osName}")
 
