@@ -7,7 +7,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     if: "! contains(github.event.pull_request.labels.*.name, 'documentation')"
     steps:

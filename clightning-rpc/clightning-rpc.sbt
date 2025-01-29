@@ -67,7 +67,7 @@ TaskKeys.downloadCLightning := {
       if (platform == "Ubuntu-20.04-amd64") {
         "0068852306bca9df3d213c6a29bb90451eb538be83e413d6838e9e2d2729ff7f"
       } else if (platform == "Ubuntu-22.04-amd64") {
-        "7d78e49615ace6ff8ee9ebfdf30e108ecf41ce98834493260ee31486389b781f"
+        "10a42e4d8f1bfef2c82a4f16725669843a2243729e0904aeb0412981f8f2496c"
       } else if (platform == "Ubuntu-24.04-amd64") {
         ""
       }
