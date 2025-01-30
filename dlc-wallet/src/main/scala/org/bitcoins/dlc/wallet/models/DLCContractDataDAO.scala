@@ -97,7 +97,7 @@ case class DLCContractDataDAO()(implicit
         contractMaturity,
         contractTimeout,
         totalCollateral
-      ).<>(DLCContractDataDb.tupled, DLCContractDataDb.unapply)
+      ).<>(DLCContractDataDb.apply, DLCContractDataDb.unapply)
 
     def fk =
       foreignKey(

@@ -115,10 +115,9 @@ abstract class DbAppConfig extends AppConfig {
 
     val usedConf = overrideConf.withFallback(config)
     Try {
-      val c = DatabaseConfig.forConfig[JdbcProfile](
-        path = s"bitcoin-s.$moduleName",
-        config = usedConf
-      )
+      val c = DatabaseConfig.forConfig[JdbcProfile](path =
+                                                      s"bitcoin-s.$moduleName",
+                                                    config = usedConf)
 
       logger.trace(s"Resolved DB config: ${ConfigOps(c.config).asReadableJson}")
       c

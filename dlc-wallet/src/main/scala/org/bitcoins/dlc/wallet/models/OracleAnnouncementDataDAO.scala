@@ -82,6 +82,6 @@ case class OracleAnnouncementDataDAO()(implicit
         eventDescriptor,
         eventMaturity
       )
-        .<>(OracleAnnouncementDataDb.tupled, OracleAnnouncementDataDb.unapply)
+        .<>(OracleAnnouncementDataDb.apply, OracleAnnouncementDataDb.unapply)
   }
 }

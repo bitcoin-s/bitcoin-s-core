@@ -88,7 +88,7 @@ case class NodeStateDescriptorDAO()(implicit
 
     override def * : ProvenShape[NodeStateDescriptorDb] =
       (tpe, descriptor).<>(
-        NodeStateDescriptorDb.tupled,
+        NodeStateDescriptorDb.apply,
         NodeStateDescriptorDb.unapply
       )
 

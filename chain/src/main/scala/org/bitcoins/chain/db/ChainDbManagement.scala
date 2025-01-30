@@ -15,26 +15,26 @@ import scala.concurrent.ExecutionContext
   * project.
   */
 trait ChainDbManagement extends DbManagement {
-  _: JdbcProfileComponent[ChainAppConfig] =>
+  this: JdbcProfileComponent[ChainAppConfig] =>
   import profile.api._
 
   def ec: ExecutionContext
 
-  private lazy val chainTable: TableQuery[Table[_]] =
+  private lazy val chainTable: TableQuery[Table[?]] =
     BlockHeaderDAO()(ec, appConfig).table
 
-  private lazy val filterHeaderTable: TableQuery[Table[_]] = {
+  private lazy val filterHeaderTable: TableQuery[Table[?]] = {
     CompactFilterHeaderDAO()(ec, appConfig).table
   }
 
-  private lazy val filterTable: TableQuery[Table[_]] = {
+  private lazy val filterTable: TableQuery[Table[?]] = {
     CompactFilterDAO()(ec, appConfig).table
   }
 
-  private lazy val stateTable: TableQuery[Table[_]] = {
+  private lazy val stateTable: TableQuery[Table[?]] = {
     ChainStateDescriptorDAO()(ec, appConfig).table
   }
 
-  override lazy val allTables: List[TableQuery[Table[_]]] =
+  override lazy val allTables: List[TableQuery[Table[?]]] =
     List(chainTable, filterHeaderTable, filterTable, stateTable)
 }

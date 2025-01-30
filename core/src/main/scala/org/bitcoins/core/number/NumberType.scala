@@ -334,7 +334,7 @@ object UInt8
     checkCached(unsigned)
   }
 
-  def toByte(uInt8: UInt8): Byte = uInt8.underlying.toByte
+  def toByte(uInt8: UInt8): Byte = uInt8.toBigInt.toByte
 
   def toBytes(us: Seq[UInt8]): ByteVector = {
     ByteVector(us.map(toByte))

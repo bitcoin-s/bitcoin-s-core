@@ -16,7 +16,7 @@ import scala.util.Random
 
 /** Base test trait for all the tests in our walletTest module */
 trait BaseWalletTest extends EmbeddedPg {
-  _: Suite with BitcoinSPekkoAsyncTest =>
+  self: Suite & BitcoinSPekkoAsyncTest =>
 
   override def beforeAll(): Unit = {
     AppConfig.throwIfDefaultDatadir(getFreshConfig.walletConf)

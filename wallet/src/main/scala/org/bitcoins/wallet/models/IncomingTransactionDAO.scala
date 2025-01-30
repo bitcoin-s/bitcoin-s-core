@@ -14,7 +14,8 @@ case class IncomingTransactionDAO()(implicit
 ) extends TxDAO[IncomingTransactionDb] {
   import profile.api._
 
-  override val table: profile.api.TableQuery[IncomingTransactionTable] = {
+  override val table: slick.lifted.TableQuery[
+    IncomingTransactionDAO.this.IncomingTransactionTable] = {
     TableQuery[IncomingTransactionTable]
   }
 
@@ -54,7 +55,7 @@ case class IncomingTransactionDAO()(implicit
     def primaryKey: PrimaryKey =
       primaryKey("pk_in_tx", sourceColumns = txIdBE)
 
-    def fk_underlying_tx: slick.lifted.ForeignKeyQuery[_, TransactionDb] = {
+    def fk_underlying_tx: slick.lifted.ForeignKeyQuery[?, TransactionDb] = {
       foreignKey(
         "fk_underlying_tx",
         sourceColumns = txIdBE,

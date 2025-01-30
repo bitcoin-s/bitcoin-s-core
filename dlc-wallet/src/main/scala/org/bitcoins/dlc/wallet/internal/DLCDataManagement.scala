@@ -220,7 +220,7 @@ case class DLCDataManagement(dlcWalletDAOs: DLCWalletDAOs)(implicit
       getOracleAnnouncements(announcementIds, announcementData, nonceDbs)
 
     ContractDescriptor.fromTLV(contractDataDb.contractDescriptorTLV) match {
-      case enum: EnumContractDescriptor =>
+      case e: EnumContractDescriptor =>
         val oracleInfo =
           if (announcementTLVs.size == 1) {
             EnumSingleOracleInfo(announcementTLVs.head)
@@ -232,7 +232,7 @@ case class DLCDataManagement(dlcWalletDAOs: DLCWalletDAOs)(implicit
           }
         SingleContractInfo(
           contractDataDb.totalCollateral.satoshis,
-          enum,
+          e,
           oracleInfo
         )
       case numeric: NumericContractDescriptor =>

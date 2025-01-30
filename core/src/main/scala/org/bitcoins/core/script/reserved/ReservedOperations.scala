@@ -92,10 +92,7 @@ case class UndefinedOP_NOP(opCode: Int) extends ReservedOperation
 object ReservedOperation extends ScriptOperationFactory[ReservedOperation] {
   lazy val undefinedOpCodes = for { i <- 0xbb to 0xff } yield UndefinedOP_NOP(i)
 
-  override val operations: scala.collection.immutable.Vector[
-    org.bitcoins.core.script.reserved.ReservedOperation
-      with Product
-      with java.io.Serializable] =
+  override val operations: Vector[ReservedOperation] =
     Vector(OP_RESERVED,
            OP_VER,
            OP_VERIF,

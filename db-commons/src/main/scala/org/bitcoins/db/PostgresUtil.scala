@@ -11,10 +11,8 @@ object PostgresUtil {
       moduleName
     } else {
       val schemaName = s"${moduleName}_$walletName"
-      require(
-        schemaName.length <= schemaNameMaxLen,
-        s"Schema name length must be up to 63 characters: `$schemaName`"
-      )
+      require(schemaName.length <= schemaNameMaxLen,
+              s"Schema name length must be up to 63 characters: `$schemaName`")
       schemaName
     }
   }

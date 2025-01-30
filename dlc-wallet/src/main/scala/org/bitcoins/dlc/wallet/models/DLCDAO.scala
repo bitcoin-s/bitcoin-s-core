@@ -171,7 +171,7 @@ case class DLCDAO()(implicit
   private def updatePeerAction(
       dlcId: Sha256Digest,
       peerOpt: Option[String]
-  ): DBIOAction[Int, NoStream, Effect.Read with Effect.Write] = {
+  ): DBIOAction[Int, NoStream, Effect.Read & Effect.Write] = {
     val dlcQuery = table.filter(_.dlcId === dlcId)
 
     for {
@@ -261,6 +261,6 @@ case class DLCDAO()(implicit
         aggregateSignatureOpt,
         serializationVersion,
         peerOpt
-      ).<>(DLCDb.tupled, DLCDb.unapply)
+      ).<>(DLCDb.apply, DLCDb.unapply)
   }
 }

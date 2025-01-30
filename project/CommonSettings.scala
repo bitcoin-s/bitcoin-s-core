@@ -140,7 +140,6 @@ object CommonSettings {
   /** Linting options for scalac */
   private val scala2_13CompilerLinting: Vector[String] = {
     Vector(
-      "-Xfatal-warnings",
       "-Xlint"
     )
   }

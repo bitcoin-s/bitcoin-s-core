@@ -66,7 +66,7 @@ trait DualDLCWalletTestCachedBitcoind
             bitcoind
           )(config2, system)
         } yield (walletA, walletB, bitcoind),
-      destroy = { (fundedWallets: (FundedDLCWallet, FundedDLCWallet, _)) =>
+      destroy = { (fundedWallets: (FundedDLCWallet, FundedDLCWallet, ?)) =>
         for {
           _ <- destroyDLCWallet(fundedWallets._1.wallet)
           _ <- destroyDLCWallet(fundedWallets._2.wallet)
@@ -109,7 +109,7 @@ trait DualDLCWalletTestCachedBitcoind
         } yield (dlcWalletA, dlcWalletB, bitcoind)
       },
       destroy = {
-        (dlcWallets: (InitializedDLCWallet, InitializedDLCWallet, _)) =>
+        (dlcWallets: (InitializedDLCWallet, InitializedDLCWallet, ?)) =>
           for {
             _ <- destroyDLCWallet(dlcWallets._1.wallet)
             _ <- destroyDLCWallet(dlcWallets._2.wallet)

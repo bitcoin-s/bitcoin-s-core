@@ -239,7 +239,7 @@ trait ChainUnitTest
     val subscribedF = for {
       chainHandler <- chainHandlerF
       addr <- bitcoind.getNewAddress
-      hash +: _ <- bitcoind.generateToAddress(1, addr)
+      hash <- bitcoind.generateToAddress(1, addr).map(_.head)
       // wait until we see the hash, to make sure the subscription is started
       _ <- AsyncUtil.retryUntilSatisfiedF(
         () => {

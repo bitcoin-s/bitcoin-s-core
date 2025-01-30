@@ -117,7 +117,7 @@ case class DLCAnnouncementDAO()(implicit
 
     override def * : ProvenShape[DLCAnnouncementDb] =
       (dlcId, announcementId, index, used)
-        .<>(DLCAnnouncementDb.tupled, DLCAnnouncementDb.unapply)
+        .<>(DLCAnnouncementDb.apply, DLCAnnouncementDb.unapply)
 
     def primaryKey: PrimaryKey =
       primaryKey(
@@ -125,14 +125,14 @@ case class DLCAnnouncementDAO()(implicit
         sourceColumns = (dlcId, announcementId)
       )
 
-    def fkAnnouncementId: ForeignKeyQuery[_, OracleAnnouncementDataDb] =
+    def fkAnnouncementId: ForeignKeyQuery[?, OracleAnnouncementDataDb] =
       foreignKey(
         "fk_announcement_id",
         sourceColumns = announcementId,
         targetTableQuery = announcementDataTable
       )(_.id)
 
-    def fkDLCId: ForeignKeyQuery[_, DLCDb] =
+    def fkDLCId: ForeignKeyQuery[?, DLCDb] =
       foreignKey(
         "fk_dlc_id",
         sourceColumns = dlcId,

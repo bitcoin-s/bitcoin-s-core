@@ -49,7 +49,7 @@ case class AddressDAO()(implicit
   def createAction(addressDb: AddressDb): DBIOAction[
     AddressDb,
     NoStream,
-    Effect.Read with Effect.Write with Effect.Transactional
+    Effect.Read & Effect.Write & Effect.Transactional
   ] = {
     val spkFind =
       spkTable.filter(_.scriptPubKey === addressDb.scriptPubKey).result
@@ -415,9 +415,9 @@ case class AddressDAO()(implicit
         hashedPubKey,
         scriptPubKeyId,
         scriptWitness
-      ).<>((AddressRecord.apply _).tupled, AddressRecord.unapply)
+      ).<>(AddressRecord.apply, AddressRecord.unapply)
 
-    def fk_scriptPubKeyId: ForeignKeyQuery[_, ScriptPubKeyDb] = {
+    def fk_scriptPubKeyId: ForeignKeyQuery[?, ScriptPubKeyDb] = {
       foreignKey(
         "fk_spk",
         sourceColumns = scriptPubKeyId,

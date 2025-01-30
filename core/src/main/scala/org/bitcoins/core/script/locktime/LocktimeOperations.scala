@@ -39,7 +39,7 @@ object LocktimeOperation extends ScriptOperationFactory[LocktimeOperation] {
 
   override val operations: scala.collection.immutable.Vector[
     org.bitcoins.core.script.locktime.LocktimeOperation
-      with Product
-      with java.io.Serializable] =
+      & Product
+      & java.io.Serializable] =
     Vector(OP_CHECKLOCKTIMEVERIFY, OP_CHECKSEQUENCEVERIFY)
 }
