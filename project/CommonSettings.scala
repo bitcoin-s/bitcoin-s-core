@@ -2,28 +2,15 @@
 import com.typesafe.sbt.SbtNativePackager.Docker
 import com.typesafe.sbt.SbtNativePackager.autoImport.packageName
 
-import java.nio.file.Paths
-import com.typesafe.sbt.packager.Keys.{
-  daemonUser,
-  daemonUserUid,
-  dockerAlias,
-  dockerAliases,
-  dockerCommands,
-  dockerExposedVolumes,
-  dockerRepository,
-  dockerUpdateLatest,
-  maintainer
-}
+import java.nio.file.{Files, Paths}
+import com.typesafe.sbt.packager.Keys.{daemonUser, daemonUserUid, dockerAlias, dockerAliases, dockerCommands, dockerExposedVolumes, dockerRepository, dockerUpdateLatest, maintainer}
 import com.typesafe.sbt.packager.archetypes.jlink.JlinkPlugin.autoImport.JlinkIgnore
 import com.typesafe.sbt.packager.docker.{Cmd, DockerChmodType}
-import com.typesafe.sbt.packager.docker.DockerPlugin.autoImport.{
-  dockerAdditionalPermissions,
-  dockerBaseImage
-}
-import sbt._
-import sbt.Keys._
+import com.typesafe.sbt.packager.docker.DockerPlugin.autoImport.{dockerAdditionalPermissions, dockerBaseImage}
+import sbt.*
+import sbt.Keys.*
 import sbtprotoc.ProtocPlugin.autoImport.PB
-import sbtassembly.AssemblyKeys._
+import sbtassembly.AssemblyKeys.*
 import sbtdynver.DynVer
 
 import scala.sys.process.Process
@@ -243,8 +230,38 @@ object CommonSettings {
     )
   }
 
-  lazy val binariesPath =
-    Paths.get(Properties.userHome, ".bitcoin-s", "binaries")
+  lazy val binariesPath = {
+    val base = Paths.get(Properties.userHome, ".bitcoin-s", "binaries")
+    if (EnvUtil.isLinux) {
+      base
+    } else if (EnvUtil.isMac) {
+      // migration code to use proper location on mac
+      val full = Paths
+        .get(Properties.userHome)
+        .resolve("Library")
+        .resolve("Application Support")
+        .resolve("bitcoin-s")
+        .resolve("binaries")
+      if (Files.exists(full)) {
+        full
+      } else {
+        if (Files.exists(base)) {
+          // just use old directory for now
+          // we will eventually migrate this in the future
+          base
+        } else {
+          // fresh install, so use the proper spot
+          Files.createDirectories(full)
+          full
+        }
+      }
+    } else if (EnvUtil.isWindows) {
+      // windows
+      base
+    } else {
+      sys.error(s"Unsupported os=${EnvUtil.osName}")
+    }
+  }
 
   lazy val cryptoJlinkIgnore = {
     Vector(

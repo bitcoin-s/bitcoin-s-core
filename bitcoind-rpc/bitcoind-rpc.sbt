@@ -41,7 +41,7 @@ TaskKeys.downloadBitcoind := {
   }
 
   implicit val ec = scala.concurrent.ExecutionContext.global
-  val downloads = versions.map { version =>
+  val downloads = Future.traverse(versions) { version =>
     val (platform, suffix) = getPlatformAndSuffix(version)
     val archiveLocation = binaryDir resolve s"$version.$suffix"
     val location =
@@ -124,11 +124,16 @@ TaskKeys.downloadBitcoind := {
         val success = hash.equalsIgnoreCase(expectedHash(version))
         if (success) {
           logger.info(s"Download complete and verified, unzipping result")
-
-          val extractCommand =
-            s"tar -xzf $archiveLocation --directory $binaryDir"
-          logger.info(s"Extracting archive with command: $extractCommand")
-          extractCommand.!!
+          val cmds = Vector(
+            "tar",
+            "-xzf",
+            archiveLocation.toString,
+            "--directory",
+            binaryDir.toString
+          )
+          //val extractCommand = s"""tar -xzf \"$archiveLocation\" --directory \"$binaryDir\""""
+          logger.info(s"Extracting archive with command: $cmds")
+          cmds.!!
         } else {
           Files.deleteIfExists(expectedEndLocation)
           logger.error(
@@ -146,5 +151,5 @@ TaskKeys.downloadBitcoind := {
   }
 
   //timeout if we cannot download in 5 minutes
-  Await.result(Future.sequence(downloads), 5.minutes)
+  Await.result(downloads, 2.minutes)
 }
